@@ -1,0 +1,10 @@
+{
+  // Static-assets Worker for raphaelfakhri.com.
+  // GitHub is the source of truth: pushes to main trigger .github/workflows/deploy.yml,
+  // which runs `wrangler deploy` (same pattern as the symbai.dev workers).
+  "name": "raphaelfakhri",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./public"
+  }
+}

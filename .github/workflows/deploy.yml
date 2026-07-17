@@ -1,0 +1,26 @@
+name: Deploy raphaelfakhri.com
+
+# Source of truth = this repo. Every push to main deploys the Worker to Cloudflare
+# via `wrangler deploy`, authenticated with the account global key (same pattern as
+# the symbai.dev workers). No build step — the site is static assets in ./public.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Deploy Worker
+        run: npx --yes wrangler@4 deploy
+        env:
+          CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+          CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
