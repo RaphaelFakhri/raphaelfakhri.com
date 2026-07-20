@@ -1,0 +1,133 @@
+---
+// raphaelfakhri.com — personal brand site.
+// Plain HTML only: no CSS, no JS. Built with Astro, output to ./dist.
+const links = [
+  { href: 'https://symbai.dev', label: 'symbai.dev' },
+  { href: 'https://raphaelfakhri.substack.com', label: 'Newsletter' },
+  { href: 'https://www.youtube.com/@RaphaelFakhri00', label: 'YouTube' },
+  { href: 'https://x.com/raphaelfakhri00', label: 'X' },
+  { href: 'https://www.linkedin.com/in/raphaelfakhri', label: 'LinkedIn' },
+];
+
+const values = [
+  {
+    title: 'Cool people can be friends',
+    body: "I take on people I'd actually want to know. Business is better — and lasts longer — when it's between friends, not opponents across a table.",
+  },
+  {
+    title: 'Value belongs to whoever creates it',
+    body: 'I build the thing that actually works and price it so you keep the upside. No rent-seeking, no dependency traps, no charging you to access your own stuff.',
+  },
+  {
+    title: 'The Raphael choice',
+    body: "Resources should be spent to minimize regret, boredom, and misery — the cheapest thing that's still genuinely interesting. I teach you to do more with less, mostly with AI.",
+  },
+  {
+    title: "I don't win unless you do",
+    body: "Outcomes over dashboards. I'd rather ship you one thing that makes you money than ten features that make me look busy.",
+  },
+];
+
+const work = [
+  { title: 'Websites that convert', body: 'Clean, fast sites for real businesses. Built from a reusable kit, so they’re quick and priced fairly.' },
+  { title: 'Automations', body: 'The manual thing you do every day, done for you. Scrapers, workflows, the boring stuff that eats your week.' },
+  { title: 'Sales & support tooling', body: 'Chat bots, dialers, CRM plumbing — systems that talk to your customers so you don’t have to be online at 2am.' },
+  { title: 'AI leverage', body: 'Using AI to do things that used to cost a team. This is where the biggest, cheapest wins are hiding.' },
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raphael Fakhri — cool people can be friends</title>
+  <meta name="description" content="I build real tools for small operators — sites, automations, sales systems — and I do business like a friend would. Value belongs to whoever creates it." />
+  <link rel="icon" href={"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%98%8E%3C/text%3E%3C/svg%3E"} />
+  <meta property="og:title" content="Raphael Fakhri — cool people can be friends" />
+  <meta property="og:description" content="I build real tools for small operators and do business like a friend would. Value belongs to whoever creates it." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://raphaelfakhri.com" />
+</head>
+<body>
+  <header>
+    <p><strong>Raphael Fakhri</strong> &mdash; builder for small operators, AI leverage</p>
+  </header>
+
+  <hr />
+
+  <main>
+    <h1>Cool people can be friends.</h1>
+    <p>I build real tools for people doing real work &mdash; sites, automations, sales systems &mdash; and I do business the way a friend would.</p>
+    <p>
+      <a href="#work">See what I build</a> &middot;
+      <a href="#contact">Work with me</a>
+    </p>
+
+    <hr />
+
+    <section>
+      <h2>What I believe</h2>
+      <blockquote>
+        <p>The best things get built between people who actually like each other. So I work with people I&rsquo;d want to know, deal straight, and protect your upside &mdash; because value belongs to whoever creates it, not whoever&rsquo;s best positioned to extract it.</p>
+      </blockquote>
+      <p>No cold transactions. No toll booths. No lock-in.</p>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>How that cashes out &mdash; four things I don&rsquo;t compromise on</h2>
+      <ol>
+        {values.map((v) => (
+          <li>
+            <strong>{v.title}.</strong> {v.body}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <hr />
+
+    <section id="work">
+      <h2>What I build &mdash; real tools for small operators</h2>
+      <p>Workshops, local shops, solo founders &mdash; the people doing the actual work while everyone else sells them dashboards. Here&rsquo;s what I make them:</p>
+      <ul>
+        {work.map((w) => (
+          <li>
+            <strong>{w.title}.</strong> {w.body}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <hr />
+
+    <section id="learn">
+      <h2>I create strategists who master money and technology</h2>
+      <p>Not everything should be hired out. I make content and products that teach you to make informed calls about business and tech &mdash; and to use AI to do things cheaply, building skills that compound. <a href="https://symbai.dev">symbai.dev</a> is where that lives: how to use AI to get real leverage without a budget.</p>
+      <ul>
+        {links.map((l) => (
+          <li><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <hr />
+
+    <section id="contact">
+      <h2>Work with me</h2>
+      <p>If you&rsquo;re a cool person doing real work and you need a site, an automation, or an unfair AI advantage &mdash; let&rsquo;s talk. Straight deal, your upside protected. Worst case, you leave with a plan you can run yourself.</p>
+      <p>
+        <a href="https://www.linkedin.com/in/raphaelfakhri">Message me on LinkedIn</a> &middot;
+        <a href="https://x.com/raphaelfakhri00">DM me on X</a>
+      </p>
+    </section>
+  </main>
+
+  <hr />
+
+  <footer>
+    <p>&copy; Raphael Fakhri &mdash; cool people can be friends.</p>
+  </footer>
+</body>
+</html>

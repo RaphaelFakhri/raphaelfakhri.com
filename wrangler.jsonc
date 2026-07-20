@@ -1,10 +1,11 @@
 {
   // Static-assets Worker for raphaelfakhri.com.
   // GitHub is the source of truth: pushes to main trigger .github/workflows/deploy.yml,
-  // which runs `wrangler deploy` (same pattern as the symbai.dev workers).
+  // which runs `astro build` then `wrangler deploy` (same pattern as the symbai.dev sites).
+  // Astro builds the site (src/pages/*.astro) to ./dist, which is served here.
   "name": "raphaelfakhri",
   "compatibility_date": "2026-07-01",
   "assets": {
-    "directory": "./public"
+    "directory": "./dist"
   }
 }
