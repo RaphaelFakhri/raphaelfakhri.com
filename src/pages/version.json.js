@@ -4,7 +4,7 @@
 export const prerender = true;
 
 export function GET() {
-  const id = process.env.GITHUB_SHA || 'dev';
+  const id = process.env.BUILD_ID || process.env.GITHUB_SHA || 'dev';
   return new Response(JSON.stringify({ id }), {
     headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
   });
