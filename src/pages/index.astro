@@ -70,6 +70,11 @@ const values = [
     a { color: #2e936f; }
     hr { border: none; border-top: 1px solid #e8e8e8; margin: 1.4rem 0; }
     ul { padding-left: 1.1rem; }
+    .socials { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .4rem; font-size: .95rem; }
+    .socials a { color: #2563eb; }
+    @media (min-width: 920px) {
+      .socials { position: fixed; left: calc(50% - 400px); top: 32%; flex-direction: column; gap: .9rem; margin: 0; }
+    }
     #flow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.9; margin-top: .5rem; min-height: 11em; }
     #flow .step { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
     #flow .step.on { opacity: 1; transform: none; }
@@ -79,6 +84,11 @@ const values = [
 <body>
   <header>
     <p><strong>Raphael Fakhri</strong></p>
+    <nav class="socials">
+      {links.map((l) => (
+        <a href={l.href}>{l.label}</a>
+      ))}
+    </nav>
   </header>
 
   <hr />
@@ -165,16 +175,6 @@ const values = [
       })();
     </script>
 
-    <hr />
-
-    <section id="find">
-      <h2>Where to find me</h2>
-      <ul>
-        {links.map((l) => (
-          <li><a href={l.href}>{l.label}</a></li>
-        ))}
-      </ul>
-    </section>
   </main>
 
   <hr />
