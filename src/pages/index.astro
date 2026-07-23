@@ -2,6 +2,7 @@
 // raphaelfakhri.com - personal site. Who he is, what he believes. Nothing for sale.
 // Built with Astro, output to ./dist. One tiny script: a version-poller that live-reloads
 // the page when a new build deploys, so edits appear without a manual refresh.
+import { posts } from '../posts.js';
 const BUILD_ID = process.env.BUILD_ID || process.env.GITHUB_SHA || 'dev';
 const links = [
   { href: 'https://x.com/raphaelfakhri00', label: 'X' },
@@ -59,6 +60,8 @@ const values = [
     .dictated { color: #666; font-style: italic; font-size: .95rem; }
     .post-title { color: #2563eb; text-decoration: none; }
     .post-title:hover { text-decoration: underline; }
+    .post-list { list-style: none; padding-left: 0; }
+    .post-list li { margin: .55rem 0; font-size: 1.1rem; }
     .post-actions { display: flex; flex-wrap: wrap; gap: .9rem; align-items: center; margin-top: 1.2rem; font-size: .9rem; }
     .post-actions a { color: #2563eb; }
     .post-actions .up { background: none; border: 1px solid #2563eb; color: #2563eb; border-radius: 999px; padding: .15rem .65rem; cursor: pointer; font: inherit; }
@@ -94,92 +97,15 @@ const values = [
 
     <hr />
 
-    <section id="demo">
+    <section id="writing">
       <h2>Writing</h2>
-      <p class="dictated">How these get written: I talk, an AI writes, I direct. I do not type them. Turning a thought into a post used to be the effort that stopped me. Now the effort is just having the thought out loud. Tap a title to read it.</p>
-
-      <article class="post" id="prompt-and-wait">
-        <h3><a class="post-title" href="#prompt-and-wait">Prompt and wait</a></h3>
-        <div class="post-body">
-          <p>Where I think work is going: you name the goal, agents recurse until it&rsquo;s done. Here&rsquo;s one making you a burger.</p>
-          <div id="flow"></div>
-          <p>That is not science fiction. It is the thing we already have, pointed at a longer horizon and given the ability to call itself. The loop is the whole trick: keep going until the goal is met.</p>
-          <p>What it does to scarcity is the interesting part. If any goal can be filled at close to zero cost and the only input left is patience, then scarcity of stuff is basically solved. That is abundance, on the supply side. The honest catch is who owns the fleets. Making things free is a technology problem. Sharing them is not.</p>
-          <p>And here is the part that matters. When production gets cheap, the scarce thing moves. Solve making, and the bottleneck jumps to time, or attention, or knowing what to even ask for. So the skill that survives every version of this is the same one: find the thing actually holding the goal back, and move it. Right now, for me, it is that not enough people know I exist. So I wrote this.</p>
-        </div>
-      </article>
-
-      <article class="post" id="the-offer">
-        <h3><a class="post-title" href="#the-offer">It is not the skills. It is the offer.</a></h3>
-        <div class="post-body">
-          <p>For a while I thought the hard part was building. It is not. Anyone can build now. The hard part is the offer, and getting a person to say yes.</p>
-          <p>I have watched it happen. You have the skills, you say so, and people politely pass or laugh it off. That is not them saying you are not good. It is them saying the offer is aimed wrong: wrong buyer, wrong problem, or a promise that does not sound worth paying for. A bad offer is fixable. Missing skills would not be.</p>
-        </div>
-      </article>
-
-      <article class="post" id="anybody-can-code">
-        <h3><a class="post-title" href="#anybody-can-code">Anybody can code</a></h3>
-        <div class="post-body">
-          <p>Anybody can code now, so being able to build is not a moat. It is table stakes.</p>
-          <p>The scarce thing is attention. If nobody knows you exist, the best product in the world sells nothing. So the real skill, the one worth learning, is distribution: making something a lot of people actually see. I am not good at it yet. That is exactly why it is what I am working on, and this page is me starting.</p>
-        </div>
-      </article>
+      <p class="dictated">How these get written: I talk, an AI writes, I direct. I do not type them. Turning a thought into a post used to be the effort that stopped me. Now the effort is just having the thought out loud.</p>
+      <ul class="post-list">
+        {posts.map((p) => (
+          <li><a class="post-title" href={`/${p.slug}`}>{p.title}</a></li>
+        ))}
+      </ul>
     </section>
-    <script is:inline>
-      (function () {
-        var url = 'https://raphaelfakhri.com';
-        var sub = 'https://raphaelfakhri.substack.com';
-        document.querySelectorAll('#demo .post').forEach(function (post) {
-          var title = post.querySelector('.post-title').textContent.trim();
-          var body = post.querySelector('.post-body');
-          var t = encodeURIComponent(title), u = encodeURIComponent(url + '#' + post.id);
-          var key = 'up_' + title.replace(/\W+/g, '').slice(0, 24);
-          var count = parseInt(localStorage.getItem(key) || '0', 10);
-          var row = document.createElement('div');
-          row.className = 'post-actions';
-          row.innerHTML =
-            '<button class="up" type="button">▲ <span>' + count + '</span></button>' +
-            '<a href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener">Share on X</a>' +
-            '<a href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener">Facebook</a>' +
-            '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">LinkedIn</a>' +
-            '<a href="' + sub + '" target="_blank" rel="noopener">Subscribe</a>' +
-            '<a href="' + sub + '" target="_blank" rel="noopener">Comment</a>';
-          body.appendChild(row);
-          var span = row.querySelector('.up span');
-          row.querySelector('.up').addEventListener('click', function () {
-            count++; localStorage.setItem(key, count); span.textContent = count;
-          });
-        });
-      })();
-    </script>
-    <script is:inline>
-      (function () {
-        var flow = document.getElementById('flow');
-        if (!flow) return;
-        var steps = [
-          { d: 0, h: '🧑 you', t: '“make me a burger”' },
-          { d: 1, h: '🤖 agent', t: 'check the kitchen… no patties' },
-          { d: 2, h: '🚚 sub-agent', t: 'spin up a beef fleet' },
-          { d: 3, h: '🐄 fleet', t: 'raise cattle → grind patties ✓' },
-          { d: 1, h: '🤖 agent', t: 'assemble the burger' },
-          { d: 0, h: '🍔 done', t: 'delivered, you just waited' }
-        ];
-        var nodes = steps.map(function (s) {
-          var el = document.createElement('div');
-          el.className = 'step';
-          el.style.paddingLeft = (s.d * 1.6) + 'em';
-          el.innerHTML = (s.d ? '↳ ' : '') + '<span class="a">' + s.h + ':</span> ' + s.t;
-          flow.appendChild(el);
-          return el;
-        });
-        var i = 0;
-        function tick() {
-          if (i < nodes.length) { nodes[i].classList.add('on'); i++; setTimeout(tick, 850); }
-          else { setTimeout(function () { nodes.forEach(function (n) { n.classList.remove('on'); }); i = 0; setTimeout(tick, 500); }, 2600); }
-        }
-        tick();
-      })();
-    </script>
 
     <hr />
 

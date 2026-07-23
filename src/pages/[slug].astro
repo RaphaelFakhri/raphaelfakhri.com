@@ -1,0 +1,106 @@
+---
+import { posts } from '../posts.js';
+export function getStaticPaths() {
+  return posts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+const { post } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{post.title} · Raphael Fakhri</title>
+  <meta name="description" content={post.title} />
+  <link rel="icon" href={"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%98%8E%3C/text%3E%3C/svg%3E"} />
+  <meta property="og:title" content={post.title} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content={`https://raphaelfakhri.com/${post.slug}`} />
+  <style is:inline>
+    body { max-width: 600px; margin: 0 auto; padding: 1.25rem 1.25rem 3rem; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6; color: #1a1a1a; }
+    h1 { font-size: 1.55rem; line-height: 1.25; margin: .2rem 0 .6rem; color: #2563eb; }
+    p { margin: .7rem 0; }
+    a { color: #2e936f; }
+    header a { color: #2563eb; }
+    hr { border: none; border-top: 1px solid #e8e8e8; margin: 1.4rem 0; }
+    .post-actions { display: flex; flex-wrap: wrap; gap: .9rem; align-items: center; margin-top: 1.6rem; font-size: .9rem; }
+    .post-actions a { color: #2563eb; }
+    .post-actions .up { background: none; border: 1px solid #2563eb; color: #2563eb; border-radius: 999px; padding: .15rem .65rem; cursor: pointer; font: inherit; }
+    #flow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.9; margin-top: .5rem; min-height: 11em; }
+    #flow .step { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
+    #flow .step.on { opacity: 1; transform: none; }
+    #flow .step .a { color: #2e936f; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header>
+    <p><strong>Raphael Fakhri</strong> · <a href="/#writing">back to blog</a></p>
+  </header>
+
+  <hr />
+
+  <main>
+    <h1>{post.title}</h1>
+    <div set:html={post.body}></div>
+    <div id="actions"></div>
+  </main>
+
+  <hr />
+
+  <footer>
+    <p>&copy; Raphael Fakhri. Scarcity is a technology problem.</p>
+  </footer>
+
+  <script define:vars={{ title: post.title, slug: post.slug }}>
+    (function () {
+      var url = location.origin + '/' + slug;
+      var sub = 'https://raphaelfakhri.substack.com';
+      var u = encodeURIComponent(url), t = encodeURIComponent(title);
+      var key = 'up_' + slug;
+      var count = parseInt(localStorage.getItem(key) || '0', 10);
+      var el = document.getElementById('actions');
+      el.className = 'post-actions';
+      el.innerHTML =
+        '<button class="up" type="button">▲ <span>' + count + '</span></button>' +
+        '<a href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener">Share on X</a>' +
+        '<a href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener">Facebook</a>' +
+        '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">LinkedIn</a>' +
+        '<a href="' + sub + '" target="_blank" rel="noopener">Subscribe</a>' +
+        '<a href="' + sub + '" target="_blank" rel="noopener">Comment</a>';
+      var span = el.querySelector('.up span');
+      el.querySelector('.up').addEventListener('click', function () {
+        count++; localStorage.setItem(key, count); span.textContent = count;
+      });
+    })();
+  </script>
+
+  <script is:inline>
+    (function () {
+      var flow = document.getElementById('flow');
+      if (!flow) return;
+      var steps = [
+        { d: 0, h: '🧑 you', t: '“make me a burger”' },
+        { d: 1, h: '🤖 agent', t: 'check the kitchen… no patties' },
+        { d: 2, h: '🚚 sub-agent', t: 'spin up a beef fleet' },
+        { d: 3, h: '🐄 fleet', t: 'raise cattle → grind patties ✓' },
+        { d: 1, h: '🤖 agent', t: 'assemble the burger' },
+        { d: 0, h: '🍔 done', t: 'delivered, you just waited' }
+      ];
+      var nodes = steps.map(function (s) {
+        var el = document.createElement('div');
+        el.className = 'step';
+        el.style.paddingLeft = (s.d * 1.6) + 'em';
+        el.innerHTML = (s.d ? '↳ ' : '') + '<span class="a">' + s.h + ':</span> ' + s.t;
+        flow.appendChild(el);
+        return el;
+      });
+      var i = 0;
+      function tick() {
+        if (i < nodes.length) { nodes[i].classList.add('on'); i++; setTimeout(tick, 850); }
+        else { setTimeout(function () { nodes.forEach(function (n) { n.classList.remove('on'); }); i = 0; setTimeout(tick, 500); }, 2600); }
+      }
+      tick();
+    })();
+  </script>
+</body>
+</html>
