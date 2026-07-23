@@ -1,8 +1,8 @@
 {
   // Worker for raphaelfakhri.com. GitHub stays the source of truth (pushes are mirrored),
-  // but live content edits go through KV via push_content.sh (sub-second) instead of a full
-  // wrangler deploy. The worker (src/worker.js) serves '/' and '/version.json' from KV and
-  // falls back to the built static assets in ./dist for everything else.
+  // but live content edits go through a Durable Object via push_content.sh (sub-second,
+  // strongly consistent — no KV edge-cache staleness). The worker (src/worker.js) serves '/'
+  // and '/version.json' from the DO and falls back to the built static assets in ./dist.
   "name": "raphaelfakhri",
   "compatibility_date": "2026-07-01",
   "main": "src/worker.js",
@@ -11,7 +11,12 @@
     "binding": "ASSETS",
     "run_worker_first": true
   },
-  "kv_namespaces": [
-    { "binding": "SITE", "id": "ab4a803a63da481aaa1f2f11b0b72586" }
+  "durable_objects": {
+    "bindings": [
+      { "name": "SITE_DO", "class_name": "Site" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["Site"] }
   ]
 }
