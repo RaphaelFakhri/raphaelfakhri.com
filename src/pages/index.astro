@@ -99,13 +99,70 @@ const values = [
 
     <section id="writing">
       <h2>Writing</h2>
-      <p class="dictated">How these get written: I talk, an AI writes, I direct. I do not type them. Turning a thought into a post used to be the effort that stopped me. Now the effort is just having the thought out loud.</p>
-      <ul class="post-list">
-        {posts.map((p) => (
-          <li><a class="post-title" href={`/${p.slug}`}>{p.title}</a></li>
-        ))}
-      </ul>
+      <p class="dictated">How these get written: I talk, an AI writes, I direct. I do not type them. Turning a thought into a post used to be the effort that stopped me. Now the effort is just having the thought out loud. Each title is a link to its own page.</p>
+      {posts.map((p) => (
+        <article class="post" id={p.slug}>
+          <h3><a class="post-title" href={`/${p.slug}`}>{p.title}</a></h3>
+          <div class="post-body" set:html={p.body}></div>
+        </article>
+      ))}
     </section>
+    <script is:inline>
+      (function () {
+        var origin = 'https://raphaelfakhri.com';
+        var sub = 'https://raphaelfakhri.substack.com';
+        document.querySelectorAll('#writing .post').forEach(function (post) {
+          var title = post.querySelector('.post-title').textContent.trim();
+          var body = post.querySelector('.post-body');
+          var purl = origin + '/' + post.id;
+          var u = encodeURIComponent(purl), t = encodeURIComponent(title);
+          var key = 'up_' + post.id;
+          var count = parseInt(localStorage.getItem(key) || '0', 10);
+          var row = document.createElement('div');
+          row.className = 'post-actions';
+          row.innerHTML =
+            '<button class="up" type="button">▲ <span>' + count + '</span></button>' +
+            '<a href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener">Share on X</a>' +
+            '<a href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener">Facebook</a>' +
+            '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">LinkedIn</a>' +
+            '<a href="' + sub + '" target="_blank" rel="noopener">Subscribe</a>' +
+            '<a href="' + sub + '" target="_blank" rel="noopener">Comment</a>';
+          body.appendChild(row);
+          var span = row.querySelector('.up span');
+          row.querySelector('.up').addEventListener('click', function () {
+            count++; localStorage.setItem(key, count); span.textContent = count;
+          });
+        });
+      })();
+    </script>
+    <script is:inline>
+      (function () {
+        var flow = document.getElementById('flow');
+        if (!flow) return;
+        var steps = [
+          { d: 0, h: '🧑 you', t: '“make me a burger”' },
+          { d: 1, h: '🤖 agent', t: 'check the kitchen… no patties' },
+          { d: 2, h: '🚚 sub-agent', t: 'spin up a beef fleet' },
+          { d: 3, h: '🐄 fleet', t: 'raise cattle → grind patties ✓' },
+          { d: 1, h: '🤖 agent', t: 'assemble the burger' },
+          { d: 0, h: '🍔 done', t: 'delivered, you just waited' }
+        ];
+        var nodes = steps.map(function (s) {
+          var el = document.createElement('div');
+          el.className = 'step';
+          el.style.paddingLeft = (s.d * 1.6) + 'em';
+          el.innerHTML = (s.d ? '↳ ' : '') + '<span class="a">' + s.h + ':</span> ' + s.t;
+          flow.appendChild(el);
+          return el;
+        });
+        var i = 0;
+        function tick() {
+          if (i < nodes.length) { nodes[i].classList.add('on'); i++; setTimeout(tick, 850); }
+          else { setTimeout(function () { nodes.forEach(function (n) { n.classList.remove('on'); }); i = 0; setTimeout(tick, 500); }, 2600); }
+        }
+        tick();
+      })();
+    </script>
 
     <hr />
 
