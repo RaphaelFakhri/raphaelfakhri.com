@@ -54,8 +54,14 @@ const values = [
     h1 { font-size: 1.55rem; line-height: 1.25; margin: .2rem 0 .6rem; }
     h2 { font-size: 1.15rem; margin: 1.6rem 0 .4rem; }
     h3 { font-size: 1.3rem; margin: .3rem 0 .2rem; }
-    .post + .post { margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.4rem; }
-    .post h3 { margin-top: 0; }
+    .post { border-top: 1px solid #eee; padding-top: 1rem; margin-top: 1rem; }
+    .post h3 { margin: 0; }
+    .dictated { color: #666; font-style: italic; font-size: .95rem; }
+    .post-title { cursor: pointer; }
+    .post-title::before { content: "\25B8  "; color: #2e936f; font-weight: 400; }
+    .post.open .post-title::before { content: "\25BE  "; }
+    .post-body { display: none; }
+    .post.open .post-body { display: block; }
     p { margin: .7rem 0; }
     a { color: #2e936f; }
     hr { border: none; border-top: 1px solid #e8e8e8; margin: 1.4rem 0; }
@@ -90,27 +96,49 @@ const values = [
 
     <section id="demo">
       <h2>Writing</h2>
+      <p class="dictated">How these get written: I talk, an AI writes, I direct. I do not type them. Turning a thought into a post used to be the effort that stopped me. Now the effort is just having the thought out loud. Tap a title to read it.</p>
+
       <article class="post">
-      <h3>Prompt and wait</h3>
-      <p>Where I think work is going: you name the goal, agents recurse until it&rsquo;s done. Here&rsquo;s one making you a burger.</p>
-      <div id="flow"></div>
-      <p>That is not science fiction. It is the thing we already have, pointed at a longer horizon and given the ability to call itself. The loop is the whole trick: keep going until the goal is met.</p>
-      <p>What it does to scarcity is the interesting part. If any goal can be filled at close to zero cost and the only input left is patience, then scarcity of stuff is basically solved. That is abundance, on the supply side. The honest catch is who owns the fleets. Making things free is a technology problem. Sharing them is not.</p>
-      <p>And here is the part that matters. When production gets cheap, the scarce thing moves. Solve making, and the bottleneck jumps to time, or attention, or knowing what to even ask for. So the skill that survives every version of this is the same one: find the thing actually holding the goal back, and move it. Right now, for me, it is that not enough people know I exist. So I wrote this.</p>
+        <h3 class="post-title">Prompt and wait</h3>
+        <div class="post-body">
+          <p>Where I think work is going: you name the goal, agents recurse until it&rsquo;s done. Here&rsquo;s one making you a burger.</p>
+          <div id="flow"></div>
+          <p>That is not science fiction. It is the thing we already have, pointed at a longer horizon and given the ability to call itself. The loop is the whole trick: keep going until the goal is met.</p>
+          <p>What it does to scarcity is the interesting part. If any goal can be filled at close to zero cost and the only input left is patience, then scarcity of stuff is basically solved. That is abundance, on the supply side. The honest catch is who owns the fleets. Making things free is a technology problem. Sharing them is not.</p>
+          <p>And here is the part that matters. When production gets cheap, the scarce thing moves. Solve making, and the bottleneck jumps to time, or attention, or knowing what to even ask for. So the skill that survives every version of this is the same one: find the thing actually holding the goal back, and move it. Right now, for me, it is that not enough people know I exist. So I wrote this.</p>
+        </div>
       </article>
 
       <article class="post">
-        <h3>It is not the skills. It is the offer.</h3>
-        <p>For a while I thought the hard part was building. It is not. Anyone can build now. The hard part is the offer, and getting a person to say yes.</p>
-        <p>I have watched it happen. You have the skills, you say so, and people politely pass or laugh it off. That is not them saying you are not good. It is them saying the offer is aimed wrong: wrong buyer, wrong problem, or a promise that does not sound worth paying for. A bad offer is fixable. Missing skills would not be.</p>
+        <h3 class="post-title">It is not the skills. It is the offer.</h3>
+        <div class="post-body">
+          <p>For a while I thought the hard part was building. It is not. Anyone can build now. The hard part is the offer, and getting a person to say yes.</p>
+          <p>I have watched it happen. You have the skills, you say so, and people politely pass or laugh it off. That is not them saying you are not good. It is them saying the offer is aimed wrong: wrong buyer, wrong problem, or a promise that does not sound worth paying for. A bad offer is fixable. Missing skills would not be.</p>
+        </div>
       </article>
 
       <article class="post">
-        <h3>Anybody can code</h3>
-        <p>Anybody can code now, so being able to build is not a moat. It is table stakes.</p>
-        <p>The scarce thing is attention. If nobody knows you exist, the best product in the world sells nothing. So the real skill, the one worth learning, is distribution: making something a lot of people actually see. I am not good at it yet. That is exactly why it is what I am working on, and this page is me starting.</p>
+        <h3 class="post-title">Anybody can code</h3>
+        <div class="post-body">
+          <p>Anybody can code now, so being able to build is not a moat. It is table stakes.</p>
+          <p>The scarce thing is attention. If nobody knows you exist, the best product in the world sells nothing. So the real skill, the one worth learning, is distribution: making something a lot of people actually see. I am not good at it yet. That is exactly why it is what I am working on, and this page is me starting.</p>
+        </div>
       </article>
     </section>
+    <script is:inline>
+      (function () {
+        var titles = document.querySelectorAll('#demo .post-title');
+        titles.forEach(function (t, idx) {
+          if (idx === 0) t.parentNode.classList.add('open');
+          t.addEventListener('click', function () {
+            var art = t.parentNode;
+            var wasOpen = art.classList.contains('open');
+            document.querySelectorAll('#demo .post').forEach(function (p) { p.classList.remove('open'); });
+            if (!wasOpen) art.classList.add('open');
+          });
+        });
+      })();
+    </script>
     <script is:inline>
       (function () {
         var flow = document.getElementById('flow');
