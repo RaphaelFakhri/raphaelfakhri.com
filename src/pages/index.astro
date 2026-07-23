@@ -72,6 +72,48 @@ const values = [
 
     <hr />
 
+    <section id="demo">
+      <h2>Prompt and wait</h2>
+      <p>Where I think this goes: you name the goal, agents recurse until it&rsquo;s done. Here&rsquo;s one making you a burger.</p>
+      <div id="flow"></div>
+    </section>
+    <style is:global>
+      #demo #flow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.9; margin-top: .5rem; min-height: 11em; }
+      #demo #flow .step { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
+      #demo #flow .step.on { opacity: 1; transform: none; }
+      #demo #flow .step .a { color: #2e936f; font-weight: 600; }
+    </style>
+    <script is:inline>
+      (function () {
+        var flow = document.getElementById('flow');
+        if (!flow) return;
+        var steps = [
+          { d: 0, h: '🧑 you', t: '“make me a burger”' },
+          { d: 1, h: '🤖 agent', t: 'check the kitchen… no patties' },
+          { d: 2, h: '🚚 sub-agent', t: 'spin up a beef fleet' },
+          { d: 3, h: '🐄 fleet', t: 'raise cattle → grind patties ✓' },
+          { d: 1, h: '🤖 agent', t: 'assemble the burger' },
+          { d: 0, h: '🍔 done', t: 'delivered — you just waited' }
+        ];
+        var nodes = steps.map(function (s) {
+          var el = document.createElement('div');
+          el.className = 'step';
+          el.style.paddingLeft = (s.d * 1.6) + 'em';
+          el.innerHTML = (s.d ? '↳ ' : '') + '<span class="a">' + s.h + ':</span> ' + s.t;
+          flow.appendChild(el);
+          return el;
+        });
+        var i = 0;
+        function tick() {
+          if (i < nodes.length) { nodes[i].classList.add('on'); i++; setTimeout(tick, 850); }
+          else { setTimeout(function () { nodes.forEach(function (n) { n.classList.remove('on'); }); i = 0; setTimeout(tick, 500); }, 2600); }
+        }
+        tick();
+      })();
+    </script>
+
+    <hr />
+
     <section id="find">
       <h2>Where to find me</h2>
       <ul>
