@@ -65,7 +65,9 @@ const values = [
     .post-list li { margin: .55rem 0; font-size: 1.1rem; }
     .post-actions { display: flex; flex-wrap: wrap; gap: .9rem; align-items: center; margin-top: 1.2rem; font-size: .9rem; }
     .post-actions a { color: #2563eb; }
-    .post-actions .up { background: none; border: 1px solid #2563eb; color: #2563eb; border-radius: 999px; padding: .15rem .65rem; cursor: pointer; font: inherit; }
+    .post-actions .like { background: none; border: 1px solid #2563eb; color: #2563eb; border-radius: 999px; padding: .15rem .65rem; cursor: pointer; font: inherit; }
+    .post-actions .like.liked { background: #2563eb; color: #fff; }
+    .post-actions .views { color: #888; }
     p { margin: .7rem 0; }
     a { color: #2e936f; }
     hr { border: none; border-top: 1px solid #e8e8e8; margin: 1.4rem 0; }
@@ -122,27 +124,43 @@ const values = [
       (function () {
         var origin = 'https://raphaelfakhri.com';
         var sub = 'https://raphaelfakhri.substack.com';
+        function wireStats(slug, row) {
+          var likesEl = row.querySelector('.likes'), viewsEl = row.querySelector('.views'), likeBtn = row.querySelector('.like');
+          function render(s) { if (s) { likesEl.textContent = s.likes; viewsEl.textContent = s.views + (s.views === 1 ? ' view' : ' views'); } }
+          var q = '/stats?slug=' + encodeURIComponent(slug);
+          var vk = 'viewed_' + slug;
+          if (sessionStorage.getItem(vk)) {
+            fetch(q).then(function (r) { return r.json(); }).then(render).catch(function () {});
+          } else {
+            sessionStorage.setItem(vk, '1');
+            fetch(q + '&action=view', { method: 'POST' }).then(function (r) { return r.json(); }).then(render).catch(function () {});
+          }
+          var lk = 'liked_' + slug;
+          if (localStorage.getItem(lk)) likeBtn.classList.add('liked');
+          likeBtn.addEventListener('click', function () {
+            if (localStorage.getItem(lk)) return;
+            localStorage.setItem(lk, '1'); likeBtn.classList.add('liked');
+            fetch(q + '&action=like', { method: 'POST' }).then(function (r) { return r.json(); }).then(render).catch(function () {});
+          });
+        }
         document.querySelectorAll('#writing .post').forEach(function (post) {
+          var slug = post.id;
           var title = post.querySelector('.post-title').textContent.trim();
           var body = post.querySelector('.post-body');
-          var purl = origin + '/' + post.id;
+          var purl = origin + '/' + slug;
           var u = encodeURIComponent(purl), t = encodeURIComponent(title);
-          var key = 'up_' + post.id;
-          var count = parseInt(localStorage.getItem(key) || '0', 10);
           var row = document.createElement('div');
           row.className = 'post-actions';
           row.innerHTML =
-            '<button class="up" type="button">▲ <span>' + count + '</span></button>' +
+            '<button class="like" type="button">▲ <span class="likes">0</span></button>' +
+            '<span class="views">0 views</span>' +
             '<a href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener">Share on X</a>' +
             '<a href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener">Facebook</a>' +
             '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">LinkedIn</a>' +
             '<a href="' + sub + '" target="_blank" rel="noopener">Subscribe</a>' +
             '<a href="' + sub + '" target="_blank" rel="noopener">Comment</a>';
           body.appendChild(row);
-          var span = row.querySelector('.up span');
-          row.querySelector('.up').addEventListener('click', function () {
-            count++; localStorage.setItem(key, count); span.textContent = count;
-          });
+          wireStats(slug, row);
         });
       })();
     </script>

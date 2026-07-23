@@ -12,6 +12,21 @@ export class Site {
   }
   async fetch(request) {
     const url = new URL(request.url);
+    if (url.pathname === '/stats') {
+      const stats = (await this.state.storage.get('stats')) || {};
+      const slug = url.searchParams.get('slug') || '';
+      if (request.method === 'POST') {
+        const action = url.searchParams.get('action');
+        const s = stats[slug] || { likes: 0, views: 0 };
+        if (action === 'like') s.likes++;
+        else if (action === 'view') s.views++;
+        stats[slug] = s;
+        await this.state.storage.put('stats', stats);
+      }
+      return new Response(JSON.stringify(stats[slug] || { likes: 0, views: 0 }), {
+        headers: { 'content-type': 'application/json' },
+      });
+    }
     if (request.method === 'POST') {
       const { id, html } = await request.json();
       await this.state.storage.put('id', id);
@@ -37,6 +52,14 @@ export default {
       const body = await request.text();
       await stub.fetch('https://do/store', { method: 'POST', body, headers: { 'content-type': 'application/json' } });
       return new Response('ok');
+    }
+
+    if (url.pathname === '/stats') {
+      const res = await stub.fetch('https://do/stats' + url.search, { method: request.method });
+      return new Response(res.body, {
+        status: res.status,
+        headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
+      });
     }
 
     if (url.pathname === '/feed.json') {
