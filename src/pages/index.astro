@@ -57,11 +57,14 @@ const values = [
     .post { border-top: 1px solid #eee; padding-top: 1rem; margin-top: 1rem; }
     .post h3 { margin: 0; }
     .dictated { color: #666; font-style: italic; font-size: .95rem; }
-    .post-title { cursor: pointer; }
-    .post-title::before { content: "\25B8  "; color: #2e936f; font-weight: 400; }
+    .post-title { cursor: pointer; color: #2563eb; }
+    .post-title::before { content: "\25B8  "; color: #2563eb; font-weight: 400; }
     .post.open .post-title::before { content: "\25BE  "; }
     .post-body { display: none; }
     .post.open .post-body { display: block; }
+    .post-actions { display: flex; flex-wrap: wrap; gap: .9rem; align-items: center; margin-top: 1.2rem; font-size: .9rem; }
+    .post-actions a { color: #2563eb; }
+    .post-actions .up { background: none; border: 1px solid #2563eb; color: #2563eb; border-radius: 999px; padding: .15rem .65rem; cursor: pointer; font: inherit; }
     p { margin: .7rem 0; }
     a { color: #2e936f; }
     hr { border: none; border-top: 1px solid #e8e8e8; margin: 1.4rem 0; }
@@ -135,6 +138,33 @@ const values = [
             var wasOpen = art.classList.contains('open');
             document.querySelectorAll('#demo .post').forEach(function (p) { p.classList.remove('open'); });
             if (!wasOpen) art.classList.add('open');
+          });
+        });
+      })();
+    </script>
+    <script is:inline>
+      (function () {
+        var url = 'https://raphaelfakhri.com';
+        var sub = 'https://raphaelfakhri.substack.com';
+        document.querySelectorAll('#demo .post').forEach(function (post) {
+          var title = post.querySelector('.post-title').textContent.trim();
+          var body = post.querySelector('.post-body');
+          var t = encodeURIComponent(title), u = encodeURIComponent(url);
+          var key = 'up_' + title.replace(/\W+/g, '').slice(0, 24);
+          var count = parseInt(localStorage.getItem(key) || '0', 10);
+          var row = document.createElement('div');
+          row.className = 'post-actions';
+          row.innerHTML =
+            '<button class="up" type="button">▲ <span>' + count + '</span></button>' +
+            '<a href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener">Share on X</a>' +
+            '<a href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener">Facebook</a>' +
+            '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">LinkedIn</a>' +
+            '<a href="' + sub + '" target="_blank" rel="noopener">Subscribe</a>' +
+            '<a href="' + sub + '" target="_blank" rel="noopener">Comment</a>';
+          body.appendChild(row);
+          var span = row.querySelector('.up span');
+          row.querySelector('.up').addEventListener('click', function () {
+            count++; localStorage.setItem(key, count); span.textContent = count;
           });
         });
       })();
