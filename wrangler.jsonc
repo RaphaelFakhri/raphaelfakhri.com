@@ -1,11 +1,17 @@
 {
-  // Static-assets Worker for raphaelfakhri.com.
-  // GitHub is the source of truth: pushes to main trigger .github/workflows/deploy.yml,
-  // which runs `astro build` then `wrangler deploy` (same pattern as the symbai.dev sites).
-  // Astro builds the site (src/pages/*.astro) to ./dist, which is served here.
+  // Worker for raphaelfakhri.com. GitHub stays the source of truth (pushes are mirrored),
+  // but live content edits go through KV via push_content.sh (sub-second) instead of a full
+  // wrangler deploy. The worker (src/worker.js) serves '/' and '/version.json' from KV and
+  // falls back to the built static assets in ./dist for everything else.
   "name": "raphaelfakhri",
   "compatibility_date": "2026-07-01",
+  "main": "src/worker.js",
   "assets": {
-    "directory": "./dist"
-  }
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "kv_namespaces": [
+    { "binding": "SITE", "id": "ab4a803a63da481aaa1f2f11b0b72586" }
+  ]
 }
