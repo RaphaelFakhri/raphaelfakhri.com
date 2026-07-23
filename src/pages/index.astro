@@ -12,27 +12,27 @@ const links = [
 const values = [
   {
     title: 'Build with people who push you',
-    body: "Adam Smith wrote about strangers, not friends. Newton and Leibniz hated each other and still gave us calculus. Jobs was hard to like and hard to beat. Liking each other is not the mechanism; pressure is. I work with people sharp enough to argue with me and honest enough to do it to my face. If we end up friends, that's fuel, not the product.",
+    body: 'Liking each other is not the mechanism; pressure is. I work with people sharp enough to argue with me and honest enough to do it to my face.',
   },
   {
     title: 'Value belongs to whoever creates it',
-    body: 'I build the thing that works and price it so you keep the upside. No rent-seeking. No dependency traps. No charging you to access your own stuff.',
+    body: 'No rent-seeking. No lock-in. No charging you to access your own stuff.',
   },
   {
     title: 'The Raphael choice',
-    body: "Spend resources to minimize regret, boredom, and misery. Take the cheapest path that's still genuinely interesting. I teach you to do more with less, mostly with AI.",
+    body: 'Take the cheapest path that is still genuinely interesting. Do more with less, mostly with AI.',
   },
   {
     title: "I don't win unless you do",
-    body: "Outcomes are what count. I'd rather ship you one thing that makes you money than ten features that make me look busy.",
+    body: 'Outcomes are what count. One thing that makes you money beats ten features that make me look busy.',
   },
 ];
 
 const work = [
-  { title: 'Websites that convert', body: 'Clean, fast sites for real businesses. Built from a reusable kit, so they ship quick and price fair.' },
-  { title: 'Automations', body: 'The manual thing you do every day, done for you. Scrapers, workflows, the boring work that eats your week.' },
-  { title: 'Sales & support tooling', body: 'Chat bots, dialers, CRM plumbing. Systems that talk to your customers so you don’t have to be online at 2am.' },
-  { title: 'AI leverage', body: 'Using AI to do what used to take a team. The biggest, cheapest wins are hiding here.' },
+  { title: 'Websites', body: 'Clean, fast sites that turn visitors into customers. Built from a reusable kit, so they ship in days and price fair.' },
+  { title: 'Automations', body: 'The boring manual work that eats your week, done for you. Scrapers, workflows, follow-ups.' },
+  { title: 'Sales tools', body: 'Chat bots, dialers, CRM plumbing. Systems that talk to your customers while you sleep.' },
+  { title: 'AI systems', body: 'What used to take a team, done with AI. The biggest, cheapest wins live here.' },
 ];
 ---
 <!doctype html>
@@ -40,44 +40,82 @@ const work = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raphael Fakhri — leverage for every operator</title>
-  <meta name="description" content="The leverage that used to require a funded company now fits in one pair of hands. I build the tools that prove it — sites, automations, sales systems — and I say the plan out loud so anyone can check the receipts." />
+  <title>Raphael Fakhri — websites, automations, sales tools</title>
+  <meta name="description" content="I build websites, automations, and sales tools for small businesses — fast and cheap, with AI. The point is not software; it's more customers for you." />
   <link rel="icon" href={"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%98%8E%3C/text%3E%3C/svg%3E"} />
-  <meta property="og:title" content="Raphael Fakhri — leverage for every operator" />
-  <meta property="og:description" content="The leverage that used to require a funded company now fits in one pair of hands. I build the tools that prove it and say the plan out loud so anyone can check the receipts." />
+  <meta property="og:title" content="Raphael Fakhri — websites, automations, sales tools" />
+  <meta property="og:description" content="I build websites, automations, and sales tools for small businesses — fast and cheap, with AI. The point is more customers, not more software." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://raphaelfakhri.com" />
 </head>
 <body>
   <header>
-    <p><strong>Raphael Fakhri</strong> &mdash; builder for small operators, AI leverage</p>
+    <p><strong>Raphael Fakhri</strong></p>
   </header>
 
   <hr />
 
   <main>
-    <h1>The leverage that built big companies now belongs to any operator.</h1>
-    <p>For most of history, serious leverage &mdash; a sales floor, an ops team, a software department &mdash; required a funded company. That constraint is gone. Scarcity of leverage was a technology problem, and the technology is solved. What remains is execution; build the tools, prove they work, put them in the hands of the people doing the actual work.</p>
-    <p>That is the mission. Everything below is the plan and the receipts.</p>
+    <h1>I build websites, automations, and sales tools for small businesses.</h1>
+    <p>Fast and cheap, with AI. The point is not software — it's more customers for you.</p>
     <p>
-      <a href="#masterplan">Read the plan</a> &middot;
+      <a href="#work">What I build</a> &middot;
       <a href="#contact">Work with me</a>
     </p>
 
     <hr />
 
-    <section>
-      <h2>The obvious objections, answered first</h2>
-      <p><strong>&ldquo;One person can&rsquo;t do the work of a team.&rdquo;</strong> A thing an agency quotes at three months ships from me in days. No handoff, no account layer, no meetings about meetings. The tools are already running: <a href="https://symbai.dev">symbai.dev</a>, <a href="https://clear.symbai.dev">clear.symbai.dev</a>, <a href="https://onoff.symbai.dev">onoff.symbai.dev</a>. Live, not promised.</p>
-      <p><strong>&ldquo;AI leverage is hype.&rdquo;</strong> Some of it is. Receipts, not adjectives, are how you tell the difference. Everything I claim on this page links to something you can open and check.</p>
-      <p><strong>&ldquo;This is just freelancing with a manifesto.&rdquo;</strong> Freelancing sells hours. What I build compounds; each project becomes a reusable kit, each kit becomes a system that runs without me. The point of the work is that the next person needs less of me.</p>
+    <section id="work">
+      <h2>What I build</h2>
+      <p>For workshops, local shops, and solo founders &mdash; the people doing the actual work:</p>
+      <ul>
+        {work.map((w) => (
+          <li>
+            <strong>{w.title}.</strong> {w.body}
+          </li>
+        ))}
+      </ul>
+      <p><strong>Already running:</strong> <a href="https://symbai.dev">symbai.dev</a> &middot; <a href="https://clear.symbai.dev">clear.symbai.dev</a> &middot; <a href="https://onoff.symbai.dev">onoff.symbai.dev</a>. Live, not promised.</p>
     </section>
 
     <hr />
 
     <section id="bottleneck">
       <h2>Your bottleneck isn&rsquo;t the product. It&rsquo;s demand.</h2>
-      <p>Small operators can build almost anything now. What they can&rsquo;t do is make enough people want it. That&rsquo;s the real constraint &mdash; the market demand bottleneck &mdash; and it&rsquo;s the one I build against. Sites that convert. Automations that surface leads. Sales systems that close while you sleep. I turn demand from your scarcest input into the one you have too much of.</p>
+      <p>You can build almost anything now. What you can&rsquo;t do is make enough people want it. That&rsquo;s what I build against: sites that convert, automations that surface leads, sales systems that close while you sleep.</p>
+    </section>
+
+    <hr />
+
+    <section id="contact">
+      <h2>Work with me</h2>
+      <p>You need a site, an automation, or an unfair AI advantage. I&rsquo;ll tell you straight whether I&rsquo;m the right fit. Worst case, you leave with a plan you can run yourself.</p>
+      <p>
+        <a href="https://www.linkedin.com/in/raphaelfakhri">Message me on LinkedIn</a> &middot;
+        <a href="https://x.com/raphaelfakhri00">DM me on X</a>
+      </p>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>The obvious objections, answered</h2>
+      <p><strong>&ldquo;One person can&rsquo;t do the work of a team.&rdquo;</strong> What an agency quotes at three months ships from me in days. No handoffs, no account layer, no meetings about meetings.</p>
+      <p><strong>&ldquo;AI is hype.&rdquo;</strong> Some of it is. Receipts are how you tell the difference &mdash; everything I claim here links to something you can open and check.</p>
+      <p><strong>&ldquo;This is just freelancing with a manifesto.&rdquo;</strong> Freelancing sells hours. What I build compounds; each project becomes a kit that runs without me.</p>
+    </section>
+
+    <hr />
+
+    <section id="masterplan">
+      <h2>The Secret Master Plan (just between you and me)</h2>
+      <ol>
+        <li><strong>Ship one-person tools.</strong> Sites, automations, sales systems for small businesses, in days not months. Already running &mdash; the receipts above.</li>
+        <li><strong>Use that to teach.</strong> Every build becomes a kit and a lesson, so the next person does it themselves instead of paying a team.</li>
+        <li><strong>Use that to compound.</strong> Kits become systems that run without me. Cheaper to own, no lock-in.</li>
+        <li><strong>Then the leverage belongs to everyone.</strong> What used to take a funded company becomes something any operator runs alone.</li>
+      </ol>
+      <p>Don&rsquo;t tell anyone.</p>
     </section>
 
     <hr />
@@ -95,60 +133,14 @@ const work = [
 
     <hr />
 
-    <section id="masterplan">
-      <h2>The Secret Master Plan (just between you and me)</h2>
-      <ol>
-        <li>
-          <strong>Ship one-person tools.</strong> Websites, automations and sales systems for small operators, delivered in days not months. Already running &mdash; <a href="https://symbai.dev">symbai.dev</a>, <a href="https://clear.symbai.dev">clear.symbai.dev</a>, <a href="https://onoff.symbai.dev">onoff.symbai.dev</a>.
-        </li>
-        <li>
-          <strong>Use that to teach.</strong> Every build becomes a reusable kit and a lesson. The next person does it themselves instead of paying a team. Receipt: the newsletter and videos at <a href="https://symbai.dev">symbai.dev</a>.
-        </li>
-        <li>
-          <strong>Use that to compound.</strong> Kits become systems that run without me in the loop. Cheaper to own, no lock-in; the value stays with whoever created it. Receipt: every tool above is live and runs on its own.
-        </li>
-        <li>
-          <strong>Then the leverage belongs to everyone.</strong> What used to take a funded company &mdash; a site, a sales floor, an ops team &mdash; becomes something any operator can run alone. Abundance, not sacrifice. Receipt: this plan, stated where you can check it.
-        </li>
-      </ol>
-      <p>Don&rsquo;t tell anyone.</p>
-    </section>
-
-    <hr />
-
-    <section id="work">
-      <h2>What I build &mdash; rung one, shipping now</h2>
-      <p>Workshops, local shops, solo founders. The people doing the actual work while everyone else sells them dashboards. Here&rsquo;s what I make them:</p>
-      <ul>
-        {work.map((w) => (
-          <li>
-            <strong>{w.title}.</strong> {w.body}
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <hr />
-
     <section id="learn">
       <h2>I create strategists who master money and technology</h2>
-      <p>The end state of the ladder is a world where you don&rsquo;t need me. I make content and products that teach you to make informed calls about business and tech, and to use AI to do things cheaply. Skills compound; that&rsquo;s the point. <a href="https://symbai.dev">symbai.dev</a> is where that lives &mdash; real leverage without a budget.</p>
+      <p>The end state is a world where you don&rsquo;t need me. I teach you to use AI to do things cheaply, and to make informed calls about business and tech. <a href="https://symbai.dev">symbai.dev</a> is where that lives.</p>
       <ul>
         {links.map((l) => (
           <li><a href={l.href}>{l.label}</a></li>
         ))}
       </ul>
-    </section>
-
-    <hr />
-
-    <section id="contact">
-      <h2>Work with me</h2>
-      <p>You&rsquo;re doing real work and you need a site, an automation, or an unfair AI advantage. I&rsquo;ll tell you straight whether I&rsquo;m the right rung for you. Worst case, you leave with a plan you can run yourself; that&rsquo;s a fine outcome too.</p>
-      <p>
-        <a href="https://www.linkedin.com/in/raphaelfakhri">Message me on LinkedIn</a> &middot;
-        <a href="https://x.com/raphaelfakhri00">DM me on X</a>
-      </p>
     </section>
   </main>
 
