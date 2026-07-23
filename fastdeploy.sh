@@ -7,5 +7,5 @@ cd /home/opc/raphaelfakhri.com
 export BUILD_ID="$(date +%s)"
 npm run build >/dev/null 2>&1
 set -a; . "$HOME/.config/cloudflare/creds.env"; set +a
-npx --yes wrangler@4 deploy 2>&1 | tail -3
+./node_modules/.bin/wrangler deploy 2>&1 | tail -3
 echo "DEPLOYED build_id=$BUILD_ID"
