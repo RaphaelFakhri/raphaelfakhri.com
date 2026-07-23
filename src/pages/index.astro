@@ -49,6 +49,19 @@ const values = [
   <meta property="og:description" content="What I believe, written down so I can be held to it." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://raphaelfakhri.com" />
+  <style is:inline>
+    body { max-width: 600px; margin: 0 auto; padding: 1.25rem 1.25rem 3rem; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6; color: #1a1a1a; }
+    h1 { font-size: 1.55rem; line-height: 1.25; margin: .2rem 0 .6rem; }
+    h2 { font-size: 1.15rem; margin: 1.6rem 0 .4rem; }
+    p { margin: .7rem 0; }
+    a { color: #2e936f; }
+    hr { border: none; border-top: 1px solid #e8e8e8; margin: 1.4rem 0; }
+    ul { padding-left: 1.1rem; }
+    #flow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.9; margin-top: .5rem; min-height: 11em; }
+    #flow .step { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
+    #flow .step.on { opacity: 1; transform: none; }
+    #flow .step .a { color: #2e936f; font-weight: 600; }
+  </style>
 </head>
 <body>
   <header>
@@ -80,12 +93,6 @@ const values = [
       <p>What it does to scarcity is the interesting part. If any goal can be filled at close to zero cost and the only input left is patience, then scarcity of stuff is basically solved. That is abundance, on the supply side. The honest catch is who owns the fleets. Making things free is a technology problem. Sharing them is not.</p>
       <p>And here is the part that matters. When production gets cheap, the scarce thing moves. Solve making, and the bottleneck jumps to time, or attention, or knowing what to even ask for. So the skill that survives every version of this is the same one: find the thing actually holding the goal back, and move it. Right now, for me, it is that not enough people know I exist. So I wrote this.</p>
     </section>
-    <style is:global>
-      #demo #flow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.9; margin-top: .5rem; min-height: 11em; }
-      #demo #flow .step { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
-      #demo #flow .step.on { opacity: 1; transform: none; }
-      #demo #flow .step .a { color: #2e936f; font-weight: 600; }
-    </style>
     <script is:inline>
       (function () {
         var flow = document.getElementById('flow');
