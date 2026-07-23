@@ -182,6 +182,38 @@ const values = [
   <footer>
     <p>&copy; Raphael Fakhri. Scarcity is a technology problem.</p>
   </footer>
+  <script is:inline>
+    // Pull posts from the Substack RSS feed (via the worker's /feed.json). When Substack has
+    // posts, they become the source of truth and replace the built-in ones; when the feed is
+    // empty or unreachable, the built-in posts stay. Likes/comments live on Substack.
+    (function () {
+      fetch('/feed.json').then(function (r) { return r.json(); }).then(function (items) {
+        if (!items || !items.length) return;
+        var wrap = document.getElementById('writing');
+        if (!wrap) return;
+        wrap.querySelectorAll('.post').forEach(function (p) { p.remove(); });
+        var sub = 'https://raphaelfakhri.substack.com';
+        items.forEach(function (it) {
+          var u = encodeURIComponent(it.link), t = encodeURIComponent(it.title);
+          var art = document.createElement('article');
+          art.className = 'post';
+          art.innerHTML =
+            '<h3><a class="post-title" href="' + it.link + '">' + it.title + '</a></h3>' +
+            '<div class="post-body">' + it.html +
+              '<div class="post-actions">' +
+                '<a href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener">Share on X</a>' +
+                '<a href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener">Facebook</a>' +
+                '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">LinkedIn</a>' +
+                '<a href="' + it.link + '" target="_blank" rel="noopener">Like on Substack</a>' +
+                '<a href="' + it.link + '" target="_blank" rel="noopener">Comment</a>' +
+                '<a href="' + sub + '" target="_blank" rel="noopener">Subscribe</a>' +
+              '</div>' +
+            '</div>';
+          wrap.appendChild(art);
+        });
+      }).catch(function () {});
+    })();
+  </script>
   <script define:vars={{ BUILD_ID }}>
     // Live-reload: poll the build id and reload when a new version is deployed.
     setInterval(async () => {

@@ -39,6 +39,38 @@ export default {
       return new Response('ok');
     }
 
+    if (url.pathname === '/feed.json') {
+      try {
+        const r = await fetch('https://raphaelfakhri.substack.com/feed', {
+          headers: { 'user-agent': 'Mozilla/5.0' },
+          cf: { cacheTtl: 300, cacheEverything: true },
+        });
+        const xml = await r.text();
+        const items = [];
+        const itemRe = /<item>([\s\S]*?)<\/item>/g;
+        let m;
+        const pick = (block, tag) => {
+          const mm = block.match(new RegExp('<' + tag + '>([\\s\\S]*?)<\\/' + tag + '>'));
+          if (!mm) return '';
+          return mm[1].replace(/^<!\[CDATA\[/, '').replace(/\]\]>$/, '').trim();
+        };
+        while ((m = itemRe.exec(xml))) {
+          const b = m[1];
+          items.push({
+            title: pick(b, 'title'),
+            link: pick(b, 'link'),
+            date: pick(b, 'pubDate'),
+            html: pick(b, 'content:encoded') || pick(b, 'description'),
+          });
+        }
+        return new Response(JSON.stringify(items), {
+          headers: { 'content-type': 'application/json', 'cache-control': 'max-age=300' },
+        });
+      } catch (e) {
+        return new Response('[]', { headers: { 'content-type': 'application/json' } });
+      }
+    }
+
     if (url.pathname === '/version.json') {
       const id = await (await stub.fetch('https://do/id')).text();
       return new Response(JSON.stringify({ id }), {
