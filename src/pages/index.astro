@@ -1,38 +1,38 @@
 ---
-// raphaelfakhri.com — personal brand site.
+// raphaelfakhri.com — personal site. Who he is, what he believes. Nothing for sale.
 // Plain HTML only: no CSS, no JS. Built with Astro, output to ./dist.
 const links = [
-  { href: 'https://symbai.dev', label: 'symbai.dev' },
-  { href: 'https://raphaelfakhri.substack.com', label: 'Newsletter' },
-  { href: 'https://www.youtube.com/@RaphaelFakhri00', label: 'YouTube' },
   { href: 'https://x.com/raphaelfakhri00', label: 'X' },
   { href: 'https://www.linkedin.com/in/raphaelfakhri', label: 'LinkedIn' },
+  { href: 'https://www.youtube.com/@RaphaelFakhri00', label: 'YouTube' },
+  { href: 'https://raphaelfakhri.substack.com', label: 'Newsletter' },
 ];
 
 const values = [
   {
-    title: 'Build with people who push you',
-    body: 'Liking each other is not the mechanism; pressure is. I work with people sharp enough to argue with me and honest enough to do it to my face.',
+    title: 'Build with people who push you, not people who please you',
+    body: 'Liking each other isn&rsquo;t the mechanism; pressure is. Friendship is fuel, not the product. Adam Smith wrote about what strangers achieve together. Newton and Leibniz hated each other and still gave us calculus. Jobs was hard to like and hard to beat. I&rsquo;d rather be sharpened than comforted.',
+  },
+  {
+    title: 'Take the hard road on purpose',
+    body: 'Choose the thing that costs you something &mdash; that&rsquo;s where you actually grow. Amor fati: don&rsquo;t just accept the cost, want it. The easy road is usually a longer way to a smaller life.',
+  },
+  {
+    title: 'A value is only real if it sometimes costs you',
+    body: 'Everything else is a story you tell after the fact. Choose, don&rsquo;t justify. Hold me to it.',
   },
   {
     title: 'Value belongs to whoever creates it',
-    body: 'No rent-seeking. No lock-in. No charging you to access your own stuff.',
+    body: 'Not to whoever&rsquo;s best positioned to extract it. No rent-seeking, no lock-in. If the only reason something is yours is that someone can&rsquo;t leave, it was never yours.',
+  },
+  {
+    title: 'Win only when the other person wins',
+    body: 'And still charge like the work is worth it. Generous, not self-erasing. A deal where I lose isn&rsquo;t generosity; it&rsquo;s a subsidy. A deal where you lose isn&rsquo;t a win; it&rsquo;s a debt that comes due.',
   },
   {
     title: 'The Raphael choice',
-    body: 'Take the cheapest path that is still genuinely interesting. Do more with less, mostly with AI.',
+    body: 'Spend your life to minimize regret, boredom, and misery. Take the cheapest path that&rsquo;s still genuinely interesting. Do more with less.',
   },
-  {
-    title: "I don't win unless you do",
-    body: 'Outcomes are what count. One thing that makes you money beats ten features that make me look busy.',
-  },
-];
-
-const work = [
-  { title: 'Websites', body: 'Clean, fast sites that turn visitors into customers. Built from a reusable kit, so they ship in days and price fair.' },
-  { title: 'Automations', body: 'The boring manual work that eats your week, done for you. Scrapers, workflows, follow-ups.' },
-  { title: 'Sales tools', body: 'Chat bots, dialers, CRM plumbing. Systems that talk to your customers while you sleep.' },
-  { title: 'AI systems', body: 'What used to take a team, done with AI. The biggest, cheapest wins live here.' },
 ];
 ---
 <!doctype html>
@@ -40,11 +40,11 @@ const work = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raphael Fakhri — websites, automations, sales tools</title>
-  <meta name="description" content="I build websites, automations, and sales tools for small businesses — fast and cheap, with AI. The point is not software; it's more customers for you." />
+  <title>Raphael Fakhri</title>
+  <meta name="description" content="Raphael Fakhri. What I believe, written down so I can be held to it." />
   <link rel="icon" href={"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%98%8E%3C/text%3E%3C/svg%3E"} />
-  <meta property="og:title" content="Raphael Fakhri — websites, automations, sales tools" />
-  <meta property="og:description" content="I build websites, automations, and sales tools for small businesses — fast and cheap, with AI. The point is more customers, not more software." />
+  <meta property="og:title" content="Raphael Fakhri" />
+  <meta property="og:description" content="What I believe, written down so I can be held to it." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://raphaelfakhri.com" />
 </head>
@@ -56,76 +56,17 @@ const work = [
   <hr />
 
   <main>
-    <h1>I build websites, automations, and sales tools for small businesses.</h1>
-    <p>Fast and cheap, with AI. The point is not software — it's more customers for you.</p>
-    <p>
-      <a href="#work">What I build</a> &middot;
-      <a href="#contact">Work with me</a>
-    </p>
+    <h1>I&rsquo;m Raphael. This page isn&rsquo;t selling anything. It&rsquo;s what I believe, written down so I can be held to it.</h1>
+    <p>I&rsquo;d rather be known for a short list I actually live by than a long one I perform. This is the short list.</p>
 
     <hr />
 
-    <section id="work">
-      <h2>What I build</h2>
-      <p>For workshops, local shops, and solo founders &mdash; the people doing the actual work:</p>
-      <ul>
-        {work.map((w) => (
-          <li>
-            <strong>{w.title}.</strong> {w.body}
-          </li>
-        ))}
-      </ul>
-      <p><strong>Already running:</strong> <a href="https://symbai.dev">symbai.dev</a> &middot; <a href="https://clear.symbai.dev">clear.symbai.dev</a> &middot; <a href="https://onoff.symbai.dev">onoff.symbai.dev</a>. Live, not promised.</p>
-    </section>
-
-    <hr />
-
-    <section id="bottleneck">
-      <h2>Your bottleneck isn&rsquo;t the product. It&rsquo;s demand.</h2>
-      <p>You can build almost anything now. What you can&rsquo;t do is make enough people want it. That&rsquo;s what I build against: sites that convert, automations that surface leads, sales systems that close while you sleep.</p>
-    </section>
-
-    <hr />
-
-    <section id="contact">
-      <h2>Work with me</h2>
-      <p>You need a site, an automation, or an unfair AI advantage. I&rsquo;ll tell you straight whether I&rsquo;m the right fit. Worst case, you leave with a plan you can run yourself.</p>
-      <p>
-        <a href="https://www.linkedin.com/in/raphaelfakhri">Message me on LinkedIn</a> &middot;
-        <a href="https://x.com/raphaelfakhri00">DM me on X</a>
-      </p>
-    </section>
-
-    <hr />
-
-    <section>
-      <h2>The obvious objections, answered</h2>
-      <p><strong>&ldquo;One person can&rsquo;t do the work of a team.&rdquo;</strong> What an agency quotes at three months ships from me in days. No handoffs, no account layer, no meetings about meetings.</p>
-      <p><strong>&ldquo;AI is hype.&rdquo;</strong> Some of it is. Receipts are how you tell the difference &mdash; everything I claim here links to something you can open and check.</p>
-      <p><strong>&ldquo;This is just freelancing with a manifesto.&rdquo;</strong> Freelancing sells hours. What I build compounds; each project becomes a kit that runs without me.</p>
-    </section>
-
-    <hr />
-
-    <section id="masterplan">
-      <h2>The Secret Master Plan (just between you and me)</h2>
-      <ol>
-        <li><strong>Ship one-person tools.</strong> Sites, automations, sales systems for small businesses, in days not months. Already running &mdash; the receipts above.</li>
-        <li><strong>Use that to teach.</strong> Every build becomes a kit and a lesson, so the next person does it themselves instead of paying a team.</li>
-        <li><strong>Use that to compound.</strong> Kits become systems that run without me. Cheaper to own, no lock-in.</li>
-        <li><strong>Then the leverage belongs to everyone.</strong> What used to take a funded company becomes something any operator runs alone.</li>
-      </ol>
-      <p>Don&rsquo;t tell anyone.</p>
-    </section>
-
-    <hr />
-
-    <section>
-      <h2>What I don&rsquo;t compromise on</h2>
+    <section id="values">
+      <h2>What I believe</h2>
       <ol>
         {values.map((v) => (
           <li>
-            <strong>{v.title}.</strong> {v.body}
+            <strong>{v.title}.</strong> <Fragment set:html={v.body} />
           </li>
         ))}
       </ol>
@@ -133,9 +74,15 @@ const work = [
 
     <hr />
 
-    <section id="learn">
-      <h2>I create strategists who master money and technology</h2>
-      <p>The end state is a world where you don&rsquo;t need me. I teach you to use AI to do things cheaply, and to make informed calls about business and tech. <a href="https://symbai.dev">symbai.dev</a> is where that lives.</p>
+    <section id="underneath">
+      <h2>Underneath all of it</h2>
+      <p>Ordinary people should have the leverage that used to belong only to big companies. Scarcity is a technology problem, not a fact of life. Abundance over sacrifice &mdash; the answer to not enough is more, not less for someone else.</p>
+    </section>
+
+    <hr />
+
+    <section id="find">
+      <h2>Where to find me</h2>
       <ul>
         {links.map((l) => (
           <li><a href={l.href}>{l.label}</a></li>
