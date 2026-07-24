@@ -108,7 +108,10 @@ export default {
         return new Response(EMPTY, { headers: { 'content-type': 'application/json' } });
       }
       try {
-        const r = await fetch('https://raphaelfakhri.substack.com/api/v1/posts/' + slug, {
+        // Per-minute cache-buster: Substack edge-caches this API per URL and would otherwise
+        // serve a stale like/comment count. cf.cacheTtl still dedupes within each minute.
+        const bust = Math.floor(Date.now() / 60000);
+        const r = await fetch('https://raphaelfakhri.substack.com/api/v1/posts/' + slug + '?cb=' + bust, {
           headers: { 'user-agent': 'Mozilla/5.0' },
           cf: { cacheTtl: 60, cacheEverything: true },
         });
