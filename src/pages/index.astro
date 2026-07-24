@@ -58,6 +58,14 @@ const values = [
     h3 { font-size: 1.3rem; margin: .3rem 0 .2rem; }
     .post { border-top: 1px solid #eee; padding-top: 1rem; margin-top: 1.5rem; }
     .post h3 { margin: 0 0 .3rem; }
+    /* Substack-embedded images (GIFs): kill the default <figure> indent so they aren't pushed
+       right, size them to the column, and hide Substack's expand/restack buttons which render
+       as stray controls here without Substack's own stylesheet. */
+    .post-body figure { margin: 1rem 0; }
+    .post-body .captioned-image-container { margin: 1rem 0; }
+    .post-body .image2-inset { margin: 0; padding: 0; }
+    .post-body picture, .post-body img { display: block; max-width: 100%; height: auto; margin: 0; }
+    .post-body .image-link-expand, .post-body .restack-image, .post-body button { display: none !important; }
     .dictated { color: #666; font-style: italic; font-size: .95rem; }
     .post-title { color: #2563eb; text-decoration: none; }
     .post-title:hover { text-decoration: underline; }
