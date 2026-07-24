@@ -67,10 +67,11 @@ const values = [
     /* Substack-embedded images (GIFs): kill the default <figure> indent so they aren't pushed
        right, size them to the column, and hide Substack's expand/restack buttons which render
        as stray controls here without Substack's own stylesheet. */
-    .post-body figure { margin: 1rem 0; }
-    .post-body .captioned-image-container { margin: 1rem 0; }
+    .post-body figure { margin: 1.9rem auto; text-align: center; }
+    .post-body .captioned-image-container { margin: 1.9rem auto; text-align: center; }
     .post-body .image2-inset { margin: 0; padding: 0; }
-    .post-body picture, .post-body img { display: block; max-width: 100%; height: auto; margin: 0; }
+    .post-body picture, .post-body img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .post-date { color: #999; font-size: .82rem; margin: 0 0 .7rem; }
     .post-body .image-link-expand, .post-body .restack-image, .post-body button { display: none !important; }
     .dictated { color: #666; font-style: italic; font-size: .95rem; }
     .post-title { color: #2563eb; text-decoration: none; }
@@ -166,6 +167,18 @@ const values = [
         heart: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
         chat: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>',
         substack: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>'
+      };
+      RF.timeAgo = function (dateStr) {
+        var t = new Date(dateStr).getTime();
+        if (!t || isNaN(t)) return '';
+        var s = Math.floor((Date.now() - t) / 1000);
+        if (s < 45) return 'just now';
+        var units = [['year', 31536000], ['month', 2592000], ['week', 604800], ['day', 86400], ['hour', 3600], ['minute', 60]];
+        for (var i = 0; i < units.length; i++) {
+          var n = Math.floor(s / units[i][1]);
+          if (n >= 1) return n + ' ' + units[i][0] + (n === 1 ? '' : 's') + ' ago';
+        }
+        return 'just now';
       };
       RF.share = function (link, title) {
         var u = encodeURIComponent(link), t = encodeURIComponent(title);
@@ -267,8 +280,10 @@ const values = [
           var slug = (it.link || '').split('?')[0].replace(/\/$/, '').split('/').pop();
           var art = document.createElement('article');
           art.className = 'post';
+          var ago = RF.timeAgo(it.date);
           art.innerHTML =
             '<h3><a class="post-title" href="' + it.link + '">' + it.title + '</a></h3>' +
+            (ago ? '<div class="post-date">Posted ' + ago + '</div>' : '') +
             '<div class="post-body">' + it.html +
               '<div class="post-actions">' +
                 '<a class="act like-link" href="' + it.link + '" target="_blank" rel="noopener" aria-label="Like on Substack">' + RF.ic.heart + '<span class="likes-count">…</span></a>' +
