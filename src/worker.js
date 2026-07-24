@@ -76,6 +76,30 @@ export default {
       });
     }
 
+    if (url.pathname === '/likes.json') {
+      // Proxy the public Substack reaction count for a post (CORS-safe for the homepage).
+      const slug = url.searchParams.get('slug') || '';
+      if (!/^[a-z0-9-]+$/i.test(slug)) {
+        return new Response('{"count":0}', { headers: { 'content-type': 'application/json' } });
+      }
+      try {
+        const r = await fetch('https://raphaelfakhri.substack.com/api/v1/posts/' + slug, {
+          headers: { 'user-agent': 'Mozilla/5.0' },
+          cf: { cacheTtl: 60, cacheEverything: true },
+        });
+        const d = await r.json();
+        const p = d.post || d;
+        const count = Number(p.reaction_count) || 0;
+        return new Response(JSON.stringify({ count }), {
+          headers: { 'content-type': 'application/json', 'cache-control': 'max-age=60' },
+        });
+      } catch (e) {
+        return new Response('{"count":0}', {
+          headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
+        });
+      }
+    }
+
     if (url.pathname === '/feed.json') {
       try {
         // Substack edge-caches its RSS per user-agent and serves a stale variant to plain

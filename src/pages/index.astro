@@ -221,21 +221,25 @@ const values = [
         var sub = 'https://raphaelfakhri.substack.com';
         items.forEach(function (it) {
           var u = encodeURIComponent(it.link), t = encodeURIComponent(it.title);
+          var slug = (it.link || '').split('?')[0].replace(/\/$/, '').split('/').pop();
           var art = document.createElement('article');
           art.className = 'post';
           art.innerHTML =
             '<h3><a class="post-title" href="' + it.link + '">' + it.title + '</a></h3>' +
             '<div class="post-body">' + it.html +
               '<div class="post-actions">' +
+                '<a class="likes" href="' + it.link + '" target="_blank" rel="noopener" title="Like on Substack">♥ <span class="likes-count">…</span></a>' +
                 '<a href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener">Share on X</a>' +
-                '<a href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener">Facebook</a>' +
-                '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">LinkedIn</a>' +
-                '<a href="' + it.link + '" target="_blank" rel="noopener">Like on Substack</a>' +
-                '<a href="' + it.link + '" target="_blank" rel="noopener">Comment</a>' +
-                '<a href="' + sub + '" target="_blank" rel="noopener">Subscribe</a>' +
+                '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">Share on LinkedIn</a>' +
               '</div>' +
             '</div>';
           wrap.appendChild(art);
+          if (slug) {
+            fetch('/likes.json?slug=' + encodeURIComponent(slug)).then(function (r) { return r.json(); }).then(function (d) {
+              var el = art.querySelector('.likes-count');
+              if (el) el.textContent = (d && typeof d.count === 'number') ? d.count : 0;
+            }).catch(function () {});
+          }
         });
       }).catch(function () {});
     })();
