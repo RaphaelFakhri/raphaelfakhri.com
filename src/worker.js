@@ -100,6 +100,40 @@ export default {
       }
     }
 
+    if (url.pathname === '/post-meta.json') {
+      // Public Substack post meta for the homepage: like count, comment count, top 3 comments.
+      const slug = url.searchParams.get('slug') || '';
+      const EMPTY = '{"likes":0,"comments":0,"top":[]}';
+      if (!/^[a-z0-9-]+$/i.test(slug)) {
+        return new Response(EMPTY, { headers: { 'content-type': 'application/json' } });
+      }
+      try {
+        const r = await fetch('https://raphaelfakhri.substack.com/api/v1/posts/' + slug, {
+          headers: { 'user-agent': 'Mozilla/5.0' },
+          cf: { cacheTtl: 60, cacheEverything: true },
+        });
+        const d = await r.json();
+        const p = d.post || d;
+        const out = { likes: Number(p.reaction_count) || 0, comments: Number(p.comment_count) || 0, top: [] };
+        if (p.id && out.comments > 0) {
+          const cr = await fetch(
+            'https://raphaelfakhri.substack.com/api/v1/post/' + p.id + '/comments?all_comments=true&sort=best_first',
+            { headers: { 'user-agent': 'Mozilla/5.0' }, cf: { cacheTtl: 60, cacheEverything: true } }
+          );
+          const cd = await cr.json();
+          const cs = cd.comments || [];
+          out.top = cs.slice(0, 3).map(function (c) {
+            return { name: String(c.name || 'Reader'), body: String(c.body || '').slice(0, 280) };
+          });
+        }
+        return new Response(JSON.stringify(out), {
+          headers: { 'content-type': 'application/json', 'cache-control': 'max-age=60' },
+        });
+      } catch (e) {
+        return new Response(EMPTY, { headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+      }
+    }
+
     if (url.pathname === '/feed.json') {
       try {
         // Substack edge-caches its RSS per user-agent and serves a stale variant to plain
