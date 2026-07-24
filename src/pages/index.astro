@@ -71,7 +71,7 @@ const values = [
     .post-body .captioned-image-container { margin: 1.9rem auto; text-align: center; }
     .post-body .image2-inset { margin: 0; padding: 0; }
     .post-body picture, .post-body img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
-    .post-date { color: #999; font-size: .82rem; margin: 0 0 .7rem; }
+    .post-date { color: #999; font-size: .82rem; margin: 1rem 0 0; }
     .post-body .image-link-expand, .post-body .restack-image, .post-body button { display: none !important; }
     .dictated { color: #666; font-style: italic; font-size: .95rem; }
     .post-title { color: #2563eb; text-decoration: none; }
@@ -283,13 +283,13 @@ const values = [
           var ago = RF.timeAgo(it.date);
           art.innerHTML =
             '<h3><a class="post-title" href="' + it.link + '">' + it.title + '</a></h3>' +
-            (ago ? '<div class="post-date">Posted ' + ago + '</div>' : '') +
             '<div class="post-body">' + it.html +
               '<div class="post-actions">' +
                 '<a class="act like-link" href="' + it.link + '" target="_blank" rel="noopener" aria-label="Like on Substack">' + RF.ic.heart + '<span class="likes-count">…</span></a>' +
                 RF.share(it.link, it.title) +
               '</div>' +
-            '</div>';
+            '</div>' +
+            (ago ? '<div class="post-date">Posted ' + ago + '</div>' : '');
           wrap.appendChild(art);
           if (slug) {
             fetch('/post-meta.json?slug=' + encodeURIComponent(slug)).then(function (r) { return r.json(); }).then(function (d) {
