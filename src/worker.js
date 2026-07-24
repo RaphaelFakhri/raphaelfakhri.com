@@ -20,10 +20,20 @@ export class Site {
         const s = stats[slug] || { likes: 0, views: 0 };
         if (action === 'like') s.likes++;
         else if (action === 'view') s.views++;
+        else if (action === 'reset') { s.likes = 0; s.views = 0; }
         stats[slug] = s;
         await this.state.storage.put('stats', stats);
       }
       return new Response(JSON.stringify(stats[slug] || { likes: 0, views: 0 }), {
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+    if (url.pathname === '/feed-store' && request.method === 'POST') {
+      await this.state.storage.put('feed', await request.text());
+      return new Response('ok');
+    }
+    if (url.pathname === '/feed-get') {
+      return new Response((await this.state.storage.get('feed')) || '', {
         headers: { 'content-type': 'application/json' },
       });
     }
@@ -55,8 +65,12 @@ export default {
     }
 
     if (url.pathname === '/stats') {
+      if (url.searchParams.get('action') === 'reset' && url.searchParams.get('token') !== 'rf-live-edit-7c2f') {
+        return new Response('forbidden', { status: 403 });
+      }
       const res = await stub.fetch('https://do/stats' + url.search, { method: request.method });
-      return new Response(res.body, {
+      const text = await res.text();
+      return new Response(text, {
         status: res.status,
         headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
       });
@@ -64,7 +78,11 @@ export default {
 
     if (url.pathname === '/feed.json') {
       try {
-        const r = await fetch('https://raphaelfakhri.substack.com/feed', {
+        // Substack edge-caches its RSS per user-agent and serves a stale variant to plain
+        // requests. A rotating query param (5-min bucket) busts that cache so we get fresh
+        // content; cf.cacheTtl still dedupes our own subrequests within each bucket.
+        const bust = Math.floor(Date.now() / 300000);
+        const r = await fetch('https://raphaelfakhri.substack.com/feed?cb=' + bust, {
           headers: { 'user-agent': 'Mozilla/5.0' },
           cf: { cacheTtl: 300, cacheEverything: true },
         });
@@ -86,11 +104,25 @@ export default {
             html: pick(b, 'content:encoded') || pick(b, 'description'),
           });
         }
-        return new Response(JSON.stringify(items), {
-          headers: { 'content-type': 'application/json', 'cache-control': 'max-age=300' },
+        if (items.length) {
+          // good fetch: remember it as last-known-good, then serve fresh
+          const body = JSON.stringify(items);
+          await stub.fetch('https://do/feed-store', { method: 'POST', body });
+          return new Response(body, {
+            headers: { 'content-type': 'application/json', 'cache-control': 'max-age=300' },
+          });
+        }
+        // empty/error parse: never serve empty (it would drop the homepage to fallback posts).
+        // Serve the last-known-good feed instead, uncached so the next request can refresh.
+        const good = await (await stub.fetch('https://do/feed-get')).text();
+        return new Response(good || '[]', {
+          headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
         });
       } catch (e) {
-        return new Response('[]', { headers: { 'content-type': 'application/json' } });
+        const good = await (await stub.fetch('https://do/feed-get')).text().catch(() => '');
+        return new Response(good || '[]', {
+          headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
+        });
       }
     }
 
