@@ -4,11 +4,17 @@
 // the page when a new build deploys, so edits appear without a manual refresh.
 import { posts } from '../posts.js';
 const BUILD_ID = process.env.BUILD_ID || process.env.GITHUB_SHA || 'dev';
+const ICON = {
+  x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+  li: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>',
+  yt: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.5 15.5v-7l6.5 3.5z"/></svg>',
+  substack: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>',
+};
 const links = [
-  { href: 'https://x.com/raphaelfakhri00', label: 'X' },
-  { href: 'https://www.linkedin.com/in/raphaelfakhri', label: 'LinkedIn' },
-  { href: 'https://www.youtube.com/@RaphaelFakhri00', label: 'YouTube' },
-  { href: 'https://raphaelfakhri.substack.com', label: 'Newsletter' },
+  { href: 'https://x.com/raphaelfakhri00', label: 'X', icon: ICON.x },
+  { href: 'https://www.linkedin.com/in/raphaelfakhri', label: 'LinkedIn', icon: ICON.li },
+  { href: 'https://www.youtube.com/@RaphaelFakhri00', label: 'YouTube', icon: ICON.yt },
+  { href: 'https://raphaelfakhri.substack.com', label: 'Newsletter', icon: ICON.substack },
 ];
 
 const values = [
@@ -98,7 +104,10 @@ const values = [
     hr { border: none; border-top: 1px solid #e8e8e8; margin: 1.4rem 0; }
     ul { padding-left: 1.1rem; }
     .socials { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .4rem; font-size: .95rem; }
-    .socials a { color: #2563eb; }
+    .socials a { color: #333; display: inline-flex; align-items: center; gap: .42rem; text-decoration: none; }
+    .socials a:hover { color: #000; }
+    .socials .ico { display: inline-flex; }
+    .socials svg { width: 16px; height: 16px; fill: currentColor; display: block; }
     @media (min-width: 920px) {
       .socials { position: fixed; left: calc(50% - 400px); top: 32%; flex-direction: column; gap: .9rem; margin: 0; }
     }
@@ -113,7 +122,7 @@ const values = [
     <p><strong>Raphael Fakhri</strong></p>
     <nav class="socials">
       {links.map((l) => (
-        <a href={l.href}>{l.label}</a>
+        <a href={l.href} aria-label={l.label}><span class="ico" set:html={l.icon} />{l.label}</a>
       ))}
     </nav>
   </header>
