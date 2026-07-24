@@ -37,6 +37,15 @@ export class Site {
         headers: { 'content-type': 'application/json' },
       });
     }
+    if (url.pathname === '/meta-store' && request.method === 'POST') {
+      await this.state.storage.put('meta_' + (url.searchParams.get('slug') || ''), await request.text());
+      return new Response('ok');
+    }
+    if (url.pathname === '/meta-get') {
+      return new Response((await this.state.storage.get('meta_' + (url.searchParams.get('slug') || ''))) || '{}', {
+        headers: { 'content-type': 'application/json' },
+      });
+    }
     if (request.method === 'POST') {
       const { id, html } = await request.json();
       await this.state.storage.put('id', id);
@@ -108,12 +117,11 @@ export default {
         return new Response(EMPTY, { headers: { 'content-type': 'application/json' } });
       }
       try {
-        // Per-minute cache-buster: Substack edge-caches this API per URL and would otherwise
-        // serve a stale like/comment count. cf.cacheTtl still dedupes within each minute.
-        const bust = Math.floor(Date.now() / 60000);
-        const r = await fetch('https://raphaelfakhri.substack.com/api/v1/posts/' + slug + '?cb=' + bust, {
-          headers: { 'user-agent': 'Mozilla/5.0' },
-          cf: { cacheTtl: 60, cacheEverything: true },
+        // Substack serves a stale count to Cloudflare's egress; force origin (no CF cache,
+        // no-cache headers, random buster) to get the freshest value we can.
+        const r = await fetch('https://raphaelfakhri.substack.com/api/v1/posts/' + slug + '?cb=' + Date.now(), {
+          headers: { 'user-agent': 'Mozilla/5.0', 'cache-control': 'no-cache', pragma: 'no-cache' },
+          cf: { cacheTtl: 0 },
         });
         const d = await r.json();
         const p = d.post || d;
@@ -129,11 +137,25 @@ export default {
             return { name: String(c.name || 'Reader'), body: String(c.body || '').slice(0, 280) };
           });
         }
+        // Merge with last-known-good: a stale 0 from Substack's edge must never hide a real
+        // count once we've seen it. Counts are effectively monotonic for a personal blog.
+        const sk = 'https://do/meta-get?slug=' + encodeURIComponent(slug);
+        let stored = {};
+        try { stored = JSON.parse((await (await stub.fetch(sk)).text()) || '{}'); } catch (e2) { stored = {}; }
+        out.likes = Math.max(out.likes, Number(stored.likes) || 0);
+        out.comments = Math.max(out.comments, Number(stored.comments) || 0);
+        if ((!out.top || !out.top.length) && stored.top && stored.top.length) out.top = stored.top;
+        await stub.fetch('https://do/meta-store?slug=' + encodeURIComponent(slug), { method: 'POST', body: JSON.stringify(out) });
         return new Response(JSON.stringify(out), {
-          headers: { 'content-type': 'application/json', 'cache-control': 'max-age=60' },
+          headers: { 'content-type': 'application/json', 'cache-control': 'max-age=30' },
         });
       } catch (e) {
-        return new Response(EMPTY, { headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+        try {
+          const g = await (await stub.fetch('https://do/meta-get?slug=' + encodeURIComponent(slug))).text();
+          return new Response(g || EMPTY, { headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+        } catch (e3) {
+          return new Response(EMPTY, { headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+        }
       }
     }
 
