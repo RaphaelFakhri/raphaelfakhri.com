@@ -160,13 +160,9 @@ const values = [
           var row = document.createElement('div');
           row.className = 'post-actions';
           row.innerHTML =
-            '<button class="like" type="button">▲ <span class="likes">0</span></button>' +
-            '<span class="views">0 views</span>' +
+            '<button class="like" type="button">♥ <span class="likes">0</span></button>' +
             '<a href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener">Share on X</a>' +
-            '<a href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener">Facebook</a>' +
-            '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">LinkedIn</a>' +
-            '<a href="' + sub + '" target="_blank" rel="noopener">Subscribe</a>' +
-            '<a href="' + sub + '" target="_blank" rel="noopener">Comment</a>';
+            '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener">Share on LinkedIn</a>';
           body.appendChild(row);
           wireStats(slug, row);
         });
