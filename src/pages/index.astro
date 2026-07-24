@@ -11,10 +11,10 @@ const ICON = {
   substack: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>',
 };
 const links = [
-  { href: 'https://x.com/raphaelfakhri00', label: 'X', icon: ICON.x },
-  { href: 'https://www.linkedin.com/in/raphaelfakhri', label: 'LinkedIn', icon: ICON.li },
-  { href: 'https://www.youtube.com/@RaphaelFakhri00', label: 'YouTube', icon: ICON.yt },
-  { href: 'https://raphaelfakhri.substack.com', label: 'Newsletter', icon: ICON.substack },
+  { href: 'https://x.com/raphaelfakhri00', label: 'Find me on X', icon: ICON.x },
+  { href: 'https://www.linkedin.com/in/raphaelfakhri', label: 'Connect on LinkedIn', icon: ICON.li },
+  { href: 'https://www.youtube.com/@RaphaelFakhri00', label: 'Subscribe on YouTube', icon: ICON.yt },
+  { href: 'https://raphaelfakhri.substack.com', label: 'Read the newsletter', icon: ICON.substack },
 ];
 
 const values = [
@@ -108,8 +108,10 @@ const values = [
     .socials a:hover { color: #000; }
     .socials .ico { display: inline-flex; }
     .socials svg { width: 16px; height: 16px; fill: currentColor; display: block; }
-    @media (min-width: 920px) {
-      .socials { position: fixed; left: calc(50% - 400px); top: 32%; flex-direction: column; gap: .9rem; margin: 0; }
+    .socials .myname { margin: 0 0 .2rem; font-size: 1rem; }
+    @media (min-width: 1040px) {
+      .socials { position: fixed; right: calc(50% + 340px); left: auto; top: 26%; flex-direction: column;
+                 align-items: flex-end; text-align: right; gap: .8rem; margin: 0; max-width: 210px; }
     }
     #flow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.9; margin-top: .5rem; min-height: 11em; }
     #flow .step { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
@@ -119,8 +121,8 @@ const values = [
 </head>
 <body>
   <header>
-    <p><strong>Raphael Fakhri</strong></p>
     <nav class="socials">
+      <p class="myname"><strong>Raphael Fakhri</strong></p>
       {links.map((l) => (
         <a href={l.href} aria-label={l.label}><span class="ico" set:html={l.icon} />{l.label}</a>
       ))}
@@ -247,7 +249,7 @@ const values = [
   <hr />
 
   <footer>
-    <p>&copy; Raphael Fakhri. Scarcity is a technology problem.</p>
+    <p>&copy; Raphael Fakhri. Natural scarcity is a technology problem.</p>
   </footer>
   <script is:inline>
     // Pull posts from the Substack RSS feed (via the worker's /feed.json). When Substack has
