@@ -20,7 +20,7 @@
   header .role { font-size:1.05rem; color:var(--muted); margin:.25rem 0 .7rem; }
   header .contact { font-size:.88rem; color:var(--muted); display:flex; flex-wrap:wrap; gap:.25rem .9rem; }
   .pdf { float:right; font-size:.82rem; border:1px solid var(--accent); border-radius:999px; padding:.2rem .75rem; margin-top:.3rem; }
-  h2 { font-size:.78rem; text-transform:uppercase; letter-spacing:.12em; color:var(--accent);
+  h2 { break-after:avoid; font-size:.78rem; text-transform:uppercase; letter-spacing:.12em; color:var(--accent);
        margin:1.6rem 0 .6rem; padding-bottom:.3rem; border-bottom:1px solid var(--rule); }
   .summary { margin:.2rem 0 0; }
   .job { margin:0 0 1rem; break-inside:avoid; }
@@ -71,24 +71,17 @@
 </header>
 
 <h2>Summary</h2>
-<p class="summary">I build LLM products end to end. I designed, built and run <b>Zaky</b>, an AI tutoring app whose homework pipeline turns a photo of an exercise into a checked, step-by-step solution and a narrated video. Before that I spent two years on production web systems at AUB and USJ (.NET Core, Laravel, PostgreSQL) and built an LLM agent at Cardinal Health. My open-source fixes have been merged by the maintainers of FluentMigrator, Swashbuckle, LiveKit and Temporal.</p>
+<p class="summary">I build LLM products end to end. As a freelancer I built <b>Zaky</b>, a client’s AI tutoring app, whose homework pipeline turns a photo of an exercise into a checked, step-by-step solution and a narrated video. Before that I spent two years on production web systems at AUB and USJ (.NET Core, Laravel, PostgreSQL) and built an LLM agent at Cardinal Health. My open-source fixes have been merged by the maintainers of FluentMigrator, Swashbuckle, LiveKit and Temporal.</p>
 
 <h2>Experience</h2>
 
 <div class="job">
-  <div class="top"><div><span class="org">Zaky</span> · <span class="title">Founder and sole engineer</span></div><div class="when">Sep 2026 – Present</div></div>
-  <ul>
-    <li>AI tutoring app for students in grades 1–12: React Native (Expo) client, Python account and homework services, and live video lessons with teachers over LiveKit with a shared whiteboard.</li>
-    <li>Homework pipeline: a vision model finds and crops each exercise in a photo, Claude writes the solution, SymPy checks the final answer in a separate process, then Manim and ElevenLabs render a narrated explainer video.</li>
-    <li>Used on 100+ devices since its October 2026 launch, with 260+ explanations and 100+ generated videos in the first four weeks.</li>
-    <li>Run separate dev and live environments, with a release script that waits for in-flight student jobs to finish before restarting and can roll back.</li>
-  </ul>
-</div>
-
-<div class="job">
   <div class="top"><div><span class="org">Freelance</span> · <span class="title">Software Engineer</span></div><div class="when">Apr 2026 – Present</div></div>
   <ul>
-    <li>Own a client’s AI customer-service agent end to end: website chat, the mobile app and message routing, built on Chatwoot. Live 24/7 without an incident.</li>
+    <li><b>Zaky</b>, an AI tutoring app for grades 1–12, built for a client as sole engineer (Sep 2026 – present): React Native (Expo) client, Python account and homework services, and live video lessons with teachers over LiveKit with a shared whiteboard.</li>
+    <li>Zaky’s homework pipeline: a vision model finds and crops each exercise in a photo, Claude writes the solution, SymPy checks the final answer in a separate process, then Manim and ElevenLabs render a narrated explainer video.</li>
+    <li>Zaky is used on 100+ devices since its October 2026 launch, with 260+ explanations and 100+ generated videos in the first four weeks. I run its separate dev and live environments, with a release script that waits for in-flight student jobs before restarting and can roll back.</li>
+    <li>Own another client’s AI customer-service agent end to end: website chat, the mobile app and message routing, built on Chatwoot. Live 24/7 without an incident.</li>
   </ul>
 </div>
 
