@@ -323,6 +323,27 @@
       }
     }
   }
+
+  // Subtle 3D perspective tilt + cursor spotlight on gallery tiles
+  const tiltReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tiltFine = window.matchMedia('(pointer: fine)').matches;
+  if (!tiltReduced && tiltFine) {
+    document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - py) * 7;
+        const ry = (px - 0.5) * 7;
+        card.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
+        card.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
+        card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(4px)`;
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = '';
+      });
+    });
+  }
 </script>
 
 <style>
