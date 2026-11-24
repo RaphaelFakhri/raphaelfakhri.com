@@ -723,6 +723,10 @@ function startSpatialFallback({ canvas, stageWrap, fallbackEl, fpsEl, getState, 
   let frames = 0;
   let fpsLast = performance.now();
   const start = performance.now();
+  document.addEventListener('visibilitychange', () => {
+    frames = 0;
+    fpsLast = performance.now();
+  });
 
   function tick() {
     requestAnimationFrame(tick);
@@ -730,7 +734,7 @@ function startSpatialFallback({ canvas, stageWrap, fallbackEl, fpsEl, getState, 
     const t = (now - start) / 1000;
 
     frames++;
-    if (now - fpsLast >= 600) {
+    if (now - fpsLast >= 350) {
       const fps = Math.round((frames * 1000) / (now - fpsLast));
       if (fpsEl) fpsEl.textContent = `FPS ${Math.min(120, fps)}`;
       frames = 0;
@@ -868,19 +872,38 @@ function init() {
   updateClock();
   setInterval(updateClock, 1000);
 
-  /* 2. Real LCP Telemetry */
+  /* 2. Real LCP / FCP Telemetry */
   const lcpEl = document.getElementById('telemetry-lcp');
+  let lcpReported = false;
   if (lcpEl && 'PerformanceObserver' in window) {
     try {
       const po = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const last = entries[entries.length - 1];
-        if (last) lcpEl.textContent = `LCP ${(last.startTime / 1000).toFixed(2)}s`;
+        if (last) {
+          lcpReported = true;
+          lcpEl.textContent = `LCP ${(last.startTime / 1000).toFixed(2)}s`;
+        }
       });
       po.observe({ type: 'largest-contentful-paint', buffered: true });
     } catch {
-      lcpEl.textContent = 'LCP <0.4s';
+      // Fall through to paint/navigation timing below
     }
+  }
+  if (lcpEl) {
+    setTimeout(() => {
+      if (lcpReported) return;
+      const paints = performance.getEntriesByType?.('paint') || [];
+      const fcp = paints.find((p) => p.name === 'first-contentful-paint');
+      if (fcp && fcp.startTime > 0) {
+        lcpEl.textContent = `FCP ${(fcp.startTime / 1000).toFixed(2)}s`;
+        return;
+      }
+      const nav = performance.getEntriesByType?.('navigation')?.[0];
+      if (nav && nav.domContentLoadedEventEnd > 0) {
+        lcpEl.textContent = `LOAD ${(nav.domContentLoadedEventEnd / 1000).toFixed(2)}s`;
+      }
+    }, 900);
   }
 
   /* 3. Copy Email + Toast */
@@ -1210,16 +1233,34 @@ function init() {
   window.addEventListener('pointerup', endDrag);
   window.addEventListener('pointercancel', endDrag);
 
-  /* 9. Real-Time Three.js WebGL Stage (with seamless Canvas2D+CSS3D fallback) */
-  let renderer;
-  try {
-    renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance',
-    });
-  } catch {
+  /* 9. Real-Time Three.js WebGL Stage (with silent zero-error Canvas2D+CSS3D fallback) */
+  function probeWebGL() {
+    try {
+      const probe = document.createElement('canvas');
+      const attrs = { antialias: true, alpha: true, powerPreference: 'high-performance' };
+      const gl = probe.getContext('webgl2', attrs) || probe.getContext('webgl', attrs);
+      if (!gl) return false;
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  let renderer = null;
+  if (probeWebGL()) {
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance',
+      });
+    } catch {
+      renderer = null;
+    }
+  }
+  if (!renderer) {
     const updateFallbackDrag = () => {
       if (!isDragging) {
         targetDragY *= 0.95;
@@ -1364,7 +1405,7 @@ function init() {
 
     frames++;
     const now = performance.now();
-    if (now - fpsLast >= 600) {
+    if (now - fpsLast >= 350) {
       const fps = Math.round((frames * 1000) / (now - fpsLast));
       if (fpsEl) fpsEl.textContent = `FPS ${Math.min(120, fps)}`;
       frames = 0;
