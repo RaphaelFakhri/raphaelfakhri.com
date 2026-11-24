@@ -1,6 +1,6 @@
 // raphaelfakhri.com Cloudflare Worker
 // Serves static Astro assets from ./dist with proper caching, security headers,
-// and clean redirects for retired legacy post URLs.
+// and clean redirects for retired legacy URLs.
 
 // Retained as a minimal stub to preserve the existing Durable Object migration.
 export class Site {
@@ -21,7 +21,7 @@ const SECURITY_HEADERS = {
   'referrer-policy': 'strict-origin-when-cross-origin',
   'permissions-policy': 'camera=(), microphone=(), geolocation=()',
   'content-security-policy':
-    "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+    "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
 };
 
 export default {
@@ -29,8 +29,8 @@ export default {
     const url = new URL(request.url);
     const normalizedPath = url.pathname.replace(/\/+$/, '') || '/';
 
-    if (LEGACY_REDIRECTS.has(normalizedPath)) {
-      return Response.redirect('https://raphaelfakhri.com/#writing', 301);
+    if (LEGACY_REDIRECTS.has(normalizedPath) || normalizedPath.startsWith('/writing')) {
+      return Response.redirect('https://raphaelfakhri.com/#work', 301);
     }
 
     const assetResponse = await env.ASSETS.fetch(request);

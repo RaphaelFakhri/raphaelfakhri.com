@@ -1,16 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
-import Sculpture3D from '../components/Sculpture3D.astro';
-import { articles } from '../data/writing.js';
 ---
 <Base
-  title="Raphael Fakhri — Mobile & Full-Stack Engineer"
-  description="Mobile, backend, and AI systems engineered end to end. Beirut."
+  title="Raphael Fakhri — Software Engineer"
+  description="Software engineer in Beirut owning mobile apps, production web platforms, and backend systems end to end."
   path="/"
 >
   <section class="hero">
     <div class="hero-copy">
-      <div class="identity">
+      <div class="eyebrow">Beirut &middot; Software Engineer</div>
+      <h1>Raphael<br /><em>Fakhri</em></h1>
+
+      <p class="lead">
+        I build and own production software end to end&mdash;mobile apps, university web platforms, and backend systems that real users depend on.
+      </p>
+
+      <div class="hero-meta">
         <img
           class="avatar"
           src="/raphael.jpg"
@@ -20,253 +25,271 @@ import { articles } from '../data/writing.js';
           loading="eager"
           decoding="async"
         />
-        <span class="pill">Beirut &middot; Mobile &amp; Full-Stack</span>
-      </div>
-
-      <h1>Raphael Fakhri</h1>
-
-      <p class="lead">
-        Mobile, backend, and AI systems&mdash;shipped end to end.
-      </p>
-
-      <div class="actions">
-        <a class="btn btn-primary" href="#work">Selected work</a>
-        <a class="btn" href="/cv/">CV</a>
-        <a class="btn" href="mailto:mail@raphaelfakhri.com">Email</a>
+        <div class="actions">
+          <a class="btn btn-primary" href="#work">Selected work</a>
+          <a class="btn" href="/cv/">CV</a>
+          <a class="btn" href="mailto:mail@raphaelfakhri.com">Email</a>
+        </div>
       </div>
     </div>
 
-    <div class="hero-visual">
-      <Sculpture3D />
+    <div class="hero-stage" data-stage aria-hidden="true">
+      <div class="stage-rig">
+        <div class="layer-web">
+          <div class="chrome">
+            <span></span><span></span><span></span>
+            <small>aubmed.ac.cy</small>
+          </div>
+          <img
+            src="/work-aubmed.jpg"
+            alt=""
+            width="1440"
+            height="900"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div class="layer-phone">
+          <img
+            src="/work-zaky-1.jpg"
+            alt=""
+            width="560"
+            height="1217"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
     </div>
-  </section>
-
-  <section id="story" class="section">
-    <div class="eyebrow">Story</div>
-    <h2>From university infrastructure to sole-engineer product launches</h2>
-
-    <ol class="chapters">
-      <li>
-        <span class="step">01</span>
-        <h3>Foundations</h3>
-        <p>
-          CS at USJ. Shipped .NET Core APIs, RabbitMQ pipelines, and a live MySQL&rarr;PostgreSQL migration.
-        </p>
-      </li>
-      <li>
-        <span class="step">02</span>
-        <h3>Ownership</h3>
-        <p>
-          MSc at AUB (3.81) while solo-owning <a href="https://aubmed.ac.cy" target="_blank" rel="noopener noreferrer">aubmed.ac.cy</a> (200+ requests), plus a drift agent at Cardinal Health.
-        </p>
-      </li>
-      <li>
-        <span class="step">03</span>
-        <h3>End-to-end</h3>
-        <p>
-          Sole engineer on Zaky across iOS, Android &amp; Web, plus merged PRs in React Native, .NET, and LiveKit.
-        </p>
-      </li>
-    </ol>
   </section>
 
   <section id="work" class="section">
     <div class="eyebrow">Selected Work</div>
-    <h2>Built and shipped</h2>
+    <h2>Shipped and owned in production</h2>
 
-    <div class="gallery">
-      <article class="tile tile-wide" data-tilt>
-        <div class="tile-inner">
-          <div class="tile-top">
-            <span class="index">01 &middot; Client Work &middot; Sole Engineer</span>
-            <span class="metric">130+ screens &middot; 760+ requests</span>
+    <div class="showcase-list">
+      <article class="showcase">
+        <a
+          class="visual-frame frame-web"
+          href="https://aubmed.ac.cy"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-stage
+          aria-label="Visit aubmed.ac.cy"
+        >
+          <div class="frame-rig">
+            <div class="browser-shell">
+              <div class="chrome">
+                <span></span><span></span><span></span>
+                <small>aubmed.ac.cy</small>
+              </div>
+              <img
+                src="/work-aubmed.jpg"
+                alt="AUB Mediterraneo campus website (aubmed.ac.cy)"
+                width="1440"
+                height="900"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </div>
+        </a>
+
+        <div class="showcase-copy">
+          <span class="meta">01 &middot; American University of Beirut &middot; 2023&ndash;2025</span>
+          <h3>AUB Mediterraneo</h3>
+          <p>
+            Sole developer and designer of the Cyprus campus web platform for two years during my MSc&mdash;50+ responsive pages, in-page PDF viewer, tree navigation, and 200+ staff requests shipped 100% on time.
+          </p>
+          <div class="facts">
+            <span>C# / .NET</span>
+            <span>SharePoint</span>
+            <span>JavaScript</span>
+          </div>
+          <a class="visit" href="https://aubmed.ac.cy" target="_blank" rel="noopener noreferrer">
+            Visit aubmed.ac.cy &nearr;
+          </a>
+        </div>
+      </article>
+
+      <article class="showcase showcase-reverse">
+        <div class="visual-frame frame-phones" data-stage>
+          <div class="frame-rig phones-rig">
+            <div class="phone phone-back">
+              <img
+                src="/work-zaky-2.jpg"
+                alt="Zaky step-by-step homework solution screen"
+                width="560"
+                height="1217"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="phone phone-front">
+              <img
+                src="/work-zaky-1.jpg"
+                alt="Zaky mobile tutoring app home screen"
+                width="560"
+                height="1217"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-copy">
+          <span class="meta">02 &middot; Client Work &middot; Sole Engineer &middot; 2026</span>
           <h3>Zaky</h3>
           <p>
-            Cross-platform AI tutoring app live on iOS, Android, and Web. Serialized MMKV offline sync, Kotlin Credential Manager module, LiveKit video classrooms, and a Python/SymPy/Manim homework video pipeline.
+            Architected and shipped a 130+ screen React Native (Expo) tutoring app across iOS, Android, and Web&mdash;serialized MMKV offline sync, native Kotlin Android Credential Manager, LiveKit video classrooms, and a Python/SymPy/Manim homework video pipeline. Live since Oct 2026 (760+ student requests).
           </p>
-          <div class="tags">
+          <div class="facts">
             <span>React Native / Expo</span>
             <span>Kotlin</span>
             <span>LiveKit</span>
-            <span>Python AI</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="tile" data-tilt>
-        <div class="tile-inner">
-          <div class="tile-top">
-            <span class="index">02 &middot; Upstream</span>
-            <a class="ext" href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
-          </div>
-          <h3>Open-Source Fixes</h3>
-          <p>
-            Merged PRs across Callstack, Software Mansion, <a href="https://github.com/fluentmigrator/fluentmigrator/pull/2384" target="_blank" rel="noopener noreferrer">FluentMigrator</a> (10), <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/4128" target="_blank" rel="noopener noreferrer">Swashbuckle</a> (10), <a href="https://github.com/livekit/livekit/pull/5135" target="_blank" rel="noopener noreferrer">LiveKit</a>, and <a href="https://github.com/versatica/mediasoup/pull/1953" target="_blank" rel="noopener noreferrer">mediasoup</a>.
-          </p>
-          <div class="tags">
-            <span>TypeScript</span>
-            <span>C#</span>
-            <span>Go / C++</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="tile" data-tilt>
-        <div class="tile-inner">
-          <div class="tile-top">
-            <span class="index">03 &middot; Agentic Systems</span>
-            <a class="ext" href="https://github.com/RaphaelFakhri/shipment-triage" target="_blank" rel="noopener noreferrer">Repo &nearr;</a>
-          </div>
-          <h3>shipment-triage</h3>
-          <p>
-            Durable Temporal + LangGraph workflow with Qdrant RAG, a human approval gate, DeepEval CI checks, and a test that kills the worker mid-flight.
-          </p>
-          <div class="tags">
-            <span>Temporal</span>
-            <span>LangGraph</span>
-            <span>Qdrant</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="tile" data-tilt>
-        <div class="tile-inner">
-          <div class="tile-top">
-            <span class="index">04 &middot; Backend</span>
-            <a class="ext" href="https://github.com/RaphaelFakhri/grant-management-api" target="_blank" rel="noopener noreferrer">Repo &nearr;</a>
-          </div>
-          <h3>grant-management-api</h3>
-          <p>
-            Clean-architecture .NET 8 and SQL Server API with hand-tuned T-SQL, 70 tests, and Kubernetes Job migrations verified on a live kind cluster in CI.
-          </p>
-          <div class="tags">
-            <span>.NET 8</span>
-            <span>T-SQL</span>
-            <span>Kubernetes</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="tile" data-tilt>
-        <div class="tile-inner">
-          <div class="tile-top">
-            <span class="index">05 &middot; Systems &amp; Research</span>
-            <a class="ext" href="https://github.com/RaphaelFakhri/Generalized_Heaps_Parallel" target="_blank" rel="noopener noreferrer">Repo &nearr;</a>
-          </div>
-          <h3>CUDA Heaps &amp; MSc Thesis</h3>
-          <p>
-            Block- and warp-level CUDA heaps cutting 10M+ element sort time by 88%. MSc thesis: eye-tracking, voice, and mouse code explanations inside VS Code.
-          </p>
-          <div class="tags">
-            <span>CUDA / C++</span>
-            <span>VS Code</span>
+            <span>Python</span>
           </div>
         </div>
       </article>
     </div>
-
-    <p class="also">
-      Also shipped: <a href="https://aubmed.ac.cy" target="_blank" rel="noopener noreferrer">aubmed.ac.cy</a> (200+ requests), Cardinal Health DSPy drift agent, and a 24/7 Chatwoot + Claude support system.
-    </p>
   </section>
 
-  <section id="writing" class="section">
-    <div class="eyebrow">Writing</div>
-    <h2>Notes</h2>
+  <section id="background" class="section">
+    <div class="eyebrow">Background</div>
+    <h2>Production systems, research &amp; upstream work</h2>
 
-    <div class="notes">
-      {articles.map((article) => (
-        <a class="note-row" href={`/writing/${article.slug}/`}>
-          <div>
-            <h3>{article.title}</h3>
-            <p>{article.summary}</p>
-          </div>
-          <span class="note-meta">{article.readTime} &rarr;</span>
-        </a>
-      ))}
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="ledger-when">2023</div>
+        <div class="ledger-main">
+          <h4>Saint Joseph University (USJ)</h4>
+          <p>
+            Delivered .NET Core &amp; RabbitMQ REST APIs for a Student Information System with vendor CME, migrated production data from MySQL to PostgreSQL, and built a 15+ page Laravel HR module with granular SQL permissions.
+          </p>
+        </div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="ledger-when">2025</div>
+        <div class="ledger-main">
+          <h4>Cardinal Health | WaveMark</h4>
+          <p>
+            Built an automated Python &amp; DSPy reconciliation agent that detects schema and data drift between staging and production across ClickHouse, Kafka, and Elasticsearch and proposes patches for engineer review.
+          </p>
+        </div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="ledger-when">2026</div>
+        <div class="ledger-main">
+          <h4>24/7 AI Customer Support Platform</h4>
+          <p>
+            Own a client&rsquo;s end-to-end support agent built on self-hosted Chatwoot and Claude, unifying web chat, Shopify, WhatsApp, email, and mobile routing continuously in production.
+          </p>
+        </div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="ledger-when">2023&ndash;2026</div>
+        <div class="ledger-main">
+          <h4>AUB MSc Thesis &amp; CUDA Systems</h4>
+          <p>
+            MSc in Computer Science at AUB (GPA 3.81). Thesis: a VS Code extension explaining code in place via eye-tracker gaze, voice, or mouse, evaluated in a controlled user study. Also built <a href="https://github.com/RaphaelFakhri/Generalized_Heaps_Parallel" target="_blank" rel="noopener noreferrer">CUDA parallel heaps</a> cutting 10M+ element sort time by 88%.
+          </p>
+        </div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="ledger-when">Open Source</div>
+        <div class="ledger-main">
+          <h4>Merged Upstream Fixes</h4>
+          <p>
+            Contributions accepted by maintainers of React Native libraries (Callstack, Software Mansion, RevenueCat), <a href="https://github.com/fluentmigrator/fluentmigrator/pull/2384" target="_blank" rel="noopener noreferrer">FluentMigrator</a>, <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/4128" target="_blank" rel="noopener noreferrer">Swashbuckle</a>, <a href="https://github.com/livekit/livekit/pull/5135" target="_blank" rel="noopener noreferrer">LiveKit</a>, and <a href="https://github.com/versatica/mediasoup/pull/1953" target="_blank" rel="noopener noreferrer">mediasoup</a>.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
   <section id="contact" class="section contact">
     <div class="eyebrow">Contact</div>
-    <h2 class="contact-title">Let&rsquo;s build something that lasts.</h2>
+    <h2 class="contact-title">Say hello.</h2>
+    <p class="contact-sub">
+      Beirut-based. Available for senior mobile and full-stack engineering roles.
+    </p>
     <div class="actions">
       <a class="btn btn-primary" href="mailto:mail@raphaelfakhri.com">mail@raphaelfakhri.com</a>
-      <a class="btn" href="/cv/">View CV</a>
+      <a class="btn" href="/cv/">Read CV</a>
       <a class="btn" href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a class="btn" href="https://www.linkedin.com/in/raphaelfakhri" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
   </section>
 
+  <script type="module" src="/spatial3d.js"></script>
+
   <style>
     .hero {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 0.95fr 1.05fr;
       align-items: center;
-      gap: 2rem;
-      min-height: min(74svh, 620px);
-      padding: 1.5rem 0 0.5rem;
+      gap: 3rem;
+      min-height: min(76svh, 640px);
+      padding: 1.5rem 0 1rem;
     }
 
-    .identity {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 1.65rem;
-    }
-
-    .avatar {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--border-strong);
-      display: block;
-    }
-
-    .pill {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.74rem;
-      letter-spacing: 0.04em;
-      color: var(--text-secondary);
-      padding: 0.32rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--surface);
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
     }
 
     .lead {
-      font-size: clamp(1.12rem, 1.9vw, 1.32rem);
-      line-height: 1.55;
+      font-size: 1.06rem;
+      line-height: 1.68;
       color: var(--text-secondary);
-      max-width: 34ch;
-      margin: 1.15rem 0 2rem;
+      max-width: 39ch;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border-strong);
+      flex-shrink: 0;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem;
+      gap: 0.6rem;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.62rem 1.15rem;
+      padding: 0.58rem 1.12rem;
       border-radius: 999px;
       border: 1px solid var(--border-strong);
-      background: var(--surface);
+      background: transparent;
       color: var(--text);
-      font-size: 0.88rem;
-      font-weight: 550;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      font-size: 0.87rem;
+      font-weight: 500;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
     }
 
     .btn:hover {
-      border-color: var(--accent-border);
-      background: var(--surface-hover);
+      border-color: var(--accent);
+      background: var(--accent-soft);
       color: var(--text);
       text-decoration: none;
       transform: translateY(-1px);
@@ -275,228 +298,275 @@ import { articles } from '../data/writing.js';
     .btn-primary {
       background: var(--text);
       border-color: var(--text);
-      color: #08090c;
+      color: var(--bg);
     }
 
     .btn-primary:hover {
-      background: #dce8ff;
-      border-color: #dce8ff;
-      color: #08090c;
+      background: var(--accent-bright);
+      border-color: var(--accent-bright);
+      color: var(--bg);
     }
 
-    .hero-visual {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* 3D Hero Spatial Stage */
+    .hero-stage {
+      perspective: 1200px;
+      padding: 1.25rem 0.5rem 2.25rem;
     }
 
-    /* Story chapters */
-    .chapters {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 2.25rem;
-    }
-
-    .step {
-      display: inline-block;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.74rem;
-      color: var(--accent);
-      margin-bottom: 0.65rem;
-    }
-
-    .chapters p {
-      font-size: 0.94rem;
-      line-height: 1.65;
-    }
-
-    /* 3D sculptural gallery */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-    }
-
-    .tile {
+    .stage-rig {
       position: relative;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background:
-        radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgba(125, 180, 255, 0.11), transparent 60%),
-        var(--surface);
-      transition: transform 0.22s ease, border-color 0.22s ease;
       transform-style: preserve-3d;
-      will-change: transform;
+      transform: rotateX(calc(5deg + var(--rx, 0deg))) rotateY(calc(-10deg + var(--ry, 0deg)));
+      transition: transform 0.08s linear;
     }
 
-    .tile:hover {
-      border-color: var(--accent-border);
+    .layer-web {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      box-shadow: 0 32px 70px rgba(0, 0, 0, 0.58);
+      transform: translateZ(0px);
     }
 
-    .tile-wide {
-      grid-column: 1 / -1;
-      background:
-        radial-gradient(520px circle at var(--mx, 80%) var(--my, 20%), rgba(96, 165, 250, 0.15), transparent 62%),
-        linear-gradient(135deg, rgba(125, 180, 255, 0.06), rgba(255, 255, 255, 0.015));
+    .layer-web img,
+    .browser-shell img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
-    .tile-inner {
-      padding: 1.65rem 1.75rem;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .tile-top {
+    .chrome {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.9rem;
+      gap: 0.36rem;
+      padding: 0.55rem 0.8rem;
+      background: #171614;
+      border-bottom: 1px solid var(--border);
     }
 
-    .index, .metric {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.04em;
+    .chrome span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(242, 239, 233, 0.2);
+    }
+
+    .chrome small {
+      margin-left: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
       color: var(--text-muted);
     }
 
-    .metric {
-      color: var(--accent);
+    .layer-phone {
+      position: absolute;
+      right: -12px;
+      bottom: -34px;
+      width: 34%;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 3px solid #2b2924;
+      background: #090909;
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(212, 163, 115, 0.25);
+      transform: translateZ(56px);
     }
 
-    .ext {
-      font-size: 0.82rem;
-      font-weight: 550;
-      color: var(--text-secondary);
+    .layer-phone img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
-    .ext:hover {
-      color: var(--accent);
+    /* Featured Showcases */
+    .showcase-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
+    }
+
+    .showcase {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .showcase-reverse {
+      grid-template-columns: 0.85fr 1.15fr;
+    }
+
+    .showcase-reverse .visual-frame {
+      order: 2;
+    }
+
+    .visual-frame {
+      display: block;
+      perspective: 1100px;
+      padding: 1.8rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 50% 25%, rgba(212, 163, 115, 0.08), var(--surface) 72%);
+      transition: border-color 0.2s ease;
+    }
+
+    a.visual-frame:hover {
+      border-color: rgba(212, 163, 115, 0.42);
       text-decoration: none;
     }
 
-    .tile h3 {
-      font-size: 1.2rem;
+    .frame-rig {
+      transform-style: preserve-3d;
+      transform: rotateX(calc(2deg + var(--rx, 0deg))) rotateY(calc(-4deg + var(--ry, 0deg)));
+      transition: transform 0.08s linear;
+    }
+
+    .browser-shell {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.55);
+    }
+
+    .phones-rig {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      padding: 0.75rem 0;
+    }
+
+    .phone {
+      width: 44%;
+      max-width: 205px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 3px solid #2b2924;
+      background: #0a0a09;
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.66);
+    }
+
+    .phone img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .phone-back {
+      transform: translateY(14px) translateZ(0px) rotate(-2.5deg);
+      opacity: 0.92;
+    }
+
+    .phone-front {
+      transform: translateY(-10px) translateZ(42px) rotate(1.5deg);
+      box-shadow: 0 30px 64px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212, 163, 115, 0.22);
+    }
+
+    .meta {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
       margin-bottom: 0.55rem;
-      color: var(--text);
     }
 
-    .tile-wide h3 {
-      font-size: 1.45rem;
+    .showcase-copy p {
+      font-size: 0.96rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
     }
 
-    .tile p {
-      font-size: 0.93rem;
-      line-height: 1.65;
-      max-width: 62ch;
-    }
-
-    .tags {
-      margin-top: auto;
-      padding-top: 1.25rem;
+    .facts {
       display: flex;
       flex-wrap: wrap;
       gap: 0.45rem;
+      margin-bottom: 1.15rem;
     }
 
-    .tags span {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.71rem;
+    .facts span {
+      font-family: var(--mono);
+      font-size: 0.72rem;
       color: var(--text-secondary);
       padding: 0.22rem 0.58rem;
       border-radius: 999px;
       border: 1px solid var(--border);
     }
 
-    .also {
-      margin-top: 1.65rem;
-      font-size: 0.88rem;
-      color: var(--text-muted);
+    .visit {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 500;
     }
 
-    /* Writing */
-    .notes {
-      display: flex;
-      flex-direction: column;
+    /* Background ledger */
+    .ledger {
       border-top: 1px solid var(--border);
     }
 
-    .note-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
+    .ledger-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
       gap: 1.5rem;
-      padding: 1.5rem 0;
+      padding: 1.55rem 0;
       border-bottom: 1px solid var(--border);
-      transition: padding-left 0.18s ease;
     }
 
-    .note-row:hover {
-      text-decoration: none;
-      padding-left: 0.45rem;
-    }
-
-    .note-row h3 {
-      color: var(--text);
-      margin-bottom: 0.35rem;
-    }
-
-    .note-row:hover h3 {
-      color: var(--accent);
-    }
-
-    .note-row p {
-      font-size: 0.92rem;
-      max-width: 58ch;
-    }
-
-    .note-meta {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    .ledger-when {
+      font-family: var(--mono);
       font-size: 0.78rem;
       color: var(--text-muted);
-      white-space: nowrap;
-      flex-shrink: 0;
+      padding-top: 0.2rem;
+    }
+
+    .ledger-main h4 {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 0.35rem;
+      color: var(--text);
+    }
+
+    .ledger-main p {
+      font-size: 0.94rem;
+      max-width: 62ch;
     }
 
     /* Contact */
-    .contact {
-      padding-bottom: 1rem;
-    }
-
     .contact-title {
-      font-size: clamp(1.85rem, 4vw, 2.75rem);
-      letter-spacing: -0.035em;
-      max-width: 18ch;
-      margin-bottom: 1.75rem;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      margin-bottom: 0.85rem;
     }
 
-    @media (max-width: 820px) {
+    .contact-sub {
+      margin-bottom: 1.75rem;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .showcase,
+      .showcase-reverse {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
       .hero {
-        grid-template-columns: 1fr;
         min-height: auto;
-        gap: 1.5rem;
       }
 
-      .hero-visual {
-        order: -1;
-        max-width: 300px;
-        margin: 0 auto;
-        width: 100%;
+      .showcase-reverse .visual-frame {
+        order: 0;
       }
 
-      .chapters,
-      .gallery {
+      .layer-phone {
+        right: 6px;
+        bottom: -20px;
+        width: 32%;
+      }
+
+      .ledger-row {
         grid-template-columns: 1fr;
-      }
-
-      .note-row {
-        flex-direction: column;
-        gap: 0.55rem;
+        gap: 0.35rem;
       }
     }
   </style>
