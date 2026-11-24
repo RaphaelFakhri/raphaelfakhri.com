@@ -1,9 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const mergedPrsUrl =
+  'https://github.com/search?q=is%3Apr+author%3ARaphaelFakhri+is%3Amerged+-user%3ARaphaelFakhri&type=pullrequests';
 ---
 <Base
   title="Raphael Fakhri — Software Engineer"
-  description="Software engineer in Beirut owning mobile apps, production web platforms, and backend systems end to end."
+  description="Software engineer in Beirut owning mobile apps, production web platforms, backend systems, and 700+ merged open-source PRs."
   path="/"
 >
   <section class="hero">
@@ -12,7 +15,7 @@ import Base from '../layouts/Base.astro';
       <h1>Raphael<br /><em>Fakhri</em></h1>
 
       <p class="lead">
-        I build and own production software end to end&mdash;mobile apps, university web platforms, and backend systems that real users depend on.
+        I build and own production software end to end&mdash;mobile apps, university web platforms, backend systems, and <strong>700+ merged open-source PRs</strong>.
       </p>
 
       <div class="hero-meta">
@@ -152,12 +155,65 @@ import Base from '../layouts/Base.astro';
           </div>
         </div>
       </article>
+
+      <article class="showcase">
+        <a
+          class="visual-frame frame-oss"
+          href={mergedPrsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-stage
+          aria-label="Browse 700+ merged open-source pull requests on GitHub"
+        >
+          <div class="frame-rig oss-rig">
+            <div class="oss-stat">
+              <span class="oss-num">700+</span>
+              <span class="oss-label">merged upstream PRs</span>
+            </div>
+
+            <div class="pr-stack">
+              <div class="pr-card pr-1">
+                <span class="pr-pill">Merged</span>
+                <strong>fluentmigrator/fluentmigrator</strong>
+                <small>#2384 &middot; NULL semantics across 8 SQL engines</small>
+              </div>
+              <div class="pr-card pr-2">
+                <span class="pr-pill">Merged</span>
+                <strong>livekit/livekit</strong>
+                <small>#5135 &middot; WebRTC RTX payload-type negotiation</small>
+              </div>
+              <div class="pr-card pr-3">
+                <span class="pr-pill">Merged</span>
+                <strong>callstack/react-native-brownfield</strong>
+                <small>#519 &middot; iOS NSNumber boxing fix</small>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <div class="showcase-copy">
+          <span class="meta">03 &middot; Open Source &middot; Verified on GitHub</span>
+          <h3>700+ Merged PRs</h3>
+          <p>
+            Over 700 pull requests reviewed and merged into external repositories across React Native (Callstack, Software Mansion, RevenueCat), .NET (<a href="https://github.com/fluentmigrator/fluentmigrator/pull/2384" target="_blank" rel="noopener noreferrer">FluentMigrator</a>, <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/4128" target="_blank" rel="noopener noreferrer">Swashbuckle</a>), WebRTC (<a href="https://github.com/livekit/livekit/pull/5135" target="_blank" rel="noopener noreferrer">LiveKit</a>, <a href="https://github.com/versatica/mediasoup/pull/1953" target="_blank" rel="noopener noreferrer">mediasoup</a>), and Temporal SDKs.
+          </p>
+          <div class="facts">
+            <span>TypeScript</span>
+            <span>C# / .NET</span>
+            <span>Go</span>
+            <span>C++</span>
+          </div>
+          <a class="visit" href={mergedPrsUrl} target="_blank" rel="noopener noreferrer">
+            View merged PRs on GitHub &nearr;
+          </a>
+        </div>
+      </article>
     </div>
   </section>
 
   <section id="background" class="section">
     <div class="eyebrow">Background</div>
-    <h2>Production systems, research &amp; upstream work</h2>
+    <h2>Production systems &amp; research</h2>
 
     <div class="ledger">
       <div class="ledger-row">
@@ -196,16 +252,6 @@ import Base from '../layouts/Base.astro';
           <h4>AUB MSc Thesis &amp; CUDA Systems</h4>
           <p>
             MSc in Computer Science at AUB (GPA 3.81). Thesis: a VS Code extension explaining code in place via eye-tracker gaze, voice, or mouse, evaluated in a controlled user study. Also built <a href="https://github.com/RaphaelFakhri/Generalized_Heaps_Parallel" target="_blank" rel="noopener noreferrer">CUDA parallel heaps</a> cutting 10M+ element sort time by 88%.
-          </p>
-        </div>
-      </div>
-
-      <div class="ledger-row">
-        <div class="ledger-when">Open Source</div>
-        <div class="ledger-main">
-          <h4>Merged Upstream Fixes</h4>
-          <p>
-            Contributions accepted by maintainers of React Native libraries (Callstack, Software Mansion, RevenueCat), <a href="https://github.com/fluentmigrator/fluentmigrator/pull/2384" target="_blank" rel="noopener noreferrer">FluentMigrator</a>, <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/4128" target="_blank" rel="noopener noreferrer">Swashbuckle</a>, <a href="https://github.com/livekit/livekit/pull/5135" target="_blank" rel="noopener noreferrer">LiveKit</a>, and <a href="https://github.com/versatica/mediasoup/pull/1953" target="_blank" rel="noopener noreferrer">mediasoup</a>.
           </p>
         </div>
       </div>
@@ -249,6 +295,11 @@ import Base from '../layouts/Base.astro';
       color: var(--text-secondary);
       max-width: 39ch;
       margin: 1.5rem 0 2rem;
+    }
+
+    .lead strong {
+      color: var(--text);
+      font-weight: 500;
     }
 
     .hero-meta {
@@ -462,6 +513,84 @@ import Base from '../layouts/Base.astro';
       box-shadow: 0 30px 64px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212, 163, 115, 0.22);
     }
 
+    /* 3D Open-Source Visual Card Stack */
+    .oss-rig {
+      padding: 0.6rem 0.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.35rem;
+    }
+
+    .oss-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 0.9rem;
+      transform: translateZ(20px);
+    }
+
+    .oss-num {
+      font-family: var(--serif);
+      font-size: clamp(3.4rem, 5.6vw, 4.6rem);
+      line-height: 0.95;
+      color: var(--accent-bright);
+    }
+
+    .oss-label {
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .pr-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      transform-style: preserve-3d;
+    }
+
+    .pr-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.22rem;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    .pr-1 { transform: translateZ(16px); }
+    .pr-2 { transform: translateZ(34px) translateX(10px); border-color: rgba(212, 163, 115, 0.34); }
+    .pr-3 { transform: translateZ(22px) translateX(4px); }
+
+    .pr-pill {
+      align-self: flex-start;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #c8a2ff;
+      background: rgba(168, 85, 247, 0.14);
+      border: 1px solid rgba(192, 132, 252, 0.28);
+      padding: 0.14rem 0.5rem;
+      border-radius: 999px;
+      margin-bottom: 0.15rem;
+    }
+
+    .pr-card strong {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .pr-card small {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
     .meta {
       display: inline-block;
       font-family: var(--mono);
@@ -562,6 +691,10 @@ import Base from '../layouts/Base.astro';
         right: 6px;
         bottom: -20px;
         width: 32%;
+      }
+
+      .pr-2, .pr-3 {
+        transform: none;
       }
 
       .ledger-row {
