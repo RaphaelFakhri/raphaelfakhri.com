@@ -736,7 +736,7 @@ function startSpatialFallback({ canvas, stageWrap, fallbackEl, fpsEl, getState, 
     frames++;
     if (now - fpsLast >= 350) {
       const fps = Math.round((frames * 1000) / (now - fpsLast));
-      if (fpsEl) fpsEl.textContent = `FPS ${Math.min(120, fps)}`;
+      if (fpsEl) fpsEl.textContent = fps >= 24 ? `FPS ${Math.min(120, fps)}` : 'SPATIAL 3D';
       frames = 0;
       fpsLast = now;
     }
@@ -1234,31 +1234,26 @@ function init() {
   window.addEventListener('pointercancel', endDrag);
 
   /* 9. Real-Time Three.js WebGL Stage (with silent zero-error Canvas2D+CSS3D fallback) */
-  function probeWebGL() {
-    try {
-      const probe = document.createElement('canvas');
-      const attrs = { antialias: true, alpha: true, powerPreference: 'high-performance' };
-      const gl = probe.getContext('webgl2', attrs) || probe.getContext('webgl', attrs);
-      if (!gl) return false;
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
   let renderer = null;
-  if (probeWebGL()) {
-    try {
+  try {
+    const attrs = {
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance',
+      failIfMajorPerformanceCaveat: false,
+    };
+    const gl = canvas.getContext('webgl2', attrs) || canvas.getContext('webgl', attrs);
+    if (gl && !gl.isContextLost()) {
       renderer = new THREE.WebGLRenderer({
         canvas,
+        context: gl,
         antialias: true,
         alpha: true,
         powerPreference: 'high-performance',
       });
-    } catch {
-      renderer = null;
     }
+  } catch {
+    renderer = null;
   }
   if (!renderer) {
     const updateFallbackDrag = () => {
@@ -1407,7 +1402,7 @@ function init() {
     const now = performance.now();
     if (now - fpsLast >= 350) {
       const fps = Math.round((frames * 1000) / (now - fpsLast));
-      if (fpsEl) fpsEl.textContent = `FPS ${Math.min(120, fps)}`;
+      if (fpsEl) fpsEl.textContent = fps >= 24 ? `WEBGL ${Math.min(120, fps)} FPS` : 'WEBGL 3D';
       frames = 0;
       fpsLast = now;
     }
