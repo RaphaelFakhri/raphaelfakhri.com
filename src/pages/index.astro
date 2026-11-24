@@ -5,702 +5,1382 @@ const mergedPrsUrl =
   'https://github.com/search?q=is%3Apr+author%3ARaphaelFakhri+is%3Amerged+-user%3ARaphaelFakhri&type=pullrequests';
 ---
 <Base
-  title="Raphael Fakhri — Software Engineer"
-  description="Software engineer in Beirut owning mobile apps, production web platforms, backend systems, and 700+ merged open-source PRs."
+  title="Raphael Fakhri — Senior Mobile & Systems Engineer"
+  description="Software engineer in Beirut owning production mobile apps, university web platforms, 739 merged open-source PRs, and GPU parallel systems."
   path="/"
 >
-  <section class="hero">
-    <div class="hero-copy">
-      <div class="eyebrow">Beirut &middot; Software Engineer</div>
-      <h1>Raphael<br /><em>Fakhri</em></h1>
+  <!-- Top Live Telemetry Hairline Bar -->
+  <header class="telemetry-bar" aria-label="Live telemetry and controls">
+    <div class="telemetry-group">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      <span id="telemetry-clock">BEIRUT --:--:--</span>
+      <span class="sep hide-sm">/</span>
+      <span class="muted hide-md">33.89°N 35.50°E</span>
+    </div>
 
-      <p class="lead">
-        I build and own production software end to end&mdash;mobile apps, university web platforms, backend systems, and <strong>700+ merged open-source PRs</strong>.
-      </p>
+    <div class="telemetry-group telemetry-mid hide-sm">
+      <span id="telemetry-fps">FPS --</span>
+      <span class="sep">/</span>
+      <span id="telemetry-lcp">LCP --</span>
+      <span class="sep">/</span>
+      <a href={mergedPrsUrl} target="_blank" rel="noopener noreferrer" class="telemetry-link">
+        739 MERGED PRS ↗
+      </a>
+    </div>
 
-      <div class="hero-meta">
-        <img
-          class="avatar"
-          src="/raphael.jpg"
-          alt="Raphael Fakhri"
-          width="48"
-          height="48"
-          loading="eager"
-          decoding="async"
+    <div class="telemetry-group telemetry-actions">
+      <button type="button" id="telemetry-xray" class="pill-btn" title="Toggle 3D X-Ray & Exploded View (W)">
+        X-RAY [W]
+      </button>
+      <button type="button" id="telemetry-cmdk" class="pill-btn pill-accent" title="Open Command Palette (⌘K)">
+        ⌘K
+      </button>
+    </div>
+  </header>
+
+  <!-- Full-Viewport Interactive 3D Studio Stage -->
+  <section class="studio-stage" id="work" aria-label="Interactive 3D Portfolio Stage">
+    <div class="stage-viewport" id="stage-viewport">
+      <div class="stage-grid" aria-hidden="true">
+        <span class="crosshair ch-tl">+</span>
+        <span class="crosshair ch-tr">+</span>
+        <span class="crosshair ch-bl">+</span>
+        <span class="crosshair ch-br">+</span>
+      </div>
+
+      <canvas id="stage-canvas" aria-label="Interactive 3D showcase — drag to orbit"></canvas>
+
+      <!-- True 3D CSS+Canvas Fallback Stage (automatically active only when WebGL is disabled) -->
+      <div id="stage-fallback" class="stage-fallback" hidden aria-hidden="true">
+        <!-- 01 · AUB Mediterraneo Display Slab -->
+        <div class="fb-rig fb-aubmed is-active" data-fallback-rig="0">
+          <div class="fb-layer fb-backplate"></div>
+          <div class="fb-layer fb-display">
+            <div class="fb-chrome">
+              <span></span><span></span><span></span>
+              <small>aubmed.ac.cy · sole owner 2023–2025</small>
+            </div>
+            <img src="/work-aubmed.jpg" alt="" width="1440" height="900" loading="eager" decoding="async" />
+          </div>
+          <div class="fb-layer fb-spec-chip">50+ PAGES · 200+ REQUESTS · 100% ON TIME</div>
+        </div>
+
+        <!-- 02 · Zaky Dual Titanium iPhones -->
+        <div class="fb-rig fb-zaky" data-fallback-rig="1">
+          <div class="fb-phone fb-phone-back">
+            <span class="fb-island"></span>
+            <img src="/work-zaky-2.jpg" alt="" width="560" height="1217" loading="lazy" decoding="async" />
+          </div>
+          <div class="fb-phone fb-phone-front">
+            <span class="fb-island"></span>
+            <img src="/work-zaky-1.jpg" alt="" width="560" height="1217" loading="eager" decoding="async" />
+          </div>
+        </div>
+
+        <!-- 03 · 739 Merged Open-Source PR Glass Stack -->
+        <div class="fb-rig fb-oss" data-fallback-rig="2">
+          <div class="fb-pr fb-pr-1">
+            <div class="fb-pr-top"><span class="fb-merged">● MERGED</span><span>#2384 · C# / .NET</span></div>
+            <strong>fluentmigrator/fluentmigrator</strong>
+            <small>NULL semantics across 8 SQL database engines</small>
+          </div>
+          <div class="fb-pr fb-pr-2">
+            <div class="fb-pr-top"><span class="fb-merged">● MERGED</span><span>#5135 · GO / WEBRTC</span></div>
+            <strong>livekit/livekit</strong>
+            <small>WebRTC RTX payload-type negotiation fix</small>
+          </div>
+          <div class="fb-pr fb-pr-3">
+            <div class="fb-pr-top"><span class="fb-merged">● MERGED</span><span>#519 · SWIFT / RN</span></div>
+            <strong>callstack/react-native-brownfield</strong>
+            <small>iOS NSNumber boxing fix for native bridge</small>
+          </div>
+        </div>
+
+        <!-- 04 · CUDA Heap HUD Label (3D lattice renders live on Canvas2D behind it) -->
+        <div class="fb-rig fb-cuda" data-fallback-rig="3">
+          <div class="fb-cuda-badge">CUDA PARALLEL HEAPS · -88% SORT TIME (10M+ ELEMENTS)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hud-layer">
+      <!-- Top-Left: Architectural Identity & Physics ID Badge -->
+      <aside class="hud-card identity-card">
+        <div class="identity-top">
+          <div class="id-badge" data-badge title="Raphael Fakhri · Beirut">
+            <img
+              src="/raphael.jpg"
+              alt="Raphael Fakhri"
+              width="64"
+              height="64"
+              loading="eager"
+              decoding="async"
+            />
+            <span class="id-code">RF·01</span>
+          </div>
+
+          <div class="identity-headings">
+            <div class="micro-eyebrow">BEIRUT · SENIOR ENGINEER</div>
+            <h1>Raphael <em>Fakhri</em></h1>
+          </div>
+        </div>
+
+        <p class="identity-bio">
+          Sole engineer behind production iOS/Android &amp; web platforms,
+          <strong>739 merged open-source PRs</strong>, and GPU parallel algorithms.
+        </p>
+
+        <nav class="identity-links" aria-label="Direct links">
+          <a href="/cv/" class="link-primary">CV ↗</a>
+          <a href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/raphaelfakhri" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <button type="button" data-copy-email>Email</button>
+          <a href="#dossier">Dossier ↓</a>
+        </nav>
+      </aside>
+
+      <!-- Bottom-Left: Razor-Thin Selected Work Index -->
+      <div class="hud-card index-card">
+        <div class="index-head">
+          <span>SELECTED WORK</span>
+          <span class="muted">KEYS 1–4</span>
+        </div>
+
+        <div class="work-list" role="tablist" aria-label="Selected projects">
+          <button type="button" class="work-row is-active" role="tab" aria-selected="true" data-work-index="0">
+            <span class="w-num">01</span>
+            <span class="w-name">AUB Mediterraneo</span>
+            <span class="w-cat">Web · Sole Owner</span>
+            <span class="w-yr">2023–25</span>
+          </button>
+
+          <button type="button" class="work-row" role="tab" aria-selected="false" data-work-index="1">
+            <span class="w-num">02</span>
+            <span class="w-name">Zaky</span>
+            <span class="w-cat">RN / Expo · Client</span>
+            <span class="w-yr">2026</span>
+          </button>
+
+          <button type="button" class="work-row" role="tab" aria-selected="false" data-work-index="2">
+            <span class="w-num">03</span>
+            <span class="w-name">739 Merged PRs</span>
+            <span class="w-cat">Open Source</span>
+            <span class="w-yr">GitHub</span>
+          </button>
+
+          <button type="button" class="work-row" role="tab" aria-selected="false" data-work-index="3">
+            <span class="w-num">04</span>
+            <span class="w-name">CUDA &amp; Systems</span>
+            <span class="w-cat">MSc 3.81 · WaveMark</span>
+            <span class="w-yr">2023–26</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom-Right: Dynamic Artifact Caption & Controls -->
+      <div class="caption-wrap">
+        <div class="hud-card caption-card">
+          <div class="caption-top">
+            <span id="caption-num" class="micro-eyebrow">01 / 04</span>
+            <div class="caption-controls">
+              <button type="button" id="hold-xray-btn" class="mini-pill" title="Press and hold for exploded wireframe X-Ray">
+                HOLD X-RAY
+              </button>
+              <button type="button" id="btn-prev" class="arrow-btn" aria-label="Previous project">←</button>
+              <button type="button" id="btn-next" class="arrow-btn" aria-label="Next project">→</button>
+            </div>
+          </div>
+
+          <h2 id="caption-title">AUB Mediterraneo</h2>
+          <div id="caption-role" class="caption-role">Sole Developer &amp; Designer · 2023–2025</div>
+          <p id="caption-summary" class="caption-summary">
+            Sole owner of the Cyprus campus web platform for two years — 50+ responsive pages, in-page PDF viewer, tree navigation, and 200+ staff requests shipped 100% on time.
+          </p>
+
+          <div class="caption-foot">
+            <div id="caption-tags" class="tag-row">
+              <span>C# / .NET</span>
+              <span>SharePoint</span>
+              <span>JavaScript</span>
+            </div>
+            <a
+              id="caption-cta"
+              class="cta-link"
+              href="https://aubmed.ac.cy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit aubmed.ac.cy ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="stage-hint">DRAG STAGE TO ORBIT · KEYS 1–4 SWITCH · W X-RAY · ⌘K COMMANDS</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Below the Fold: Ultra-Tight Architectural Dossier -->
+  <main id="dossier" class="dossier-section">
+    <div class="dossier-container">
+      <div class="dossier-head">
+        <div>
+          <div class="micro-eyebrow">02 · PRODUCTION RECORD</div>
+          <h2>Shipped &amp; owned end to end</h2>
+        </div>
+        <div class="dossier-head-actions">
+          <a class="btn-solid" href="/cv/">Interactive CV ↗</a>
+          <a class="btn-ghost" href="/cv/Raphael_Fakhri_CV.pdf" target="_blank" rel="noopener noreferrer">PDF CV ↓</a>
+        </div>
+      </div>
+
+      <div class="ledger">
+        <div class="ledger-row">
+          <div class="ledger-meta">
+            <span class="ledger-year">2026</span>
+            <span class="ledger-tag">Client · Sole Engineer</span>
+          </div>
+          <div class="ledger-body">
+            <h3>Zaky — Cross-Platform Mobile Tutoring App</h3>
+            <p>
+              130+ screen React Native (Expo) app live on iOS, Android, and Web (760+ requests) — serialized MMKV offline sync, native Kotlin Android Credential Manager, LiveKit video classrooms, and Python/SymPy/Manim video pipeline.
+            </p>
+          </div>
+        </div>
+
+        <div class="ledger-row">
+          <div class="ledger-meta">
+            <span class="ledger-year">2026</span>
+            <span class="ledger-tag">Production Ops</span>
+          </div>
+          <div class="ledger-body">
+            <h3>24/7 AI Customer Support Platform</h3>
+            <p>
+              End-to-end client support agent on self-hosted Chatwoot and Claude unifying web chat, Shopify, WhatsApp, email, and mobile routing continuously in production.
+            </p>
+          </div>
+        </div>
+
+        <div class="ledger-row">
+          <div class="ledger-meta">
+            <span class="ledger-year">2025</span>
+            <span class="ledger-tag">Enterprise Systems</span>
+          </div>
+          <div class="ledger-body">
+            <h3>Cardinal Health | WaveMark</h3>
+            <p>
+              Automated Python &amp; DSPy reconciliation agent detecting staging-to-production schema and data drift across ClickHouse, Kafka, and Elasticsearch with patch proposals for engineer review.
+            </p>
+          </div>
+        </div>
+
+        <div class="ledger-row">
+          <div class="ledger-meta">
+            <span class="ledger-year">2023–2025</span>
+            <span class="ledger-tag">Sole Owner · 2 Yrs</span>
+          </div>
+          <div class="ledger-body">
+            <h3>
+              <a href="https://aubmed.ac.cy" target="_blank" rel="noopener noreferrer">AUB Mediterraneo (aubmed.ac.cy) ↗</a>
+            </h3>
+            <p>
+              Sole developer and designer for two years during my MSc — 50+ responsive pages, in-page PDF viewer, tree navigation, and 200+ staff requests shipped 100% on time.
+            </p>
+          </div>
+        </div>
+
+        <div class="ledger-row">
+          <div class="ledger-meta">
+            <span class="ledger-year">2023</span>
+            <span class="ledger-tag">Backend &amp; Data</span>
+          </div>
+          <div class="ledger-body">
+            <h3>Saint Joseph University (USJ)</h3>
+            <p>
+              .NET Core &amp; RabbitMQ Student Information System APIs with vendor CME, MySQL → PostgreSQL production migration, and a 15+ page Laravel HR module with granular SQL permissions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="split-proof">
+        <article class="proof-box">
+          <div class="micro-eyebrow">OPEN SOURCE · VERIFIED</div>
+          <h3>739 Merged Upstream Pull Requests</h3>
+          <p>
+            Reviewed and merged across React Native (Callstack, Software Mansion, RevenueCat), .NET
+            (<a href="https://github.com/fluentmigrator/fluentmigrator/pull/2384" target="_blank" rel="noopener noreferrer">FluentMigrator #2384</a>,
+            <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/4128" target="_blank" rel="noopener noreferrer">Swashbuckle #4128</a>),
+            WebRTC
+            (<a href="https://github.com/livekit/livekit/pull/5135" target="_blank" rel="noopener noreferrer">LiveKit #5135</a>,
+            <a href="https://github.com/versatica/mediasoup/pull/1953" target="_blank" rel="noopener noreferrer">mediasoup #1953</a>),
+            <a href="https://github.com/callstack/react-native-brownfield/pull/519" target="_blank" rel="noopener noreferrer">react-native-brownfield #519</a>,
+            and Temporal SDKs.
+          </p>
+          <a class="cta-link" href={mergedPrsUrl} target="_blank" rel="noopener noreferrer">
+            Browse all 739 merged PRs on GitHub ↗
+          </a>
+        </article>
+
+        <article class="proof-box">
+          <div class="micro-eyebrow">RESEARCH &amp; GPU SYSTEMS</div>
+          <h3>AUB MSc Computer Science · GPA 3.81</h3>
+          <p>
+            Thesis: VS Code extension explaining code in place via eye-tracker gaze, voice, or mouse, evaluated in a controlled user study. Also built
+            <a href="https://github.com/RaphaelFakhri/Generalized_Heaps_Parallel" target="_blank" rel="noopener noreferrer">CUDA parallel heaps</a>
+            cutting 10M+ element sort time by <strong>88%</strong>.
+          </p>
+          <a
+            class="cta-link"
+            href="https://github.com/RaphaelFakhri/Generalized_Heaps_Parallel"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Inspect CUDA Parallel Heaps ↗
+          </a>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer id="contact" class="site-footer">
+    <div class="dossier-container footer-inner">
+      <div>
+        <strong>Raphael Fakhri</strong>
+        <span class="sep">·</span>
+        <span class="muted">Beirut, Lebanon</span>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:mail@raphaelfakhri.com">mail@raphaelfakhri.com</a>
+        <a href="/cv/">CV</a>
+        <a href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/raphaelfakhri" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://x.com/raphaelfakhri2" target="_blank" rel="noopener noreferrer">X</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Command Palette (⌘K) -->
+  <div id="cmd-palette" class="cmd-backdrop" hidden role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmd-modal">
+      <div class="cmd-search-row">
+        <span class="cmd-prompt">&gt;</span>
+        <input
+          id="cmd-input"
+          type="text"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Jump to project, toggle 3D X-Ray, open CV, copy email..."
         />
-        <div class="actions">
-          <a class="btn btn-primary" href="#work">Selected work</a>
-          <a class="btn" href="/cv/">CV</a>
-          <a class="btn" href="mailto:mail@raphaelfakhri.com">Email</a>
-        </div>
+        <kbd>ESC</kbd>
       </div>
+      <div id="cmd-list" class="cmd-list"></div>
     </div>
+  </div>
 
-    <div class="hero-stage" data-stage aria-hidden="true">
-      <div class="stage-rig">
-        <div class="layer-web">
-          <div class="chrome">
-            <span></span><span></span><span></span>
-            <small>aubmed.ac.cy</small>
-          </div>
-          <img
-            src="/work-aubmed.jpg"
-            alt=""
-            width="1440"
-            height="900"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-        <div class="layer-phone">
-          <img
-            src="/work-zaky-1.jpg"
-            alt=""
-            width="560"
-            height="1217"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <section id="work" class="section">
-    <div class="eyebrow">Selected Work</div>
-    <h2>Shipped and owned in production</h2>
-
-    <div class="showcase-list">
-      <article class="showcase">
-        <a
-          class="visual-frame frame-web"
-          href="https://aubmed.ac.cy"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-stage
-          aria-label="Visit aubmed.ac.cy"
-        >
-          <div class="frame-rig">
-            <div class="browser-shell">
-              <div class="chrome">
-                <span></span><span></span><span></span>
-                <small>aubmed.ac.cy</small>
-              </div>
-              <img
-                src="/work-aubmed.jpg"
-                alt="AUB Mediterraneo campus website (aubmed.ac.cy)"
-                width="1440"
-                height="900"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
-        </a>
-
-        <div class="showcase-copy">
-          <span class="meta">01 &middot; American University of Beirut &middot; 2023&ndash;2025</span>
-          <h3>AUB Mediterraneo</h3>
-          <p>
-            Sole developer and designer of the Cyprus campus web platform for two years during my MSc&mdash;50+ responsive pages, in-page PDF viewer, tree navigation, and 200+ staff requests shipped 100% on time.
-          </p>
-          <div class="facts">
-            <span>C# / .NET</span>
-            <span>SharePoint</span>
-            <span>JavaScript</span>
-          </div>
-          <a class="visit" href="https://aubmed.ac.cy" target="_blank" rel="noopener noreferrer">
-            Visit aubmed.ac.cy &nearr;
-          </a>
-        </div>
-      </article>
-
-      <article class="showcase showcase-reverse">
-        <div class="visual-frame frame-phones" data-stage>
-          <div class="frame-rig phones-rig">
-            <div class="phone phone-back">
-              <img
-                src="/work-zaky-2.jpg"
-                alt="Zaky step-by-step homework solution screen"
-                width="560"
-                height="1217"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <div class="phone phone-front">
-              <img
-                src="/work-zaky-1.jpg"
-                alt="Zaky mobile tutoring app home screen"
-                width="560"
-                height="1217"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="showcase-copy">
-          <span class="meta">02 &middot; Client Work &middot; Sole Engineer &middot; 2026</span>
-          <h3>Zaky</h3>
-          <p>
-            Architected and shipped a 130+ screen React Native (Expo) tutoring app across iOS, Android, and Web&mdash;serialized MMKV offline sync, native Kotlin Android Credential Manager, LiveKit video classrooms, and a Python/SymPy/Manim homework video pipeline. Live since Oct 2026 (760+ student requests).
-          </p>
-          <div class="facts">
-            <span>React Native / Expo</span>
-            <span>Kotlin</span>
-            <span>LiveKit</span>
-            <span>Python</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="showcase">
-        <a
-          class="visual-frame frame-oss"
-          href={mergedPrsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-stage
-          aria-label="Browse 700+ merged open-source pull requests on GitHub"
-        >
-          <div class="frame-rig oss-rig">
-            <div class="oss-stat">
-              <span class="oss-num">700+</span>
-              <span class="oss-label">merged upstream PRs</span>
-            </div>
-
-            <div class="pr-stack">
-              <div class="pr-card pr-1">
-                <span class="pr-pill">Merged</span>
-                <strong>fluentmigrator/fluentmigrator</strong>
-                <small>#2384 &middot; NULL semantics across 8 SQL engines</small>
-              </div>
-              <div class="pr-card pr-2">
-                <span class="pr-pill">Merged</span>
-                <strong>livekit/livekit</strong>
-                <small>#5135 &middot; WebRTC RTX payload-type negotiation</small>
-              </div>
-              <div class="pr-card pr-3">
-                <span class="pr-pill">Merged</span>
-                <strong>callstack/react-native-brownfield</strong>
-                <small>#519 &middot; iOS NSNumber boxing fix</small>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <div class="showcase-copy">
-          <span class="meta">03 &middot; Open Source &middot; Verified on GitHub</span>
-          <h3>700+ Merged PRs</h3>
-          <p>
-            Over 700 pull requests reviewed and merged into external repositories across React Native (Callstack, Software Mansion, RevenueCat), .NET (<a href="https://github.com/fluentmigrator/fluentmigrator/pull/2384" target="_blank" rel="noopener noreferrer">FluentMigrator</a>, <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/4128" target="_blank" rel="noopener noreferrer">Swashbuckle</a>), WebRTC (<a href="https://github.com/livekit/livekit/pull/5135" target="_blank" rel="noopener noreferrer">LiveKit</a>, <a href="https://github.com/versatica/mediasoup/pull/1953" target="_blank" rel="noopener noreferrer">mediasoup</a>), and Temporal SDKs.
-          </p>
-          <div class="facts">
-            <span>TypeScript</span>
-            <span>C# / .NET</span>
-            <span>Go</span>
-            <span>C++</span>
-          </div>
-          <a class="visit" href={mergedPrsUrl} target="_blank" rel="noopener noreferrer">
-            View merged PRs on GitHub &nearr;
-          </a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section id="background" class="section">
-    <div class="eyebrow">Background</div>
-    <h2>Production systems &amp; research</h2>
-
-    <div class="ledger">
-      <div class="ledger-row">
-        <div class="ledger-when">2023</div>
-        <div class="ledger-main">
-          <h4>Saint Joseph University (USJ)</h4>
-          <p>
-            Delivered .NET Core &amp; RabbitMQ REST APIs for a Student Information System with vendor CME, migrated production data from MySQL to PostgreSQL, and built a 15+ page Laravel HR module with granular SQL permissions.
-          </p>
-        </div>
-      </div>
-
-      <div class="ledger-row">
-        <div class="ledger-when">2025</div>
-        <div class="ledger-main">
-          <h4>Cardinal Health | WaveMark</h4>
-          <p>
-            Built an automated Python &amp; DSPy reconciliation agent that detects schema and data drift between staging and production across ClickHouse, Kafka, and Elasticsearch and proposes patches for engineer review.
-          </p>
-        </div>
-      </div>
-
-      <div class="ledger-row">
-        <div class="ledger-when">2026</div>
-        <div class="ledger-main">
-          <h4>24/7 AI Customer Support Platform</h4>
-          <p>
-            Own a client&rsquo;s end-to-end support agent built on self-hosted Chatwoot and Claude, unifying web chat, Shopify, WhatsApp, email, and mobile routing continuously in production.
-          </p>
-        </div>
-      </div>
-
-      <div class="ledger-row">
-        <div class="ledger-when">2023&ndash;2026</div>
-        <div class="ledger-main">
-          <h4>AUB MSc Thesis &amp; CUDA Systems</h4>
-          <p>
-            MSc in Computer Science at AUB (GPA 3.81). Thesis: a VS Code extension explaining code in place via eye-tracker gaze, voice, or mouse, evaluated in a controlled user study. Also built <a href="https://github.com/RaphaelFakhri/Generalized_Heaps_Parallel" target="_blank" rel="noopener noreferrer">CUDA parallel heaps</a> cutting 10M+ element sort time by 88%.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="section contact">
-    <div class="eyebrow">Contact</div>
-    <h2 class="contact-title">Say hello.</h2>
-    <p class="contact-sub">
-      Beirut-based. Available for senior mobile and full-stack engineering roles.
-    </p>
-    <div class="actions">
-      <a class="btn btn-primary" href="mailto:mail@raphaelfakhri.com">mail@raphaelfakhri.com</a>
-      <a class="btn" href="/cv/">Read CV</a>
-      <a class="btn" href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a class="btn" href="https://www.linkedin.com/in/raphaelfakhri" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    </div>
-  </section>
-
-  <script type="module" src="/spatial3d.js"></script>
-
-  <style>
-    .hero {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      align-items: center;
-      gap: 3rem;
-      min-height: min(76svh, 640px);
-      padding: 1.5rem 0 1rem;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .lead {
-      font-size: 1.06rem;
-      line-height: 1.68;
-      color: var(--text-secondary);
-      max-width: 39ch;
-      margin: 1.5rem 0 2rem;
-    }
-
-    .lead strong {
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .hero-meta {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--border-strong);
-      flex-shrink: 0;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.58rem 1.12rem;
-      border-radius: 999px;
-      border: 1px solid var(--border-strong);
-      background: transparent;
-      color: var(--text);
-      font-size: 0.87rem;
-      font-weight: 500;
-      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
-    }
-
-    .btn:hover {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--text);
-      text-decoration: none;
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: var(--text);
-      border-color: var(--text);
-      color: var(--bg);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-bright);
-      border-color: var(--accent-bright);
-      color: var(--bg);
-    }
-
-    /* 3D Hero Spatial Stage */
-    .hero-stage {
-      perspective: 1200px;
-      padding: 1.25rem 0.5rem 2.25rem;
-    }
-
-    .stage-rig {
-      position: relative;
-      transform-style: preserve-3d;
-      transform: rotateX(calc(5deg + var(--rx, 0deg))) rotateY(calc(-10deg + var(--ry, 0deg)));
-      transition: transform 0.08s linear;
-    }
-
-    .layer-web {
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid var(--border-strong);
-      background: var(--surface);
-      box-shadow: 0 32px 70px rgba(0, 0, 0, 0.58);
-      transform: translateZ(0px);
-    }
-
-    .layer-web img,
-    .browser-shell img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    .chrome {
-      display: flex;
-      align-items: center;
-      gap: 0.36rem;
-      padding: 0.55rem 0.8rem;
-      background: #171614;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .chrome span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(242, 239, 233, 0.2);
-    }
-
-    .chrome small {
-      margin-left: 0.55rem;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--text-muted);
-    }
-
-    .layer-phone {
-      position: absolute;
-      right: -12px;
-      bottom: -34px;
-      width: 34%;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 3px solid #2b2924;
-      background: #090909;
-      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(212, 163, 115, 0.25);
-      transform: translateZ(56px);
-    }
-
-    .layer-phone img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    /* Featured Showcases */
-    .showcase-list {
-      display: flex;
-      flex-direction: column;
-      gap: 5rem;
-    }
-
-    .showcase {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      align-items: center;
-      gap: 3rem;
-    }
-
-    .showcase-reverse {
-      grid-template-columns: 0.85fr 1.15fr;
-    }
-
-    .showcase-reverse .visual-frame {
-      order: 2;
-    }
-
-    .visual-frame {
-      display: block;
-      perspective: 1100px;
-      padding: 1.8rem;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: radial-gradient(circle at 50% 25%, rgba(212, 163, 115, 0.08), var(--surface) 72%);
-      transition: border-color 0.2s ease;
-    }
-
-    a.visual-frame:hover {
-      border-color: rgba(212, 163, 115, 0.42);
-      text-decoration: none;
-    }
-
-    .frame-rig {
-      transform-style: preserve-3d;
-      transform: rotateX(calc(2deg + var(--rx, 0deg))) rotateY(calc(-4deg + var(--ry, 0deg)));
-      transition: transform 0.08s linear;
-    }
-
-    .browser-shell {
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border-strong);
-      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.55);
-    }
-
-    .phones-rig {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.25rem;
-      padding: 0.75rem 0;
-    }
-
-    .phone {
-      width: 44%;
-      max-width: 205px;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 3px solid #2b2924;
-      background: #0a0a09;
-      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.66);
-    }
-
-    .phone img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    .phone-back {
-      transform: translateY(14px) translateZ(0px) rotate(-2.5deg);
-      opacity: 0.92;
-    }
-
-    .phone-front {
-      transform: translateY(-10px) translateZ(42px) rotate(1.5deg);
-      box-shadow: 0 30px 64px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212, 163, 115, 0.22);
-    }
-
-    /* 3D Open-Source Visual Card Stack */
-    .oss-rig {
-      padding: 0.6rem 0.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.35rem;
-    }
-
-    .oss-stat {
-      display: flex;
-      align-items: baseline;
-      gap: 0.9rem;
-      transform: translateZ(20px);
-    }
-
-    .oss-num {
-      font-family: var(--serif);
-      font-size: clamp(3.4rem, 5.6vw, 4.6rem);
-      line-height: 0.95;
-      color: var(--accent-bright);
-    }
-
-    .oss-label {
-      font-family: var(--mono);
-      font-size: 0.76rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-    }
-
-    .pr-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      transform-style: preserve-3d;
-    }
-
-    .pr-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.22rem;
-      padding: 0.85rem 1rem;
-      border-radius: 12px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-strong);
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
-    }
-
-    .pr-1 { transform: translateZ(16px); }
-    .pr-2 { transform: translateZ(34px) translateX(10px); border-color: rgba(212, 163, 115, 0.34); }
-    .pr-3 { transform: translateZ(22px) translateX(4px); }
-
-    .pr-pill {
-      align-self: flex-start;
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #c8a2ff;
-      background: rgba(168, 85, 247, 0.14);
-      border: 1px solid rgba(192, 132, 252, 0.28);
-      padding: 0.14rem 0.5rem;
-      border-radius: 999px;
-      margin-bottom: 0.15rem;
-    }
-
-    .pr-card strong {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .pr-card small {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-    }
-
-    .meta {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-bottom: 0.55rem;
-    }
-
-    .showcase-copy p {
-      font-size: 0.96rem;
-      line-height: 1.7;
-      margin-bottom: 1.25rem;
-    }
-
-    .facts {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-bottom: 1.15rem;
-    }
-
-    .facts span {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text-secondary);
-      padding: 0.22rem 0.58rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-    }
-
-    .visit {
-      display: inline-block;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    /* Background ledger */
-    .ledger {
-      border-top: 1px solid var(--border);
-    }
-
-    .ledger-row {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 1.5rem;
-      padding: 1.55rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .ledger-when {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      padding-top: 0.2rem;
-    }
-
-    .ledger-main h4 {
-      font-family: var(--sans);
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 0 0 0.35rem;
-      color: var(--text);
-    }
-
-    .ledger-main p {
-      font-size: 0.94rem;
-      max-width: 62ch;
-    }
-
-    /* Contact */
-    .contact-title {
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-      margin-bottom: 0.85rem;
-    }
-
-    .contact-sub {
-      margin-bottom: 1.75rem;
-      font-size: 1rem;
-    }
-
-    @media (max-width: 860px) {
-      .hero,
-      .showcase,
-      .showcase-reverse {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .hero {
-        min-height: auto;
-      }
-
-      .showcase-reverse .visual-frame {
-        order: 0;
-      }
-
-      .layer-phone {
-        right: 6px;
-        bottom: -20px;
-        width: 32%;
-      }
-
-      .pr-2, .pr-3 {
-        transform: none;
-      }
-
-      .ledger-row {
-        grid-template-columns: 1fr;
-        gap: 0.35rem;
-      }
-    }
-  </style>
+  <script>
+    import '../scripts/stage.js';
+  </script>
 </Base>
+
+<style>
+  /* ---------------- Top Telemetry Bar ---------------- */
+  .telemetry-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    height: 40px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(7, 7, 8, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+  }
+
+  .telemetry-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+
+  .sep { color: rgba(243, 239, 231, 0.22); }
+  .muted { color: var(--text-muted); }
+
+  .telemetry-link {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .pill-btn {
+    padding: 4px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+
+  .pill-btn:hover,
+  .pill-btn.is-active {
+    border-color: var(--accent);
+    color: var(--text);
+    background: var(--accent-soft);
+  }
+
+  .pill-accent {
+    border-color: rgba(216, 168, 120, 0.4);
+    color: var(--accent-bright);
+  }
+
+  /* ---------------- Full-Viewport 3D Studio Stage ---------------- */
+  .studio-stage {
+    position: relative;
+    min-height: 100svh;
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stage-viewport {
+    position: absolute;
+    inset: 40px 0 0 0;
+    z-index: 1;
+    cursor: grab;
+  }
+
+  .stage-viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .stage-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(243, 239, 231, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(243, 239, 231, 0.03) 1px, transparent 1px);
+    background-size: 25% 33.333%;
+  }
+
+  .crosshair {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: rgba(243, 239, 231, 0.16);
+    user-select: none;
+  }
+
+  .ch-tl { top: 14px; left: 18px; }
+  .ch-tr { top: 14px; right: 18px; }
+  .ch-bl { bottom: 14px; left: 18px; }
+  .ch-br { bottom: 14px; right: 18px; }
+
+  #stage-canvas {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: pan-y;
+  }
+
+  /* ---------------- Software 3D Spatial Fallback (Non-WebGL Browsers) ---------------- */
+  .stage-fallback {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    perspective: 1400px;
+  }
+
+  .stage-fallback[hidden] {
+    display: none;
+  }
+
+  .fb-rig {
+    position: absolute;
+    left: 66%;
+    top: 41%;
+    margin-left: -260px;
+    margin-top: -165px;
+    width: 520px;
+    height: 330px;
+    transform-style: preserve-3d;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    display: grid;
+    place-items: center;
+  }
+
+  .fb-rig.is-active {
+    opacity: 1;
+  }
+
+  /* 01 AUBMED Display */
+  .fb-backplate {
+    position: absolute;
+    width: 470px;
+    height: 298px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(216, 168, 120, 0.22), rgba(20, 20, 24, 0.8));
+    border: 1px solid rgba(216, 168, 120, 0.45);
+    transform: translateZ(-28px);
+    transition: transform 0.4s ease;
+  }
+
+  .fb-display {
+    position: relative;
+    width: 460px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #141416;
+    border: 1px solid rgba(243, 239, 231, 0.22);
+    box-shadow: 0 36px 90px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(216, 168, 120, 0.16);
+    transform: translateZ(18px);
+    transition: transform 0.4s ease, border-color 0.3s ease;
+  }
+
+  .fb-chrome {
+    height: 24px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #19191c;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fb-chrome span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(243, 239, 231, 0.22);
+  }
+
+  .fb-chrome small {
+    margin-left: 8px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--text-muted);
+  }
+
+  .fb-display img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .fb-spec-chip {
+    position: absolute;
+    right: -12px;
+    bottom: -14px;
+    padding: 6px 11px;
+    border-radius: 7px;
+    background: rgba(10, 10, 12, 0.92);
+    border: 1px solid rgba(216, 168, 120, 0.45);
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: var(--accent-bright);
+    transform: translateZ(56px);
+    transition: transform 0.4s ease;
+  }
+
+  :global(body.is-xray) .fb-backplate {
+    transform: translateZ(-76px);
+    border-color: var(--cyan);
+    background: rgba(124, 196, 250, 0.08);
+  }
+
+  :global(body.is-xray) .fb-display {
+    transform: translateZ(56px);
+    border-color: var(--cyan);
+  }
+
+  :global(body.is-xray) .fb-spec-chip {
+    transform: translateZ(110px);
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+
+  /* 02 Zaky Dual Titanium iPhones */
+  .fb-phone {
+    position: absolute;
+    width: 172px;
+    border-radius: 26px;
+    padding: 6px;
+    background: linear-gradient(145deg, #353330, #161618);
+    border: 1px solid rgba(216, 168, 120, 0.42);
+    box-shadow: 0 34px 80px rgba(0, 0, 0, 0.78);
+    transition: transform 0.4s ease, border-color 0.3s ease;
+  }
+
+  .fb-phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .fb-island {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 44px;
+    height: 11px;
+    margin-left: -22px;
+    border-radius: 999px;
+    background: #050506;
+    z-index: 2;
+  }
+
+  .fb-phone-front {
+    transform: translate3d(-62px, -6px, 42px) rotateY(10deg);
+  }
+
+  .fb-phone-back {
+    transform: translate3d(76px, 16px, -36px) rotateY(-12deg) scale(0.92);
+  }
+
+  :global(body.is-xray) .fb-phone-front {
+    transform: translate3d(-115px, -10px, 86px) rotateY(16deg);
+    border-color: var(--cyan);
+  }
+
+  :global(body.is-xray) .fb-phone-back {
+    transform: translate3d(125px, 20px, -68px) rotateY(-18deg) scale(0.92);
+    border-color: var(--cyan);
+  }
+
+  /* 03 739 Merged PR Glass Stack */
+  .fb-pr {
+    position: absolute;
+    width: 380px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: rgba(15, 15, 18, 0.9);
+    border: 1px solid rgba(216, 168, 120, 0.36);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+    transition: transform 0.4s ease, border-color 0.3s ease;
+  }
+
+  .fb-pr-top {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .fb-merged {
+    color: #c4b5fd;
+    font-weight: 600;
+  }
+
+  .fb-pr strong {
+    display: block;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .fb-pr small {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .fb-pr-1 { transform: translate3d(-16px, -96px, 44px); }
+  .fb-pr-2 { transform: translate3d(18px, 0px, 6px); }
+  .fb-pr-3 { transform: translate3d(-12px, 96px, -34px); }
+
+  :global(body.is-xray) .fb-pr-1 { transform: translate3d(-24px, -110px, 96px); border-color: var(--cyan); }
+  :global(body.is-xray) .fb-pr-2 { transform: translate3d(24px, 0px, 10px); border-color: var(--cyan); }
+  :global(body.is-xray) .fb-pr-3 { transform: translate3d(-20px, 110px, -84px); border-color: var(--cyan); }
+
+  /* 04 CUDA Badge */
+  .fb-cuda-badge {
+    align-self: end;
+    margin-bottom: -24px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(9, 10, 14, 0.85);
+    border: 1px solid rgba(124, 196, 250, 0.42);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--cyan);
+  }
+
+  /* ---------------- Architectural HUD Overlay ---------------- */
+  .hud-layer {
+    position: relative;
+    z-index: 3;
+    pointer-events: none;
+    flex: 1;
+    min-height: calc(100svh - 40px);
+    padding: 20px 24px 20px;
+    display: grid;
+    grid-template-columns: minmax(320px, 392px) 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 16px;
+  }
+
+  .hud-card {
+    pointer-events: auto;
+    background: var(--surface-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  }
+
+  .identity-card {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 18px 20px 16px;
+  }
+
+  .identity-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+
+  .id-badge {
+    position: relative;
+    flex: 0 0 auto;
+    width: 58px;
+    height: 70px;
+    padding: 3px;
+    border-radius: 8px;
+    background: linear-gradient(145deg, rgba(216, 168, 120, 0.42), rgba(243, 239, 231, 0.08));
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  .id-badge::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--gx, 30%) var(--gy, 20%),
+      rgba(255, 244, 224, 0.34),
+      transparent 58%
+    );
+    pointer-events: none;
+  }
+
+  .id-badge img {
+    width: 100%;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
+  }
+
+  .id-code {
+    display: block;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    color: var(--accent-bright);
+    line-height: 14px;
+  }
+
+  .micro-eyebrow {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .identity-headings h1 {
+    margin: 3px 0 0;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 0.94;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .identity-headings h1 em {
+    font-style: italic;
+    color: var(--accent-bright);
+  }
+
+  .identity-bio {
+    margin: 0 0 14px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  .identity-bio strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .identity-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .identity-links a,
+  .identity-links button {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+
+  .identity-links a:hover,
+  .identity-links button:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+    background: rgba(243, 239, 231, 0.05);
+  }
+
+  .identity-links .link-primary {
+    border-color: rgba(216, 168, 120, 0.45);
+    background: var(--accent-soft);
+    color: var(--accent-bright);
+  }
+
+  .index-card {
+    grid-column: 1;
+    grid-row: 3;
+    padding: 14px 16px;
+  }
+
+  .index-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.13em;
+    color: var(--accent);
+  }
+
+  .work-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .work-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 24px 1.25fr 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 7px;
+    border-left: 2px solid transparent;
+    text-align: left;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .work-row:hover { background: rgba(243, 239, 231, 0.04); }
+
+  .work-row.is-active {
+    background: rgba(216, 168, 120, 0.11);
+    border-left-color: var(--accent);
+  }
+
+  .w-num { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+  .work-row.is-active .w-num { color: var(--accent); }
+
+  .w-name {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .work-row.is-active .w-name { color: var(--text); }
+
+  .w-cat,
+  .w-yr {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .caption-wrap {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: end;
+    align-self: end;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .caption-card { padding: 15px 18px; }
+
+  .caption-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .caption-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mini-pill {
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+  }
+
+  .mini-pill:hover,
+  .mini-pill:active {
+    border-color: var(--cyan);
+    color: var(--text);
+    background: rgba(124, 196, 250, 0.12);
+  }
+
+  .arrow-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .arrow-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  .caption-card h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.7rem;
+    line-height: 1.05;
+    color: var(--text);
+  }
+
+  .caption-role {
+    margin: 4px 0 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  .caption-summary {
+    margin: 0 0 11px;
+    font-size: 13px;
+    line-height: 1.48;
+    color: var(--text-secondary);
+  }
+
+  .caption-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag-row span {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .cta-link {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--accent-bright);
+    white-space: nowrap;
+  }
+
+  .cta-link:hover { text-decoration: underline; }
+
+  .stage-hint {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    padding-right: 4px;
+  }
+
+  /* ---------------- Below-the-Fold Architectural Dossier ---------------- */
+  .dossier-section {
+    padding: 5.25rem 0 4.75rem;
+    background: var(--bg);
+  }
+
+  .dossier-container {
+    width: 100%;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .dossier-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 2.25rem;
+  }
+
+  .dossier-head h2 {
+    margin: 6px 0 0;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 3.8vw, 2.75rem);
+    line-height: 1.05;
+    color: var(--text);
+  }
+
+  .dossier-head-actions { display: flex; gap: 10px; }
+
+  .btn-solid,
+  .btn-ghost {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    transition: opacity 0.15s ease, border-color 0.15s ease;
+  }
+
+  .btn-solid { background: var(--accent); color: #09090a; font-weight: 600; }
+  .btn-solid:hover { color: #09090a; opacity: 0.9; }
+  .btn-ghost { border: 1px solid var(--border-strong); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--accent); }
+
+  .ledger { border-top: 1px solid var(--border); }
+
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ledger-meta { display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
+  .ledger-year { font-family: var(--mono); font-size: 12.5px; color: var(--accent); }
+  .ledger-tag { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+
+  .ledger-body h3 {
+    margin: 0 0 6px;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.48rem;
+    line-height: 1.15;
+    color: var(--text);
+  }
+
+  .ledger-body h3 a { color: var(--text); }
+  .ledger-body h3 a:hover { color: var(--accent-bright); }
+
+  .ledger-body p {
+    margin: 0;
+    color: var(--text-secondary);
+    max-width: 72ch;
+    font-size: 14.5px;
+    line-height: 1.58;
+  }
+
+  .split-proof {
+    margin-top: 2.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .proof-box {
+    padding: 22px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .proof-box h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.52rem;
+    color: var(--text);
+  }
+
+  .proof-box p {
+    margin: 0 0 6px;
+    font-size: 14px;
+    line-height: 1.58;
+    color: var(--text-secondary);
+  }
+
+  .proof-box strong { color: var(--text); }
+
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0 36px;
+    background: var(--bg);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+  .footer-links a { color: var(--text-secondary); }
+  .footer-links a:hover { color: var(--accent-bright); }
+
+  /* ---------------- Command Palette (⌘K) ---------------- */
+  .cmd-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(4, 4, 5, 0.72);
+    backdrop-filter: blur(8px);
+    display: grid;
+    place-items: start center;
+    padding: 12vh 16px 16px;
+  }
+
+  .cmd-backdrop[hidden] { display: none; }
+
+  .cmd-modal {
+    width: 100%;
+    max-width: 540px;
+    background: #101013;
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+  }
+
+  .cmd-search-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cmd-prompt { font-family: var(--mono); color: var(--accent); font-weight: 600; }
+
+  #cmd-input {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    outline: none;
+  }
+
+  .cmd-search-row kbd,
+  .cmd-list :global(kbd) {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .cmd-list {
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .cmd-list :global(.cmd-item) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+
+  .cmd-list :global(.cmd-item.is-selected) {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+
+  /* ---------------- Toast ---------------- */
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translate(-50%, 16px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 70;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: #141417;
+    border: 1px solid rgba(216, 168, 120, 0.5);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-bright);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ---------------- Responsive Mobile & Tablet ---------------- */
+  @media (max-width: 959px) {
+    .hide-md { display: none; }
+
+    .studio-stage { min-height: auto; }
+
+    .stage-viewport {
+      position: relative;
+      inset: auto;
+      height: 48vh;
+      min-height: 340px;
+      max-height: 450px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fb-rig {
+      left: 50%;
+      top: 50%;
+      transform-origin: center center;
+    }
+
+    .fb-display { width: 320px; }
+    .fb-backplate { width: 328px; height: 210px; }
+    .fb-phone { width: 128px; }
+    .fb-pr { width: 300px; }
+
+    .hud-layer {
+      min-height: auto;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      padding: 16px;
+      gap: 12px;
+    }
+
+    .identity-card { grid-column: 1; grid-row: 1; }
+    .index-card { grid-column: 1; grid-row: 2; }
+    .caption-wrap {
+      grid-column: 1;
+      grid-row: 3;
+      max-width: none;
+      justify-self: stretch;
+    }
+
+    .stage-hint { text-align: left; }
+    .ledger-row { grid-template-columns: 1fr; gap: 8px; }
+    .split-proof { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .hide-sm { display: none; }
+    .telemetry-bar { padding: 0 12px; }
+    .work-row { grid-template-columns: 22px 1fr auto; }
+    .w-cat { display: none; }
+    .dossier-section { padding: 3.5rem 0 3.5rem; }
+    .dossier-container { padding: 0 16px; }
+  }
+</style>
