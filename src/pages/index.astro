@@ -239,7 +239,7 @@ import { articles } from '../data/writing.js';
 
     <div class="article-list">
       {articles.map((article) => (
-        <a class="article-row" href={`/writing/${article.slug}`}>
+        <a class="article-row" href={`/writing/${article.slug}/`}>
           <div class="article-meta">
             <time datetime={article.isoDate}>{article.date}</time>
             <span>&middot;</span>
