@@ -1351,6 +1351,11 @@ function init() {
   let frames = 0;
   let fpsLast = performance.now();
   const clock = new THREE.Clock();
+  document.addEventListener('visibilitychange', () => {
+    frames = 0;
+    fpsLast = performance.now();
+    clock.getDelta();
+  });
 
   function animate() {
     requestAnimationFrame(animate);
