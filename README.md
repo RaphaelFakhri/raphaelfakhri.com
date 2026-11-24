@@ -1,21 +1,21 @@
 # raphaelfakhri.com
 
-Personal site for Raphael Fakhri. Static assets served by a Cloudflare Worker.
+Personal site and portfolio for Raphael Fakhri — static Astro build served by a Cloudflare Worker.
 
-## How it deploys
+## Structure
 
-**GitHub is the source of truth.** Every push to `main` triggers
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which runs
-`wrangler deploy` to publish the Worker (`raphaelfakhri`) to Cloudflare — the same
-GitHub-Actions pattern the `symbai.dev` sites use.
+- `src/pages/index.astro` — Homepage (bio, story, selected work, engineering notes, contact).
+- `src/pages/writing/[slug].astro` — Static engineering articles (`src/data/writing.js`).
+- `src/layouts/Base.astro` — Shared layout, light/dark theme, SEO/Open Graph metadata.
+- `src/worker.js` — Cloudflare Worker serving `./dist` with caching, security headers, and legacy redirects.
+- `public/cv/` — HTML and PDF CV served at `/cv/`.
 
-- Site content: [`public/`](public/) (plain static HTML/CSS).
-- Worker config: [`wrangler.jsonc`](wrangler.jsonc).
-- No build step — edit `public/`, push, done.
+## Local development & deployment
 
-## Infra
+```bash
+npm ci
+npm run dev
+npm run build
+```
 
-- **Registrar:** Spaceship (registered 2026-07-17).
-- **DNS / hosting:** Cloudflare (nameservers `anita` / `ivan.ns.cloudflare.com`).
-- **Deploy auth:** Cloudflare global key + email, stored as the repo secrets
-  `CLOUDFLARE_API_KEY` and `CLOUDFLARE_EMAIL`.
+Pushing to `main` builds the Astro site and deploys via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).

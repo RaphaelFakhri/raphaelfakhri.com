@@ -1,8 +1,7 @@
 {
-  // Worker for raphaelfakhri.com. GitHub stays the source of truth (pushes are mirrored),
-  // but live content edits go through a Durable Object via push_content.sh (sub-second,
-  // strongly consistent — no KV edge-cache staleness). The worker (src/worker.js) serves '/'
-  // and '/version.json' from the DO and falls back to the built static assets in ./dist.
+  // Worker for raphaelfakhri.com. GitHub is the single source of truth:
+  // Astro builds static pages to ./dist and the Worker serves ./dist with
+  // caching, security headers, and legacy URL redirects.
   "name": "raphaelfakhri",
   "compatibility_date": "2026-07-01",
   "main": "src/worker.js",

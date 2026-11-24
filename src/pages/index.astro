@@ -1,330 +1,594 @@
 ---
-// raphaelfakhri.com - personal site. Who he is, what he believes. Nothing for sale.
-// Built with Astro, output to ./dist. One tiny script: a version-poller that live-reloads
-// the page when a new build deploys, so edits appear without a manual refresh.
-import { posts } from '../posts.js';
-const BUILD_ID = process.env.BUILD_ID || process.env.GITHUB_SHA || 'dev';
-const ICON = {
-  x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
-  li: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>',
-  yt: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.5 15.5v-7l6.5 3.5z"/></svg>',
-  substack: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>',
-};
-const links = [
-  { href: 'https://x.com/raphaelfakhri2', label: 'Find me on X', icon: ICON.x },
-  { href: 'https://www.linkedin.com/in/raphaelfakhri', label: 'Connect on LinkedIn', icon: ICON.li },
-  { href: 'https://www.youtube.com/@RaphaelFakhri00', label: 'Subscribe on YouTube', icon: ICON.yt },
-  { href: 'https://raphaelfakhri.substack.com', label: 'Read the newsletter', icon: ICON.substack },
-];
-
-const values = [
-  {
-    title: 'Build with people who push you, not people who please you',
-    body: 'Liking each other isn&rsquo;t the mechanism; pressure is. Friendship is fuel, not the product. Adam Smith wrote about what strangers achieve together. Newton and Leibniz hated each other and still gave us calculus. Jobs was hard to like and hard to beat. I&rsquo;d rather be sharpened than comforted.',
-  },
-  {
-    title: 'Take the hard road on purpose',
-    body: 'Choose the thing that costs you something. That&rsquo;s where you actually grow. Amor fati: don&rsquo;t just accept the cost, want it. The easy road is usually a longer way to a smaller life.',
-  },
-  {
-    title: 'A value is only real if it sometimes costs you',
-    body: 'Everything else is a story you tell after the fact. Choose, don&rsquo;t justify. Hold me to it.',
-  },
-  {
-    title: 'Value belongs to whoever creates it',
-    body: 'Not to whoever&rsquo;s best positioned to extract it. No rent-seeking, no lock-in. If the only reason something is yours is that someone can&rsquo;t leave, it was never yours.',
-  },
-  {
-    title: 'Win only when the other person wins',
-    body: 'And still charge like the work is worth it. Generous, not self-erasing. A deal where I lose isn&rsquo;t generosity; it&rsquo;s a subsidy. A deal where you lose isn&rsquo;t a win; it&rsquo;s a debt that comes due.',
-  },
-  {
-    title: 'The Raphael choice',
-    body: 'Spend your life to minimize regret, boredom, and misery. Take the cheapest path that&rsquo;s still genuinely interesting. Do more with less.',
-  },
-];
+import Base from '../layouts/Base.astro';
+import { articles } from '../data/writing.js';
 ---
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raphael Fakhri</title>
-  <meta name="description" content="Raphael Fakhri. What I believe, written down so I can be held to it." />
-  <link rel="icon" href={"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%98%8E%3C/text%3E%3C/svg%3E"} />
-  <meta property="og:title" content="Raphael Fakhri" />
-  <meta property="og:description" content="What I believe, written down so I can be held to it." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://raphaelfakhri.com" />
-  <style is:inline>
-    body { max-width: 620px; margin: 0 auto; padding: 1.25rem 1.25rem 3rem; font-family: Charter, "Iowan Old Style", Georgia, Cambria, "Times New Roman", serif; font-size: 1.05rem; line-height: 1.65; color: #1a1a1a; }
-    h1, h2, h3, .dictated, .post-actions, header { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    h1 { font-size: 1.6rem; line-height: 1.25; margin: .2rem 0 .6rem; }
-    h2 { font-size: 1.15rem; margin: 1.6rem 0 .4rem; }
-    h3 { font-size: 1.3rem; margin: .3rem 0 .2rem; }
-    .post { border-top: 1px solid #eee; padding-top: 1rem; margin-top: 1.5rem; }
-    .post h3 { margin: 0 0 .3rem; }
-    /* Substack-embedded images (GIFs): kill the default <figure> indent so they aren't pushed
-       right, size them to the column, and hide Substack's expand/restack buttons which render
-       as stray controls here without Substack's own stylesheet. */
-    .post-body figure { margin: 1.9rem auto; text-align: center; }
-    .post-body .captioned-image-container { margin: 1.9rem auto; text-align: center; }
-    .post-body .image2-inset { margin: 0; padding: 0; }
-    .post-body picture, .post-body img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
-    .post-date { color: #999; font-size: .82rem; margin: 1rem 0 0; }
-    .post-body .image-link-expand, .post-body .restack-image, .post-body button { display: none !important; }
-    .dictated { color: #666; font-style: italic; font-size: .95rem; }
-    .post-title { color: #2563eb; text-decoration: none; }
-    .post-title:hover { text-decoration: underline; }
-    .post-list { list-style: none; padding-left: 0; }
-    .post-list li { margin: .55rem 0; font-size: 1.1rem; }
-    .post-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: 1.3rem; }
-    .post-actions .act, .post-actions .like {
-      display: inline-flex; align-items: center; gap: .35rem; font: inherit; font-size: .82rem; line-height: 1;
-      color: #444; padding: .42rem .72rem; border: 1px solid #e4e4e4; border-radius: 999px; background: #fff;
-      text-decoration: none; cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease;
-    }
-    .post-actions .act:hover, .post-actions .like:hover { background: #f6f6f6; border-color: #d5d5d5; }
-    .post-actions svg { width: 15px; height: 15px; fill: currentColor; display: block; }
-    .post-actions .act-x { color: #0f1419; }
-    .post-actions .act-fb { color: #1877f2; }
-    .post-actions .act-li { color: #0a66c2; }
-    .post-actions .like, .post-actions .like-link { color: #e0245e; }
-    .post-actions .like.liked { background: #e0245e; color: #fff; border-color: #e0245e; }
-    .post-actions .like-link .likes-count { color: #444; font-variant-numeric: tabular-nums; }
-    .post-actions .act-subscribe { background: #ff6719; color: #fff; border-color: #ff6719; font-weight: 600; }
-    .post-actions .act-subscribe:hover { background: #e85d16; border-color: #e85d16; color: #fff; }
-    .post-actions .comment-count { color: #888; font-variant-numeric: tabular-nums; }
-    .top-comments { margin-top: 1rem; border-top: 1px solid #f0f0f0; padding-top: .8rem; }
-    .top-comments h4 { font-size: .72rem; color: #999; margin: 0 0 .6rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
-    .top-comment { font-size: .92rem; line-height: 1.5; margin: .5rem 0; }
-    .top-comment .who { font-weight: 600; color: #222; }
-    .top-comment .txt { color: #555; }
-    p { margin: .7rem 0; }
-    a { color: #2e936f; }
-    hr { border: none; border-top: 1px solid #e8e8e8; margin: 1.4rem 0; }
-    ul { padding-left: 1.1rem; }
-    .socials { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .4rem; font-size: .95rem; }
-    .socials a { color: #333; display: inline-flex; align-items: center; gap: .42rem; text-decoration: none; }
-    .socials a:hover { color: #000; }
-    .socials .ico { display: inline-flex; }
-    .socials svg { width: 16px; height: 16px; fill: currentColor; display: block; }
-    .socials .myname { margin: 0 0 .2rem; font-size: 1rem; }
-    @media (min-width: 1040px) {
-      .socials { position: fixed; right: calc(50% + 340px); left: auto; top: 26%; flex-direction: column;
-                 align-items: flex-end; text-align: right; gap: .8rem; margin: 0; max-width: 210px; }
-    }
-    #flow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.9; margin-top: .5rem; min-height: 11em; }
-    #flow .step { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
-    #flow .step.on { opacity: 1; transform: none; }
-    #flow .step .a { color: #2e936f; font-weight: 600; }
-  </style>
-</head>
-<body>
-  <header>
-    <nav class="socials">
-      <p class="myname"><strong>Raphael Fakhri</strong></p>
-      {links.map((l) => (
-        <a href={l.href} aria-label={l.label}><span class="ico" set:html={l.icon} />{l.label}</a>
-      ))}
-    </nav>
-  </header>
+<Base
+  title="Raphael Fakhri — Mobile & Full-Stack Software Engineer"
+  description="Mobile and full-stack software engineer in Beirut owning React Native/Expo apps, .NET/C# backends, and production AI systems end-to-end."
+  path="/"
+>
+  <section class="hero">
+    <div class="hero-top">
+      <img
+        class="avatar"
+        src="/raphael.jpg"
+        alt="Portrait of Raphael Fakhri"
+        width="88"
+        height="88"
+        loading="eager"
+        decoding="async"
+      />
+      <div>
+        <h1>Raphael Fakhri</h1>
+        <p class="hero-role">Mobile &amp; Full-Stack Software Engineer &middot; Beirut, Lebanon</p>
+      </div>
+    </div>
 
-  <hr />
+    <p class="hero-lead">
+      I own software end-to-end&mdash;from mobile apps in <strong>React Native (Expo)</strong> and backend systems in <strong>.NET / C#</strong> and <strong>Python</strong> to CI/CD, store releases, and production AI pipelines. I care most about dissecting a problem properly before writing code, finding the real bottleneck, and shipping software that holds up under real users.
+    </p>
 
-  <main>
-    <h1>I&rsquo;m Raphael. And so what?</h1>
-    <p>I&rsquo;m Lebanese. I&rsquo;m not really a developer anymore. Nobody is. We don&rsquo;t build software now; we talk to AI. What&rsquo;s left that&rsquo;s actually mine is what I believe. So that&rsquo;s what this page is: a short list I live by, not a long one I perform.</p>
-    <p>What I want is simple. Learn business. Make good decisions. Find the bottleneck and lift it with whatever tool I&rsquo;ve got, and if AI is the tool, I use AI. Spin up businesses fast; see the opportunity and grab it before anyone else. I don&rsquo;t need to be well known. I want to be useful.</p>
-    <p>I think long and hard before I solve anything. I want the problem dissected from every angle. I&rsquo;ll spend more time understanding it than solving it.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:mail@raphaelfakhri.com">Email me</a>
+      <a class="btn" href="/cv/">Read CV</a>
+      <a class="btn" href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/raphaelfakhri" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
 
-    <hr />
+    <dl class="proof-strip">
+      <div>
+        <dt>Mobile &amp; Cross-Platform</dt>
+        <dd>130+ screen Expo / React Native app shipped to iOS, Android &amp; Web</dd>
+      </div>
+      <div>
+        <dt>Backend &amp; Production AI</dt>
+        <dd>.NET 8, SQL Server, PostgreSQL, Python, Temporal &amp; LiveKit</dd>
+      </div>
+      <div>
+        <dt>Upstream Open Source</dt>
+        <dd>Merged fixes in Callstack, Software Mansion, FluentMigrator &amp; LiveKit</dd>
+      </div>
+    </dl>
+  </section>
 
-    <section id="mission">
-      <h2>What I want you to get</h2>
-      <p>Find your real bottleneck, and use the right tool to lift it. That&rsquo;s the whole game. AI isn&rsquo;t the right tool for everything. It&rsquo;s the right tool when your own time is the bottleneck. The clearest case: you&rsquo;re answering the same questions over and over, acting like a human decision tree. That&rsquo;s not work; it&rsquo;s a machine&rsquo;s job. Hand it to AI and buy your time back. But a glass factory drowning in orders doesn&rsquo;t need AI; it needs price or capacity. Most people don&rsquo;t need more software. They need to find the one thing holding them back, and move it.</p>
-    </section>
+  <section id="story" class="section">
+    <div class="section-eyebrow">Story</div>
+    <h2>How I got here</h2>
+    <div class="prose">
+      <p>
+        I started building production systems while studying Computer Science at Saint Joseph University in Beirut&mdash;shipping .NET Core and RabbitMQ APIs for a Student Information System alongside an external vendor, redesigning relational schemas to migrate production data from MySQL to PostgreSQL, and delivering a 15+ page HR module with granular SQL permissions.
+      </p>
+      <p>
+        During my MSc in Computer Science at the American University of Beirut (GPA 3.81), I spent two years as the sole developer and designer of AUB Mediterraneo&rsquo;s campus web platform (<a href="https://aubmed.ac.cy" target="_blank" rel="noopener noreferrer">aubmed.ac.cy</a>). Sitting directly with non-technical university staff taught me a lesson that stuck: most engineering waste comes from solving the wrong problem too fast. Turning messy operational goals into clear specs let me ship 200+ change requests with 100% on-time delivery.
+      </p>
+      <p>
+        Since then, I&rsquo;ve worked across enterprise data infrastructure at Cardinal Health | WaveMark (building an autonomous Python/DSPy drift-reconciliation agent across ClickHouse, Kafka, and Elasticsearch), scoped cloud and AI architectures with enterprise technical leads at Nebulane, and taken full sole-engineer ownership of client products&mdash;most notably Zaky, a cross-platform AI tutoring app live on iOS, Android, and Web&mdash;while contributing bug fixes upstream to the open-source libraries I rely on.
+      </p>
+    </div>
+  </section>
 
-    <hr />
+  <section id="work" class="section">
+    <div class="section-eyebrow">Selected Work</div>
+    <h2>Systems I&rsquo;ve shipped</h2>
 
-    <section id="writing">
-      <h2>Writing</h2>
-      <p class="dictated">How these get written: I talk, an AI writes, I direct. I do not type them. Turning a thought into a post used to be the effort that stopped me. Now the effort is just having the thought out loud. Each title is a link to its own page.</p>
-      {posts.map((p) => (
-        <article class="post" id={p.slug}>
-          <h3><a class="post-title" href={`/${p.slug}`}>{p.title}</a></h3>
-          <div class="post-body" set:html={p.body}></div>
+    <div class="case-grid">
+      <article class="card card-featured">
+        <div class="card-head">
+          <div>
+            <h3>Zaky &mdash; Cross-Platform AI Tutoring App</h3>
+            <p class="card-meta">Client work &middot; Sole Engineer &middot; Apr 2026&ndash;Present</p>
+          </div>
+          <span class="badge">Live on iOS, Android &amp; Web</span>
+        </div>
+
+        <div class="case-columns">
+          <div>
+            <p class="label">The Problem</p>
+            <p>
+              Build a complete grades 1&ndash;12 tutoring and marketplace app from scratch across three platforms&mdash;combining live 1:1 teacher sessions with an AI pipeline that turns a student&rsquo;s photo of a homework exercise into a mathematically checked explainer video.
+            </p>
+          </div>
+          <div>
+            <p class="label">What I Built</p>
+            <p>
+              Architected a 130+ screen Expo SDK 55 / React Native 0.83 TypeScript client (student, teacher, and admin roles) with serialized MMKV-to-server state sync, stale-overwrite guards, offline queues, and zero-data-loss storage migrations. Wrote a native Kotlin Expo module for Android Credential Manager alongside Sign in with Apple, LiveKit WebRTC lessons with shared whiteboard and iOS background audio, AR/EN/FR RTL localization, and automated CI/CD with one-command EAS Update rollback. On the backend, built the Python homework pipeline (vision crop &rarr; Claude &rarr; SymPy verification &rarr; Manim + ElevenLabs narrated video).
+            </p>
+          </div>
+        </div>
+
+        <p class="outcome">
+          <strong>Outcome:</strong> Live since October 2026 across iOS, Android, and Web, serving 760+ student requests across 100+ devices with separate dev/prod environments and graceful job-draining releases.
+        </p>
+
+        <ul class="tags" aria-label="Technologies used">
+          <li>React Native</li>
+          <li>Expo SDK 55</li>
+          <li>TypeScript</li>
+          <li>Kotlin</li>
+          <li>MMKV</li>
+          <li>LiveKit</li>
+          <li>Python</li>
+          <li>SymPy &amp; Manim</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div>
+            <h3>Upstream Open-Source Contributions</h3>
+            <p class="card-meta">React Native &middot; .NET &middot; WebRTC &middot; Temporal</p>
+          </div>
+          <a class="card-link" href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a>
+        </div>
+        <p>
+          When production systems hit framework edge cases, I fix them upstream rather than piling on fragile workarounds. Selected merged PRs reviewed and accepted by core maintainers:
+        </p>
+        <ul class="pr-list">
+          <li>
+            <strong>React Native ecosystem:</strong> Fixes across Callstack (Brownfield iOS NSNumber boxing, Re.Pack, Paper, React Native Testing Library), Software Mansion (Gesture Handler, Enriched HTML), RevenueCat, and LiveKit.
+          </li>
+          <li>
+            <strong>.NET infrastructure:</strong> 10 merged PRs in FluentMigrator&mdash;including <a href="https://github.com/fluentmigrator/fluentmigrator/pull/2384" target="_blank" rel="noopener noreferrer">provider-agnostic NULL semantics for unique indexes (#2384)</a> across eight SQL engines and a <a href="https://github.com/fluentmigrator/fluentmigrator/pull/2385" target="_blank" rel="noopener noreferrer">Roslyn analyzer code fix (#2385)</a>&mdash;plus 10 merged PRs in Swashbuckle.AspNetCore (<a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/4128" target="_blank" rel="noopener noreferrer">#4128</a>, <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/4116" target="_blank" rel="noopener noreferrer">#4116</a>).
+          </li>
+          <li>
+            <strong>WebRTC &amp; distributed systems:</strong> RTX payload-type negotiation in <a href="https://github.com/livekit/livekit/pull/5135" target="_blank" rel="noopener noreferrer">LiveKit SFU (#5135, Go)</a> and <a href="https://github.com/versatica/mediasoup/pull/1953" target="_blank" rel="noopener noreferrer">mediasoup (#1953, C++)</a>, <a href="https://github.com/livekit/ingress/pull/554" target="_blank" rel="noopener noreferrer">WHIP ICE restarts (#554)</a> in LiveKit Ingress, and fixes across Temporal&rsquo;s .NET, Python, TypeScript, and PHP SDKs.
+          </li>
+        </ul>
+      </article>
+
+      <div class="two-col">
+        <article class="card">
+          <h3>AUB Mediterraneo Web Platform</h3>
+          <p class="card-meta">American University of Beirut &middot; 2023&ndash;2025</p>
+          <p>
+            Sole engineer and designer for <a href="https://aubmed.ac.cy" target="_blank" rel="noopener noreferrer">aubmed.ac.cy</a> (C#/.NET on SharePoint, 50+ responsive pages, in-page PDF viewer, tree navigation). Turned staff requests into specs and shipped 200+ updates with 100% on-time delivery.
+          </p>
+          <ul class="tags">
+            <li>C# / .NET</li>
+            <li>JavaScript</li>
+            <li>SharePoint</li>
+          </ul>
         </article>
+
+        <article class="card">
+          <h3>Schema &amp; Data-Drift Agent</h3>
+          <p class="card-meta">Cardinal Health | WaveMark &middot; 2025</p>
+          <p>
+            Built an automated Python + DSPy reconciliation agent that detects schema and data drift between staging and production across ClickHouse, Kafka, and Elasticsearch, emitting structured patch proposals for engineer review.
+          </p>
+          <ul class="tags">
+            <li>Python</li>
+            <li>DSPy</li>
+            <li>ClickHouse</li>
+            <li>Kafka</li>
+            <li>Elasticsearch</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>shipment-triage</h3>
+            <a class="card-link" href="https://github.com/RaphaelFakhri/shipment-triage" target="_blank" rel="noopener noreferrer">Code &rarr;</a>
+          </div>
+          <p class="card-meta">Open-Source Project &middot; Durable Agentic Workflow</p>
+          <p>
+            Logistics exception-handling workflow on Temporal and LangGraph with Qdrant RAG and a durable human approval gate. CI kills the sole worker mid-activity to assert crash recovery without duplicate writes, gated by DeepEval.
+          </p>
+          <ul class="tags">
+            <li>Temporal</li>
+            <li>LangGraph</li>
+            <li>Qdrant</li>
+            <li>DeepEval</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>grant-management-api</h3>
+            <a class="card-link" href="https://github.com/RaphaelFakhri/grant-management-api" target="_blank" rel="noopener noreferrer">Code &rarr;</a>
+          </div>
+          <p class="card-meta">Open-Source Project &middot; .NET 8 &amp; SQL Server</p>
+          <p>
+            Clean-architecture .NET 8 REST API with hand-written T-SQL tuning (filtered covering indexes, views, stored procedures), 70 unit and integration tests, non-root Docker, and Kubernetes Job migrations verified on a live kind cluster in CI.
+          </p>
+          <ul class="tags">
+            <li>.NET 8</li>
+            <li>EF Core</li>
+            <li>T-SQL</li>
+            <li>Docker &amp; K8s</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>24/7 Unified AI Customer Support</h3>
+          <p class="card-meta">Client Work &middot; Production Operations</p>
+          <p>
+            Built and operate a client&rsquo;s end-to-end AI support agent on self-hosted Chatwoot and Claude, unifying web chat, Shopify, WhatsApp, email, and mobile routing&mdash;running continuously in production without incident.
+          </p>
+          <ul class="tags">
+            <li>Chatwoot</li>
+            <li>Claude API</li>
+            <li>Shopify</li>
+            <li>WhatsApp</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>Parallel Heaps in CUDA &amp; MSc Thesis</h3>
+            <a class="card-link" href="https://github.com/RaphaelFakhri/Generalized_Heaps_Parallel" target="_blank" rel="noopener noreferrer">Code &rarr;</a>
+          </div>
+          <p class="card-meta">Systems &amp; Research &middot; AUB MSc CS (GPA 3.81)</p>
+          <p>
+            Implemented block- and warp-level CUDA heap operations with coalesced shared-memory access (88% faster sorting 10M+ elements). MSc thesis: a VS Code extension explaining code in place selected via mouse, voice, or eye-tracker gaze.
+          </p>
+          <ul class="tags">
+            <li>CUDA / C++</li>
+            <li>VS Code API</li>
+            <li>HCI Study</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="writing" class="section">
+    <div class="section-eyebrow">Writing</div>
+    <h2>Engineering notes</h2>
+    <p class="section-intro">Short notes from building and debugging real production systems.</p>
+
+    <div class="article-list">
+      {articles.map((article) => (
+        <a class="article-row" href={`/writing/${article.slug}`}>
+          <div class="article-meta">
+            <time datetime={article.isoDate}>{article.date}</time>
+            <span>&middot;</span>
+            <span>{article.readTime}</span>
+          </div>
+          <h3>{article.title}</h3>
+          <p>{article.summary}</p>
+        </a>
       ))}
-    </section>
-    <script is:inline>
-      // Shared brand icons + share-button builder, used by both the built-in and feed renders.
-      window.RF = window.RF || {};
-      RF.ic = {
-        x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
-        fb: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>',
-        li: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>',
-        heart: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
-        chat: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>',
-        substack: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>'
-      };
-      RF.timeAgo = function (dateStr) {
-        var t = new Date(dateStr).getTime();
-        if (!t || isNaN(t)) return '';
-        var s = Math.floor((Date.now() - t) / 1000);
-        if (s < 45) return 'just now';
-        var units = [['year', 31536000], ['month', 2592000], ['week', 604800], ['day', 86400], ['hour', 3600], ['minute', 60]];
-        for (var i = 0; i < units.length; i++) {
-          var n = Math.floor(s / units[i][1]);
-          if (n >= 1) return n + ' ' + units[i][0] + (n === 1 ? '' : 's') + ' ago';
-        }
-        return 'just now';
-      };
-      RF.share = function (link, title) {
-        var u = encodeURIComponent(link), t = encodeURIComponent(title);
-        return '<a class="act act-x" href="https://twitter.com/intent/tweet?text=' + t + '&url=' + u + '" target="_blank" rel="noopener" aria-label="Share on X">' + RF.ic.x + '</a>' +
-          '<a class="act act-fb" href="https://www.facebook.com/sharer/sharer.php?u=' + u + '" target="_blank" rel="noopener" aria-label="Share on Facebook">' + RF.ic.fb + '</a>' +
-          '<a class="act act-li" href="https://www.linkedin.com/sharing/share-offsite/?url=' + u + '" target="_blank" rel="noopener" aria-label="Share on LinkedIn">' + RF.ic.li + '</a>' +
-          '<a class="act act-comment" href="' + link + '" target="_blank" rel="noopener">' + RF.ic.chat + '<span>Comment</span><span class="comment-count"></span></a>' +
-          '<a class="act act-subscribe" href="https://raphaelfakhri.substack.com/subscribe" target="_blank" rel="noopener">' + RF.ic.substack + '<span>Subscribe</span></a>';
-      };
-    </script>
-    <script is:inline>
-      (function () {
-        var origin = 'https://raphaelfakhri.com';
-        var sub = 'https://raphaelfakhri.substack.com';
-        function wireStats(slug, row) {
-          var likesEl = row.querySelector('.likes'), viewsEl = row.querySelector('.views'), likeBtn = row.querySelector('.like');
-          function render(s) { if (s) { likesEl.textContent = s.likes; viewsEl.textContent = s.views + (s.views === 1 ? ' view' : ' views'); } }
-          var q = '/stats?slug=' + encodeURIComponent(slug);
-          var vk = 'viewed_' + slug;
-          if (sessionStorage.getItem(vk)) {
-            fetch(q).then(function (r) { return r.json(); }).then(render).catch(function () {});
-          } else {
-            sessionStorage.setItem(vk, '1');
-            fetch(q + '&action=view', { method: 'POST' }).then(function (r) { return r.json(); }).then(render).catch(function () {});
-          }
-          var lk = 'liked_' + slug;
-          if (localStorage.getItem(lk)) likeBtn.classList.add('liked');
-          likeBtn.addEventListener('click', function () {
-            if (localStorage.getItem(lk)) return;
-            localStorage.setItem(lk, '1'); likeBtn.classList.add('liked');
-            fetch(q + '&action=like', { method: 'POST' }).then(function (r) { return r.json(); }).then(render).catch(function () {});
-          });
-        }
-        document.querySelectorAll('#writing .post').forEach(function (post) {
-          var slug = post.id;
-          var title = post.querySelector('.post-title').textContent.trim();
-          var body = post.querySelector('.post-body');
-          var purl = origin + '/' + slug;
-          var u = encodeURIComponent(purl), t = encodeURIComponent(title);
-          var row = document.createElement('div');
-          row.className = 'post-actions';
-          row.innerHTML =
-            '<button class="like" type="button" aria-label="Like">' + RF.ic.heart + '<span class="likes">0</span></button>' +
-            RF.share(purl, title);
-          body.appendChild(row);
-          wireStats(slug, row);
-        });
-      })();
-    </script>
-    <script is:inline>
-      (function () {
-        var flow = document.getElementById('flow');
-        if (!flow) return;
-        var steps = [
-          { d: 0, h: '🧑 you', t: '“make me a burger”' },
-          { d: 1, h: '🤖 agent', t: 'check the kitchen… no patties' },
-          { d: 2, h: '🚚 sub-agent', t: 'spin up a beef fleet' },
-          { d: 3, h: '🐄 fleet', t: 'raise cattle → grind patties ✓' },
-          { d: 1, h: '🤖 agent', t: 'assemble the burger' },
-          { d: 0, h: '🍔 done', t: 'delivered, you just waited' }
-        ];
-        var nodes = steps.map(function (s) {
-          var el = document.createElement('div');
-          el.className = 'step';
-          el.style.paddingLeft = (s.d * 1.6) + 'em';
-          el.innerHTML = (s.d ? '↳ ' : '') + '<span class="a">' + s.h + ':</span> ' + s.t;
-          flow.appendChild(el);
-          return el;
-        });
-        var i = 0;
-        function tick() {
-          if (i < nodes.length) { nodes[i].classList.add('on'); i++; setTimeout(tick, 850); }
-          else { setTimeout(function () { nodes.forEach(function (n) { n.classList.remove('on'); }); i = 0; setTimeout(tick, 500); }, 2600); }
-        }
-        tick();
-      })();
-    </script>
+    </div>
+  </section>
 
-  </main>
+  <section id="contact" class="section">
+    <div class="contact-box">
+      <div class="section-eyebrow">Get in touch</div>
+      <h2>Let&rsquo;s build something solid</h2>
+      <p>
+        If you&rsquo;re hiring a senior mobile or full-stack engineer who owns systems end-to-end&mdash;or scoping a product that needs real engineering rigor&mdash;send me an email directly.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:mail@raphaelfakhri.com">mail@raphaelfakhri.com</a>
+        <a class="btn" href="/cv/">View CV</a>
+        <a class="btn" href="https://www.linkedin.com/in/raphaelfakhri" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn" href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </section>
 
-  <hr />
+  <style>
+    .hero-top {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+      margin-bottom: 1.35rem;
+    }
 
-  <footer>
-    <p>&copy; Raphael Fakhri. Natural scarcity is a technology problem.</p>
-  </footer>
-  <script is:inline>
-    // Pull posts from the Substack RSS feed (via the worker's /feed.json). When Substack has
-    // posts, they become the source of truth and replace the built-in ones; when the feed is
-    // empty or unreachable, the built-in posts stay. Likes/comments live on Substack.
-    (function () {
-      fetch('/feed.json').then(function (r) { return r.json(); }).then(function (items) {
-        if (!items || !items.length) return;
-        var wrap = document.getElementById('writing');
-        if (!wrap) return;
-        wrap.querySelectorAll('.post').forEach(function (p) { p.remove(); });
-        var sub = 'https://raphaelfakhri.substack.com';
-        items.forEach(function (it) {
-          var u = encodeURIComponent(it.link), t = encodeURIComponent(it.title);
-          var slug = (it.link || '').split('?')[0].replace(/\/$/, '').split('/').pop();
-          var art = document.createElement('article');
-          art.className = 'post';
-          var ago = RF.timeAgo(it.date);
-          art.innerHTML =
-            '<h3><a class="post-title" href="' + it.link + '">' + it.title + '</a></h3>' +
-            '<div class="post-body">' + it.html +
-              '<div class="post-actions">' +
-                '<a class="act like-link" href="' + it.link + '" target="_blank" rel="noopener" aria-label="Like on Substack">' + RF.ic.heart + '<span class="likes-count">…</span></a>' +
-                RF.share(it.link, it.title) +
-              '</div>' +
-            '</div>' +
-            (ago ? '<div class="post-date">Posted ' + ago + '</div>' : '');
-          wrap.appendChild(art);
-          if (slug) {
-            fetch('/post-meta.json?slug=' + encodeURIComponent(slug)).then(function (r) { return r.json(); }).then(function (d) {
-              if (!d) return;
-              var lc = art.querySelector('.likes-count'); if (lc) lc.textContent = d.likes || 0;
-              var cc = art.querySelector('.comment-count'); if (cc && d.comments) cc.textContent = ' ' + d.comments;
-              if (d.top && d.top.length) {
-                var box = document.createElement('div'); box.className = 'top-comments';
-                var html = '<h4>Top comments on Substack</h4>';
-                d.top.forEach(function (c) {
-                  var who = String(c.name || 'Reader').replace(/</g, '&lt;');
-                  var txt = String(c.body || '').replace(/</g, '&lt;');
-                  html += '<div class="top-comment"><span class="who">' + who + '</span> <span class="txt">' + txt + '</span></div>';
-                });
-                box.innerHTML = html;
-                var acts = art.querySelector('.post-actions');
-                if (acts) acts.insertAdjacentElement('afterend', box); else art.appendChild(box);
-              }
-            }).catch(function () {});
-          }
-        });
-      }).catch(function () {});
-    })();
-  </script>
-  <script define:vars={{ BUILD_ID }}>
-    // Live-reload: poll the build id and reload when a new version is deployed.
-    setInterval(async () => {
-      try {
-        const r = await fetch('/version.json?cb=' + Date.now(), { cache: 'no-store' });
-        if (!r.ok) return;
-        const { id } = await r.json();
-        // Reload only on a strictly newer build (ids are timestamps); ignore stale reads.
-        if (id && Number(id) > Number(BUILD_ID)) location.reload();
-      } catch {}
-    }, 3000);
-  </script>
-</body>
-</html>
+    .avatar {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border-strong);
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .hero-role {
+      margin: 0.25rem 0 0;
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .hero-lead {
+      font-size: 1.07rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 66ch;
+      margin-bottom: 1.45rem;
+    }
+
+    .hero-lead strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.95rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 550;
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      color: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .btn-primary {
+        color: #0b1120;
+      }
+      .btn-primary:hover {
+        color: #0b1120;
+      }
+    }
+
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin: 2rem 0 0;
+      padding: 1rem 1.1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .proof-strip dt {
+      font-size: 0.78rem;
+      font-weight: 650;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .proof-strip dd {
+      margin: 0;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    .prose p {
+      max-width: 68ch;
+      margin-bottom: 1rem;
+    }
+
+    .case-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+    }
+
+    .card-featured {
+      border-color: var(--accent-border);
+      background: linear-gradient(180deg, var(--accent-soft) 0%, var(--surface) 38%);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0 0 0.65rem;
+    }
+
+    .card-head .card-meta {
+      margin-bottom: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .card-link {
+      font-size: 0.84rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .case-columns {
+      display: grid;
+      grid-template-columns: 1fr 1.55fr;
+      gap: 1.2rem;
+      margin: 0.9rem 0 0.95rem;
+    }
+
+    .label {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.72rem;
+      font-weight: 650;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .outcome {
+      font-size: 0.92rem;
+      color: var(--text);
+      padding: 0.7rem 0.85rem;
+      background: var(--surface-subtle);
+      border-radius: 8px;
+      margin-bottom: 0.95rem;
+    }
+
+    .pr-list {
+      margin: 0.75rem 0 0;
+      padding-left: 1.15rem;
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+    }
+
+    .pr-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .pr-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .pr-list strong {
+      color: var(--text);
+    }
+
+    .tags {
+      list-style: none;
+      padding: 0;
+      margin: 0.85rem 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tags li {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.74rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+    }
+
+    .section-intro {
+      margin-top: -0.45rem;
+      margin-bottom: 1.15rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .article-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .article-row {
+      display: block;
+      padding: 1.1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.15s ease;
+    }
+
+    .article-row:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    .article-row h3 {
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .article-row:hover h3 {
+      color: var(--accent);
+    }
+
+    .article-row p {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .article-meta {
+      display: flex;
+      gap: 0.45rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .contact-box {
+      padding: 1.65rem 1.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .contact-box p {
+      max-width: 60ch;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 680px) {
+      .proof-strip,
+      .two-col,
+      .case-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .card-head {
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .hero-top {
+        align-items: center;
+      }
+
+      .avatar {
+        width: 68px;
+        height: 68px;
+      }
+    }
+  </style>
+</Base>
