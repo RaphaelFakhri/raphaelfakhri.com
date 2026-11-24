@@ -21,7 +21,7 @@ const SECURITY_HEADERS = {
   'referrer-policy': 'strict-origin-when-cross-origin',
   'permissions-policy': 'camera=(), microphone=(), geolocation=()',
   'content-security-policy':
-    "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+    "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
 };
 
 export default {
@@ -44,7 +44,7 @@ export default {
     if (assetResponse.status === 200) {
       if (contentType.includes('text/html')) {
         headers.set('cache-control', 'public, max-age=300, stale-while-revalidate=86400');
-      } else if (/\.(jpg|jpeg|png|svg|webp|ico|pdf|xml|txt|css)$/i.test(url.pathname)) {
+      } else if (/\.(jpg|jpeg|png|svg|webp|ico|pdf|xml|txt|css|js)$/i.test(url.pathname)) {
         headers.set('cache-control', 'public, max-age=604800, stale-while-revalidate=86400');
       }
     }

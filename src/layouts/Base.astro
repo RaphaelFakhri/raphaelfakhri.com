@@ -62,41 +62,19 @@ const jsonLd = {
 
   <style is:global>
     :root {
-      --bg: #fafaf9;
-      --surface: #ffffff;
-      --surface-subtle: #f4f4f2;
-      --text: #141413;
-      --text-secondary: #4a4a46;
-      --text-muted: #6e6d68;
-      --border: #e6e5e0;
-      --border-strong: #d4d3cc;
-      --accent: #1d4ed8;
-      --accent-hover: #1e40af;
-      --accent-soft: #eff6ff;
-      --accent-border: #bfdbfe;
-      --tag-bg: #f1f1ee;
-      --tag-text: #3f3f3c;
-      --radius: 12px;
-      --max-w: 760px;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0e0f11;
-        --surface: #15171b;
-        --surface-subtle: #1b1e24;
-        --text: #f3f3f1;
-        --text-secondary: #b9bab5;
-        --text-muted: #8a8b86;
-        --border: #262930;
-        --border-strong: #363a45;
-        --accent: #60a5fa;
-        --accent-hover: #93c5fd;
-        --accent-soft: rgba(59, 130, 246, 0.12);
-        --accent-border: rgba(96, 165, 250, 0.28);
-        --tag-bg: #1e2128;
-        --tag-text: #c7c8c3;
-      }
+      --bg: #08090c;
+      --surface: rgba(255, 255, 255, 0.028);
+      --surface-hover: rgba(255, 255, 255, 0.052);
+      --text: #f4f4f2;
+      --text-secondary: #a1a3ad;
+      --text-muted: #6d707c;
+      --border: rgba(255, 255, 255, 0.085);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --accent: #7db4ff;
+      --accent-soft: rgba(96, 165, 250, 0.12);
+      --accent-border: rgba(125, 180, 255, 0.3);
+      --radius: 18px;
+      --max-w: 980px;
     }
 
     *, *::before, *::after {
@@ -106,27 +84,33 @@ const jsonLd = {
     html {
       scroll-behavior: smooth;
       -webkit-text-size-adjust: 100%;
+      color-scheme: dark;
     }
 
     body {
       margin: 0;
-      background: var(--bg);
+      min-height: 100svh;
+      background:
+        radial-gradient(900px 520px at 80% -10%, rgba(59, 130, 246, 0.12), transparent 65%),
+        radial-gradient(640px 440px at 10% 35%, rgba(148, 163, 184, 0.055), transparent 70%),
+        var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       font-size: 16px;
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      overflow-x: clip;
     }
 
     a {
       color: var(--accent);
       text-decoration: none;
-      text-underline-offset: 3px;
+      text-underline-offset: 4px;
     }
 
     a:hover {
-      color: var(--accent-hover);
+      color: #bfdbfe;
       text-decoration: underline;
     }
 
@@ -134,17 +118,16 @@ const jsonLd = {
       width: 100%;
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 0 1.25rem;
+      padding: 0 1.5rem;
     }
 
-    /* Top navigation */
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      z-index: 30;
+      background: rgba(8, 9, 12, 0.74);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
 
@@ -153,33 +136,44 @@ const jsonLd = {
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      min-height: 58px;
+      min-height: 62px;
     }
 
     .brand {
-      font-weight: 700;
-      font-size: 0.96rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 650;
+      font-size: 0.94rem;
       letter-spacing: -0.015em;
       color: var(--text);
       white-space: nowrap;
     }
 
+    .brand-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(125, 180, 255, 0.8);
+    }
+
     .brand:hover {
-      color: var(--accent);
+      color: var(--text);
       text-decoration: none;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.15rem;
-      flex-wrap: wrap;
+      gap: 1.5rem;
     }
 
     .nav-links a {
-      font-size: 0.88rem;
+      font-size: 0.87rem;
       font-weight: 500;
       color: var(--text-secondary);
+      transition: color 0.15s ease;
     }
 
     .nav-links a:hover {
@@ -188,64 +182,58 @@ const jsonLd = {
     }
 
     main {
-      padding: 3rem 0 4rem;
+      padding: 2.5rem 0 5.5rem;
     }
 
-    /* Typography hierarchy: strictly h1 > h2 > h3 */
     h1 {
-      font-size: clamp(1.85rem, 3.6vw, 2.35rem);
-      line-height: 1.18;
-      letter-spacing: -0.03em;
+      font-size: clamp(2.35rem, 5.2vw, 3.65rem);
+      line-height: 1.06;
+      letter-spacing: -0.038em;
       margin: 0;
-      font-weight: 750;
-    }
-
-    h2 {
-      font-size: 1.32rem;
-      line-height: 1.3;
-      letter-spacing: -0.02em;
-      margin: 0 0 1rem;
       font-weight: 700;
     }
 
-    h3 {
-      font-size: 1.04rem;
-      line-height: 1.35;
-      letter-spacing: -0.01em;
-      margin: 0 0 0.45rem;
+    h2 {
+      font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      margin: 0 0 2rem;
       font-weight: 650;
     }
 
+    h3 {
+      font-size: 1.08rem;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      margin: 0 0 0.45rem;
+      font-weight: 620;
+    }
+
     p {
-      margin: 0 0 0.95rem;
+      margin: 0;
       color: var(--text-secondary);
     }
 
-    p:last-child {
-      margin-bottom: 0;
-    }
-
     .section {
-      padding-top: 2.75rem;
-      margin-top: 2.75rem;
+      margin-top: 6rem;
+      padding-top: 4rem;
       border-top: 1px solid var(--border);
     }
 
-    .section-eyebrow {
+    .eyebrow {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       color: var(--accent);
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.65rem;
     }
 
-    /* Footer */
     .site-footer {
       border-top: 1px solid var(--border);
-      padding: 1.75rem 0 2.5rem;
-      font-size: 0.86rem;
+      padding: 2rem 0 3rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
     }
 
@@ -254,12 +242,12 @@ const jsonLd = {
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.85rem;
     }
 
     .footer-links {
       display: flex;
-      gap: 1.1rem;
+      gap: 1.25rem;
       flex-wrap: wrap;
     }
 
@@ -269,27 +257,32 @@ const jsonLd = {
 
     .footer-links a:hover {
       color: var(--text);
+      text-decoration: none;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 1.15rem;
+      }
+
       .nav-inner {
-        padding: 0.7rem 0;
+        padding: 0.65rem 0;
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.45rem;
+        gap: 0.4rem;
       }
 
       .nav-links {
-        gap: 0.95rem;
+        gap: 1.1rem;
       }
 
       main {
-        padding: 2rem 0 3rem;
+        padding: 1.5rem 0 4rem;
       }
 
       .section {
-        padding-top: 2.15rem;
-        margin-top: 2.15rem;
+        margin-top: 4rem;
+        padding-top: 2.75rem;
       }
     }
   </style>
@@ -297,7 +290,10 @@ const jsonLd = {
 <body>
   <header class="site-header">
     <div class="container nav-inner">
-      <a class="brand" href="/">Raphael Fakhri</a>
+      <a class="brand" href="/">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>Raphael Fakhri</span>
+      </a>
       <nav class="nav-links" aria-label="Primary">
         <a href="/#story">Story</a>
         <a href="/#work">Work</a>
@@ -314,7 +310,7 @@ const jsonLd = {
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 Raphael Fakhri &middot; Beirut, Lebanon</span>
+      <span>&copy; 2026 Raphael Fakhri &middot; Beirut</span>
       <div class="footer-links">
         <a href="https://github.com/RaphaelFakhri" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/raphaelfakhri" target="_blank" rel="noopener noreferrer">LinkedIn</a>
